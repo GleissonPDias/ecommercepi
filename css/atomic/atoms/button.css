@@ -1,14 +1,18 @@
 .button {
+  border: none;
   background-color: #fff;
-  min-width: 305px;
+  min-width: 100%;
   font-size: 20px;
   min-height: 43px;
   border-radius: 5px;
   outline: none;
 }
+.button-criacao {
+  min-width: 100%;
+}
 .button-search {
   position: absolute;
-  top: 24px;
+  top: 22px;
   left: 73vw;
   color: var(--hover-dropdown-li);
   border: none;
@@ -22,4 +26,7 @@
 }
 .button-search:hover {
   background-color: gray;
+}
+.btn-redefinir:hover {
+  background-color: #00baf5;
 }

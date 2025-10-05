@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./app.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="content">
+        <img
+          class="logo logo-criacao"
+          src="./assets/gettstore.png"
+          alt="gettstore"
+        />
+        <p class="criar-p">Criar minha conta</p>
+        <form class="form">
+          <input
+            class="input"
+            type="text"
+            id="name"
+            placeholder="Nome"
+            title="Nome"
+          />
+          <input
+            class="input"
+            type="email"
+            id="username"
+            placeholder="Email"
+            title="email"
+          />
+          <input
+            class="input"
+            type="password"
+            id="password"
+            title="password"
+            placeholder="Senha"
+          />
+          <input
+            class="input"
+            type="password"
+            id="confirm-password"
+            title="confirm-password"
+            placeholder="Confirmar Senha"
+          />
+
+          <div class="container-checkbox">
+            <div class="checkbox-option">
+              <input id="spam" name="spam" type="checkbox" value="0" />
+              <label for="spam">Quero receber promoções por e-mail</label>
+            </div>
+
+            <div class="checkbox-option">
+              <input id="termos" name="termos" type="checkbox" value="0" />
+              <label for="termos">Aceito os termos de uso</label>
+            </div>
+          </div>
+
+          <button class="button button-criacao" type="submit">Criar</button>
+          <p class="criar-termos">
+            Ao se cadastrar, você aceita os Termos de Uso e a Política de
+            Privacidade
+          </p>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

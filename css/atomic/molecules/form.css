@@ -1,10 +1,26 @@
+.form input:not([type="checkbox"]) {
+  min-width: 100%;
+  font-size: 20px;
+  font-style: italic;
+}
 .form {
+  padding: 8px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  max-width: 20vw;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+.form a {
+  color: #19b5f5;
 }
 .form-search {
   display: flex;
   height: 20px;
+}
+.form-redefinir {
+  background-color: #292f8f;
+  border-radius: 5px;
+  gap: 32px;
+  padding: 32px;
 }
