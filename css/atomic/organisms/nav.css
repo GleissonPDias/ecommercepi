@@ -1,0 +1,33 @@
+.nav {
+  position: fixed;
+  display: flex;
+  width: 100vw;
+  justify-content: space-between;
+  position: relative;
+}
+.nav > *:not(.containerNav) {
+  justify-content: center; /* Ou o valor de margem que você preferir */
+  padding: 19px;
+  padding-right: 32px;
+}
+.nav ul li {
+  list-style: none;
+}
+.containerNav {
+}
+
+.nav form {
+  display: flex;
+  justify-content: end;
+
+  height: 20px;
+}
+.iconCart {
+  width: 32px;
+}
+.iconUser {
+  width: 32px;
+}
+.logo {
+  z-index: 1;
+}

@@ -1,0 +1,25 @@
+.button {
+  background-color: #fff;
+  min-width: 305px;
+  font-size: 20px;
+  min-height: 43px;
+  border-radius: 5px;
+  outline: none;
+}
+.button-search {
+  position: absolute;
+  top: 24px;
+  left: 73vw;
+  color: var(--hover-dropdown-li);
+  border: none;
+  border-radius: 50%;
+  min-width: 32px;
+  justify-content: center;
+  min-height: 32px;
+  font-size: 10px;
+  outline: none;
+  background: none;
+}
+.button-search:hover {
+  background-color: gray;
+}

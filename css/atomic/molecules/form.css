@@ -1,0 +1,10 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 20vw;
+}
+.form-search {
+  display: flex;
+  height: 20px;
+}
