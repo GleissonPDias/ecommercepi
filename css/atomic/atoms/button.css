@@ -6,7 +6,20 @@
   min-height: 43px;
   border-radius: 5px;
   outline: none;
+  cursor: pointer;
 }
+
+.btn-entrar {
+  border: none;
+  background-color: #fff;
+  min-width: 100%;
+  font-size: 20px;
+  min-height: 43px;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+}
+
 .button-criacao {
   min-width: 100%;
 }

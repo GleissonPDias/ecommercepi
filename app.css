@@ -21,6 +21,21 @@
   align-items: center;
   background: linear-gradient(to bottom, #0b0d28, #272e8e);
 }
+
+.meu-botao {
+  border: none;
+  background-color: #fff;
+  min-width: 100%;
+  font-size: 20px;
+  min-height: 43px;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+  text-decoration: none;
+  text-align:center;
+  display: inline-block;
+}
+
 .content {
   display: flex;
   flex-direction: column;
