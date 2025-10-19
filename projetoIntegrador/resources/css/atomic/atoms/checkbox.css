@@ -1,0 +1,6 @@
+.checkbox {
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    gap: 8px;
+}

@@ -1,0 +1,93 @@
+/*@tailwind base;
+@tailwind components;
+@tailwind utilities;
+*/
+
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import "./atomic/atoms/checkbox";
+@import "./atomic/atoms/button.css";
+@import "./atomic/molecules/form.css";
+@import "./atomic/atoms/input.css";
+@import "./atomic/molecules/dropdown.css";
+@import "./atomic/organisms/nav.css";
+@import "./atomic/organisms/content.css";
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+}
+.container {
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to bottom, #0b0d28, #272e8e);
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    justify-content: center;
+    align-items: center;
+}
+.logo {
+    max-width: 250px;
+}
+.logo-criacao {
+    max-width: 250px;
+    padding: 16px;
+}
+
+.forgot-password {
+    align-self: flex-end;
+}
+.container-checkbox {
+    font-size: 16px;
+    justify-content: center;
+    display: flex;
+    flex-direction: column; /* Coloca as duas 'div.checkbox-option' em coluna */
+    gap: 16px; /* Define o espaço VERTICAL entre as duas opções */
+    width: 100%; /* Faz o container ocupar a largura disponível */
+}
+.checkbox-option {
+    color: #fff;
+    display: flex;
+    /* flex-direction: row; é o padrão, então não precisamos declarar */
+    align-items: center; /* Alinha o checkbox e o texto verticalmente no centro */
+    gap: 8px; /* Define o espaço HORIZONTAL entre a caixinha e o texto */
+}
+.criar-p {
+    text-align: center;
+    color: #fff;
+    max-width: 80%;
+}
+.criar-termos {
+    text-align: center;
+    color: #fff;
+    max-width: 80%;
+    font-size: 10px;
+}
+@media (max-height: 667px), (min-width: 360px) {
+    .form {
+        gap: 10px;
+    }
+    .logo {
+        width: 250px;
+        margin: 20px;
+    }
+    .logo-criacao {
+        gap: 0px;
+    }
+    .container-checkbox {
+        gap: 0px;
+    }
+    .form {
+        width: 90%;
+    }
+    .form-redefinir {
+        width: 90%;
+    }
+}
