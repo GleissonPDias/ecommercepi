@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GettStore - PEAK</title>
+    <link rel="stylesheet" href="../geral.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-left">            
+            <!-- Botão que abre o menu lateral -->
+            <button class="btn-menu" type="button" aria-label="Abrir menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <a href="/tela-inicial/home.html"><img src="/images/GettStore(1).png" alt="logo" class="logo"></a>
+        </div>
+        <div class="header-center">
+            <div class="search-bar">
+                <input type="text" placeholder="Buscar jogo ou palavra-chave">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="cart-icon">
+                <a href="../carrinho/carrinho.html"><i class="fas fa-shopping-cart"></i></a>
+                <span class="cart-count">0</span>
+            </div>
+            <i class="fas fa-heart active"></i>
+            <a href="/contaUsuario/conta.html"><i class="fas fa-user"></i></a>
+        </div>
+    </header>
+
+    <!-- MENU LATERAL (ESCONDIDO POR PADRÃO) -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <!-- Botão que fecha o menu lateral -->
+            <button class="btn-close" type="button" aria-label="Fechar menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <ul class="sidebar-links">
+            <li><a href="#"><i class="fas fa-gamepad"></i> Catálogo</a></li>
+            <li><a href="#"><i class="fas fa-tags"></i> Ofertas</a></li>
+            <li><a href="#"><i class="fas fa-gift"></i> Gift Card</a></li>
+            <li class="divider"></li>
+            <li><a href="#"><i class="fas fa-desktop"></i> PC</a></li>
+            <li><a href="#"><i class="fab fa-xbox"></i> Xbox</a></li>
+            <li><a href="#"><i class="fab fa-playstation"></i> Playstation</a></li>
+            <li><a href="#"><i class="fas fa-gamepad"></i> Switch</a></li> <!-- Ícone genérico para Switch -->
+            <li class="divider"></li>
+            <li><a href="#"><i class="fas fa-headset"></i> Suporte</a></li>
+            <li><a href="#"><i class="fas fa-ellipsis-h"></i> Mais</a></li>
+        </ul>
+    </aside>
+
+    <!-- FUNDO ESCURO (OVERLAY) -->
+    <div class="overlay"></div>
+
+    <main class="product-page">
+        <div class="content-left">
+            <div class="main-banner">
+                <img src="/images/foto1.jpg">
+                <button class="carousel-arrow prev" aria-label="Imagem anterior"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-arrow next" aria-label="Próxima imagem"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="thumbnail-gallery">
+                <img src="/images/foto1.jpg" alt="Thumbnail 1" class="active-thumb">
+                <img src="/images/foto2.jpg" alt="Thumbnail 2">
+                <img src="/images/foto3.jpg" alt="Thumbnail 3">
+                <img src="/images/foto4.jpg" alt="Thumbnail 4">
+                <img src="/images/foto5.jpg" alt="Thumbnail 5">
+            </div>
+            <div class="system-requirements">
+                <h2>Requisitos de Sistema</h2>
+                <div class="requirements-columns">
+                    <div class="req-column">
+                        <h3>Mínimos</h3>
+                        <ul>
+                            <li><strong>SO:</strong> Windows 10 (64 bits)</li>
+                            <li><strong>Processador:</strong> Intel Core i5 @ 2.5 GHz</li>
+                            <li><strong>Memória:</strong> 8 GB de RAM</li>
+                            <li><strong>Placa Gráfica:</strong> NVIDIA GeForce GTX 1060</li>
+                            <li><strong>Armazenamento:</strong> 4 GB</li>
+                        </ul>
+                    </div>
+                    <div class="req-column">
+                        <h3>Recomendados</h3>
+                        <ul>
+                            <li><strong>SO:</strong> Windows 11</li>
+                            <li><strong>Processador:</strong> Intel Core i5 @ 3.0 GHz</li>
+                            <li><strong>Memória:</strong> 16 GB de RAM</li>
+                            <li><strong>Placa Gráfica:</strong> NVIDIA GeForce RTX 2060</li>
+                            <li><strong>Armazenamento:</strong> 6 GB</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-right">
+            <div class="sidebar-card">
+                <img src="/images/foto-capa.jpg" alt="capa-jogo">
+                <p class="game-genre">PEAK</p>
+                <h1 class="game-title">AVENTURA</h1>
+                <p class="game-price">R$ 23,99</p>
+                <p class="activation-note">Produto ativado através de <strong>chave de ativação</strong></p>
+                
+                <a href="../carrinho/carrinho.html"><button class="btn-buy"><i class="fas fa-shopping-cart"></i> Comprar</button></a>
+                <button class="btn-add-cart">Adicionar ao carrinho</button>
+
+                <div class="game-info">
+                    <h3>Sobre</h3>
+                    <p>PEAK é um jogo cooperativo de escalada onde o menor erro pode custar a sua vida. Sozinho ou em grupo, sua única esperança de resgate em uma ilha misteriosa é escalar a montanha no seu centro. Você tem o que é preciso para chegar ao PICO?</p>
+
+                    <div class="info-grid">
+                        <div>
+                            <h3>Data de lançamento</h3>
+                            <p>16 de junho de 2025</p>
+                        </div>
+                        <div>
+                            <h3>Desenvolvedor</h3>
+                            <p>Team PEAK</p>
+                        </div>
+                        <div>
+                            <h3>Distribuidor</h3>
+                            <p>Aggro Crab, Landfall</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="game-meta">
+                    <p><strong>Modo de Jogo:</strong> Multijogador</p>
+                    <p><strong>Categoria:</strong> <span class="tag">Aventura</span> <span class="tag">Ação</span> <span class="tag">Indie</span></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h3>Seguir GettStore</h3>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Institucional</h3>
+                    <ul>
+                        <li><a href="#">Sobre</a></li>
+                        <li><a href="#">Carreiras</a></li>
+                        <li><a href="#">Seu jogo na Nuuvem</a></li>
+                        <li><a href="#">Segurança</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Ajuda</h3>
+                    <ul>
+                        <li><a href="#">Suporte</a></li>
+                        <li><a href="#">Termos de Uso</a></li>
+                        <li><a href="#">Política de Privacidade</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="footer-divider">
+            <div class="footer-bottom">
+                <a href="index.html"><img src="/images/GettStore Branco s fundo.png" alt="GettStore Avatar Logo" class="footer-logo"></a>
+                <p class="footer-legal">
+                    GettStore Ltda. – CNPJ 00.000.000/0000-00<br>
+                    Rua Lauro Müller, nº 116, sala 503 - Torre do Rio Sul - Botafogo - Rio de Janeiro, RJ – 22290-160
+                </p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript no final do body -->
+    <script src="script.js" defer></script>
+
+
+</body>
+</html>

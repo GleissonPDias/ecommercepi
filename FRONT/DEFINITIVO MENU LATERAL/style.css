@@ -1,0 +1,190 @@
+/* --- RESET E ESTILOS GERAIS --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #0B0D28;
+    color: #f0f0f0;
+}
+
+/* --- CABEÇALHO PRINCIPAL --- */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 25px;
+    background-color: #0B0D28; /* Mesmo fundo do body */
+    border-bottom: 1px solid #2a2f42;
+    position: sticky; /* Opcional: fixa o header no topo */
+    top: 0;
+    z-index: 100;
+}
+
+.header-left, .header-center, .header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.header-center {
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.btn-menu {
+    background: none;
+    border: none;
+    color: #f0f0f0;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.logo {
+    height: 30px;
+}
+
+.search-bar {
+    position: relative;
+    width: 100%;
+    max-width: 450px;
+}
+.search-bar input {
+    width: 100%;
+    padding: 10px 40px 10px 15px;
+    border-radius: 8px;
+    border: 1px solid #2a2f42;
+    background-color: #0d111c;
+    color: #fff;
+    font-size: 14px;
+}
+.search-bar i {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6a6f83;
+}
+
+.header-icon {
+    color: #a0a4b8;
+    font-size: 22px;
+    text-decoration: none;
+}
+.header-icon:hover {
+    color: #fff;
+}
+
+
+/* --- MENU LATERAL (SIDEBAR) --- */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px; /* Largura do menu */
+    height: 100%;
+    background-color: #1A203E; /* Cor de fundo do menu */
+    z-index: 1001; /* Fica acima do overlay */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    
+    /* Animação: começa fora da tela */
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Estado ABERTO do menu */
+.sidebar.is-open {
+    transform: translateX(0);
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.sidebar-header h3 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.btn-close {
+    background: none;
+    border: none;
+    color: #a0a4b8;
+    font-size: 24px;
+    cursor: pointer;
+}
+.btn-close:hover {
+    color: #fff;
+}
+
+.sidebar-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sidebar-links li a {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #f0f0f0;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.sidebar-links li a:hover {
+    background-color: #2a2f42;
+}
+
+.sidebar-links li a i {
+    font-size: 18px;
+    width: 20px; /* Garante alinhamento dos textos */
+    text-align: center;
+}
+
+.sidebar-links .divider {
+    height: 1px;
+    background-color: #2a2f42;
+    margin: 10px 0;
+}
+
+
+/* --- FUNDO ESCURO (OVERLAY) --- */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo preto semi-transparente */
+    z-index: 1000; /* Fica abaixo do menu, mas acima do conteúdo */
+    
+    /* Escondido por padrão */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+/* Estado ABERTO do overlay */
+.overlay.is-open {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* --- CONTEÚDO DE EXEMPLO --- */
+.content {
+    padding: 40px;
+}

@@ -1,0 +1,25 @@
+.discount-tag {
+    background-color: #c53245;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.price-tag {
+    background-color: #035444;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.tag {
+    display: inline-block;
+    background-color: #2a2f42;
+    color: #d1d5db;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    margin-right: 5px;
+}

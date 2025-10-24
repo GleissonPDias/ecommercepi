@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GettStore - Loja</title>
+    <link rel="stylesheet" href="../geral.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-left">
+            <button class="btn-menu" type="button" aria-label="Abrir menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <a href="home.html"><img src="/images/GettStore(1).png" alt="logo" class="logo"></a>
+        </div>
+        <div class="header-center">
+            <div class="search-bar">
+                <input type="text" placeholder="Buscar jogo ou palavra-chave">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="cart-icon">
+                <a href="../carrinho/carrinho.html"><i class="fas fa-shopping-cart"></i></a>
+                <span class="cart-count">0</span>
+            </div>
+            <a href="/contaUsuario/conta.html"><i class="fas fa-user"></i></a>
+        </div>
+    </header>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <button class="btn-close" type="button" aria-label="Fechar menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <ul class="sidebar-links">
+            <li><a href="#"><i class="fas fa-gamepad"></i> Catálogo</a></li>
+            <li><a href="#"><i class="fas fa-tags"></i> Ofertas</a></li>
+            <li><a href="#"><i class="fas fa-gift"></i> Gift Card</a></li>
+            <li class="divider"></li>
+            <li><a href="#"><i class="fas fa-desktop"></i> PC</a></li>
+            <li><a href="#"><i class="fab fa-xbox"></i> Xbox</a></li>
+            <li><a href="#"><i class="fab fa-playstation"></i> Playstation</a></li>
+            <li><a href="#"><i class="fas fa-gamepad"></i> Switch</a></li>
+            <li class="divider"></li>
+            <li><a href="#"><i class="fas fa-headset"></i> Suporte</a></li>
+            <li><a href="#"><i class="fas fa-ellipsis-h"></i> Mais</a></li>
+        </ul>
+    </aside>
+
+    <div class="overlay"></div>
+
+    <main class="store-page">
+        <div class="featured-carousel-container">
+
+        <section class="featured-games-slide active">
+            <div class="featured-main">
+                <a href="/tela-produto/index.html"><img src="img/Peak.jpg"></a>
+                <div class="price-overlay">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>R$ 23,99</span>
+                </div>
+                <div class="heart-icon">
+                    <i class="far fa-heart"></i>
+                </div>
+            </div>
+            <div class="featured-sidebar">
+                <div class="side-game-card">
+                    <img src="img/dead-by-daylight.jpg">
+                </div>
+                <div class="side-game-card">
+                    <img src="img/gta-v.jpeg">
+                </div>
+            </div>
+        </section>
+
+        <section class="featured-games-slide">
+            <div class="featured-main">
+                <a href="#"><img src="img/RDR2.jpg"></a>
+                <div class="price-overlay">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>R$ 89,90</span>
+                </div>
+                <div class="heart-icon">
+                    <i class="far fa-heart"></i>
+                </div>
+            </div>
+            <div class="featured-sidebar">
+                <div class="side-game-card">
+                    <img src="img/BlackMyth.jpg">
+                </div>
+                <div class="side-game-card">
+                    <img src="img/Crash4.jpg">
+                </div>
+            </div>
+        </section>
+
+        <section class="featured-games-slide">
+            <div class="featured-main">
+                <a href="#"><img src="img/Ghost.jpg"></a>
+                <div class="price-overlay">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>R$ 149,90</span>
+                </div>
+                <div class="heart-icon">
+                    <i class="far fa-heart"></i>
+                </div>
+            </div>
+            <div class="featured-sidebar">
+                <div class="side-game-card">
+                    <img src="img/StardewValley.jpg">
+                </div>
+                <div class="side-game-card">
+                    <img src="img/Icarus.jpg">
+                </div>
+            </div>
+        </section>
+
+        <button class="carousel-arrow prev" aria-label="Slide anterior"><i class="fas fa-chevron-left"></i></button>
+        <button class="carousel-arrow next" aria-label="Próximo slide"><i class="fas fa-chevron-right"></i></button>
+        <div class="pagination-dots">
+            <span class="dot active" data-slide="0"></span>
+            <span class="dot" data-slide="1"></span>
+            <span class="dot" data-slide="2"></span>
+        </div>
+
+        </div>
+
+<section class="popular-games">
+    <h2>Mais Populares</h2>
+    <div class="games-carousel"> 
+        
+        <a href="#" class="game-card">
+            <img src="img/RDR2.jpg" alt="God of War">
+            <div class="game-info">
+                <h3>Red Dead Redemption 2</h3>
+                <p class="game-platform">Windows</p>
+                <div class="price-info">
+                    <span class="discount-tag">-82%</span>
+                    <span class="price-tag">R$ 17,34</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="#" class="game-card">
+            <img src="img/God-of-War-Ragnarok.png" alt="God of War Ragnarok">
+            <div class="game-info">
+                <h3>God of War Ragnarok</h3>
+                <p class="game-platform">Windows</p>
+                <div class="price-info">
+                    <span class="discount-tag">-50%</span>
+                    <span class="price-tag">R$ 124,99</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="#" class="game-card">
+            <img src="img/FarCry6.png" alt="Far Cry 6">
+            <div class="game-info">
+                <h3>Far Cry 6</h3>
+                <p class="game-platform">Windows</p>
+                <div class="price-info">
+                    <span class="discount-tag">-78%</span>
+                    <span class="price-tag">R$ 53,13</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="#" class="game-card">
+            <img src="img/rematch.jpg" alt="Rematch">
+            <div class="game-info">
+                <h3>Rematch</h3>
+                <p class="game-platform">Windows</p>
+                <div class="price-info">
+                    <span class="discount-tag">-91%</span>
+                    <span class="price-tag">R$ 2,49</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="#" class="game-card">
+            <img src="img/DayZ.jpg" alt="DayZ">
+            <div class="game-info">
+                <h3>DayZ</h3>
+                <p class="game-platform">Windows</p>
+                <div class="price-info">
+                    <span class="discount-tag">-45%</span>
+                    <span class="price-tag">R$ 68,90</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="#" class="game-card">
+            <img src="img/baldurs-gate-3.png" alt="Baldur's Gate 3">
+            <div class="game-info">
+                <h3>Baldur's Gate 3</h3>
+                <p class="game-platform">Windows</p>
+                <div class="price-info">
+                    <span class="discount-tag">-10%</span>
+                    <span class="price-tag">R$ 179,99</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="#" class="game-card">
+            <img src="img/Icarus.jpg" alt="Dead by Daylight">
+            <div class="game-info">
+                <h3>Icarus</h3>
+                <p class="game-platform">Windows</p>
+                <div class="price-info">
+                    <span class="discount-tag">-60%</span>
+                    <span class="price-tag">R$ 19,99</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="#" class="game-card">
+            <img src="img/Crash4.jpg" alt="GTA V">
+            <div class="game-info">
+                <h3>Crash Bandicoot 4</h3>
+                <p class="game-platform">Windows</p>
+                <div class="price-info">
+                    <span class="discount-tag">-70%</span>
+                    <span class="price-tag">R$ 24,87</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="#" class="game-card">
+            <img src="img/BlackMyth.jpg" alt="GTA V">
+            <div class="game-info">
+                <h3>Black Myth Wukong</h3>
+                <p class="game-platform">Windows</p>
+                <div class="price-info">
+                    <span class="discount-tag">-70%</span>
+                    <span class="price-tag">R$ 24,87</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="#" class="game-card">
+            <img src="img/ResidentEvil2.jpg" alt="GTA V">
+            <div class="game-info">
+                <h3>Resident Evil 2</h3>
+                <p class="game-platform">Windows</p>
+                <div class="price-info">
+                    <span class="discount-tag">-70%</span>
+                    <span class="price-tag">R$ 24,87</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="#" class="game-card">
+            <img src="img/StardewValley.jpg" alt="GTA V">
+            <div class="game-info">
+                <h3>Stardew Valley</h3>
+                <p class="game-platform">Windows</p>
+                <div class="price-info">
+                    <span class="discount-tag">-70%</span>
+                    <span class="price-tag">R$ 24,87</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="#" class="game-card">
+            <img src="img/Ghost.jpg" alt="GTA V">
+            <div class="game-info">
+                <h3>Ghost of Tsushima - Director's Cut</h3>
+                <p class="game-platform">Windows</p>
+                <div class="price-info">
+                    <span class="discount-tag">-70%</span>
+                    <span class="price-tag">R$ 24,87</span>
+                </div>
+            </div>
+        </a>
+
+    </div>
+</section>
+
+    </main>
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h3>Seguir GettStore</h3>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Institucional</h3>
+                    <ul>
+                        <li><a href="#">Sobre</a></li>
+                        <li><a href="#">Carreiras</a></li>
+                        <li><a href="#">Seu jogo na Nuuvem</a></li>
+                        <li><a href="#">Segurança</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Ajuda</h3>
+                    <ul>
+                        <li><a href="#">Suporte</a></li>
+                        <li><a href="#">Termos de Uso</a></li>
+                        <li><a href="#">Política de Privacidade</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="footer-divider">
+            <div class="footer-bottom">
+                <a href="index.html"><img src="/images/GettStore Branco s fundo.png" alt="GettStore Avatar Logo" class="footer-logo"></a>
+                <p class="footer-legal">
+                    GettStore Ltda. – CNPJ 00.000.000/0000-00<br>
+                    Rua Lauro Müller, nº 116, sala 503 - Torre do Rio Sul - Botafogo - Rio de Janeiro, RJ – 22290-160
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js" defer></script>
+
+    </body>
+</html>
