@@ -1,0 +1,31 @@
+.system-requirements h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.requirements-columns {
+    display: flex;
+    gap: 40px;
+}
+
+.req-column h3 {
+    font-size: 16px;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.req-column ul {
+    list-style: none;
+}
+
+.req-column li {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #d1d5db;
+}
+
+.req-column li strong {
+    color: #a0a4b8;
+    font-weight: 500;
+}

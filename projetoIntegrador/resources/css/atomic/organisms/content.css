@@ -1,35 +1,20 @@
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .content-redefinir {
-    gap: 32px;
+  gap: 32px;
 }
-.content-verify {
-    background-color: rgb(39, 39, 182);
-    border-radius: 8px;
-    padding: 16px;
-    gap: 16px;
-}
-.congrats-sub {
-    color: gray;
-}
-.congrats-sub-sent {
-    color: rgb(30, 192, 144);
-}
-.content-btn-verify-email {
+
+.content-left {
+    flex: 2;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
 }
-.btn-verify-email {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.5rem 1rem; /* px-4 py-2 */
-    background-color: #1f2937; /* bg-gray-800 */
-    border: 1px solid transparent; /* border border-transparent */
-    border-radius: 0.375rem; /* rounded-md */
-    font-weight: 600; /* font-semibold */
-    font-size: 0.75rem; /* text-xs */
-    line-height: 1rem; /* text-xs */
-    color: #ffffff; /* text-white */
-    text-transform: uppercase; /* uppercase */
-    letter-spacing: 0.05em; /* tracking-widest */
-    transition: background-color 150ms ease-in-out, color 150ms ease-in-out,
-        border-color 150ms ease-in-out, box-shadow 150ms ease-in-out; /* transition ease-in-out duration-150 */
+
+.content-right {
+    flex: 1;
 }

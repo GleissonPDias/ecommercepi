@@ -18,14 +18,17 @@
 </head>
 <body>
 
-    <form action="{{ route('products.store') }}" method="POST">
+    {{-- Ação correta, apontando para a rota de admin --}}
+    <form action="{{ route('admin.products.store') }}" method="POST">
         @csrf
         <h1>Criar Novo Produto</h1>
 
+        {{-- Dropdown para Jogo --}}
         <div class="form-group">
             <label for="game_id">Jogo</label>
             <select id="game_id" name="game_id" required>
                 <option value="">-- Selecione um Jogo --</option>
+                {{-- Esta variável $games deve vir do seu ProductController@create --}}
                 @foreach ($games as $game)
                     <option value="{{ $game->id }}" {{ old('game_id') == $game->id ? 'selected' : '' }}>
                         {{ $game->title }}
@@ -35,10 +38,12 @@
             @error('game_id') <small>{{ $message }}</small> @enderror
         </div>
 
+        {{-- Dropdown para Plataforma --}}
         <div class="form-group">
             <label for="platform_id">Plataforma</label>
             <select id="platform_id" name="platform_id" required>
                 <option value="">-- Selecione uma Plataforma --</option>
+                 {{-- Esta variável $platforms deve vir do seu ProductController@create --}}
                 @foreach ($platforms as $platform)
                     <option value="{{ $platform->id }}" {{ old('platform_id') == $platform->id ? 'selected' : '' }}>
                         {{ $platform->name }}
@@ -66,21 +71,18 @@
             @error('current_price') <small>{{ $message }}</small> @enderror
         </div>
 
-        <div class="form-group-checkbox">
-            <input type="checkbox" id="is_active" name="is_active" value="1" checked>
-            <label for="is_active">Ativo (Visível na loja)?</label>
-        </div>
-        
-        <div class="form-group-checkbox">
-            <input type="checkbox" id="is_featured_main" name="is_featured_main" value="1">
-            <label for="is_featured_main">Destaque no Carrossel Principal?</label>
-        </div>
 
+        {{-- Checkbox para o Carrossel Secundário (Este está correto) --}}
         <div class="form-group-checkbox">
-            <input type="checkbox" id="is_featured_secondary" name="is_featured_secondary" value="1">
+            <input type="checkbox" id="is_featured_secondary" name="is_featured_secondary" value="1" {{ old('is_featured_secondary') ? 'checked' : '' }}>
             <label for="is_featured_secondary">Destaque no Carrossel Secundário?</label>
         </div>
 
+        <div class="form-group-checkbox">
+            <input type="checkbox" id="is_active" name="is_active" value="1" {{ old('is_active', true) ? 'checked' : '' }}>
+            <label for="is_active">Ativo (Visível na loja)?</label>
+        </div>
+        
         <br>
         <button type="submit">Criar Produto</button>
     </form>

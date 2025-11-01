@@ -1,20 +1,22 @@
 .input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #ffffff; /* Linha de fundo */
+    color: #fff;
     font-size: 16px;
-    background: none;
-    border: 1px solid transparent;
-    border-bottom: 1px solid #fff;
-    border-radius: 5px;
-    transition: all 0.2s ease-in-out;
+    padding: 10px 40px 10px 5px; /* Espaço à direita para o ícone */
+    font-family: 'Poppins', sans-serif;
+    transition: border-color 0.3s ease;
 }
+
 .input:hover {
-    border: 1px solid blueviolet;
-}
-.input:focus {
+  border-bottom: 1px solid blueviolet;
 }
 
 .input-search {
-    width: 40vw;
-    font-size: 20px;
-    background-color: #c0bdbd;
-    padding: 20px;
+  width: 40vw;
+  font-size: 20px;
+  background-color: #c0bdbd;
+  padding: 20px;
 }

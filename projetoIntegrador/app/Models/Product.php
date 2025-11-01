@@ -15,7 +15,6 @@ class Product extends Model {
         'default_price',
         'current_price',
         'is_active',
-        'is_featured_main',
         'is_featured_secondary',
     ];
 
@@ -40,5 +39,10 @@ class Product extends Model {
     public function campaigns(): BelongsToMany {
         return $this->belongsToMany(Campaign::class, 'campaign_product')
                     ->withPivot('promotional_price');
+    }
+    public function carouselSlides(): BelongsToMany
+    {
+        return $this->belongsToMany(CarouselSlide::class, 'carousel_slide_product')
+                    ->withPivot('slot');
     }
 }

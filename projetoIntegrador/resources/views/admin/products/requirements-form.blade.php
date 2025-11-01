@@ -17,7 +17,7 @@
 </head>
 <body>
 
-    <form action="{{ route('products.requirements.store', $product) }}" method="POST">
+    <form action="{{ route('admin.products.requirements.store', $product) }}" method="POST">
         @csrf
 
         <h1>Gerenciar Requisitos para: {{ $product->name }}</h1>

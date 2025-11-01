@@ -10,6 +10,8 @@
 }
 
 .btn-entrar {
+  display: flex;
+  justify-content: center;
   border: none;
   background-color: #fff;
   min-width: 100%;
@@ -18,21 +20,7 @@
   border-radius: 5px;
   outline: none;
   cursor: pointer;
-}
-
-.btn-Login-options {
-  border: none;
-  background-color: #fff;
-  border-radius: 4px;
-  display: flex;
-  padding: 8px;
-  width: 80%;
-  gap: 8px;
-  align-items: center;
-}
-.btn-Login-options img {
-  padding-right: 8px;
-  border-right: 1px solid grey;
+  text-decoration: none;
 }
 
 .button-criacao {

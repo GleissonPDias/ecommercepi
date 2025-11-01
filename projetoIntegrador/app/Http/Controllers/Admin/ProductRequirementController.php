@@ -1,10 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\SystemRequirement;
+
 
 class ProductRequirementController extends Controller
 {
@@ -14,7 +17,7 @@ class ProductRequirementController extends Controller
         $min = $product->systemRequirements()->where('type', 'minimum')->firstOrNew();
         $rec = $product->systemRequirements()->where('type', 'recommended')->firstOrNew();
 
-        return view('products.requirements-form', [
+        return view('admin.products.requirements-form', [
             'product' => $product,
             'min' => $min,
             'rec' => $rec,
