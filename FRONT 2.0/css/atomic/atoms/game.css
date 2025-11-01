@@ -1,0 +1,51 @@
+.game-genre {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.game-title {
+    font-size: 14px;
+    color: #a0a4b8;
+    font-weight: 500;
+}
+
+.game-price {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 15px 0;
+}
+
+.game-info {
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 1px solid #2a2f42;
+}
+
+.game-info h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.game-info p {
+    font-size: 14px;
+    color: #a0a4b8;
+    line-height: 1.6;
+}
+
+.game-meta {
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 1px solid #2a2f42;
+    font-size: 14px;
+}
+
+.game-meta p {
+    margin-bottom: 10px;
+    color: #a0a4b8;
+}
+
+.game-meta strong {
+    color: #ffffff;
+    font-weight: 500;
+}

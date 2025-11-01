@@ -1,0 +1,18 @@
+.thumbnail-gallery {
+    display: flex;
+    gap: 15px;
+}
+
+.thumbnail-gallery img {
+    width: calc(20% - 12px);
+    border-radius: 8px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+.thumbnail-gallery img:hover,
+.thumbnail-gallery img.active-thumb {
+    opacity: 1;
+    border: 2px solid #fff;
+}

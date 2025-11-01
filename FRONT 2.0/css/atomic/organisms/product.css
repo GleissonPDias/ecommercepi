@@ -1,0 +1,7 @@
+.product-page {
+    display: flex;
+    gap: 40px;
+    padding: 40px 50px;
+    max-width: 1400px;
+    margin: 0 auto;
+}

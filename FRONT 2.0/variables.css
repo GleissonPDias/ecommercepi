@@ -1,0 +1,8 @@
+:root {
+  --background-main: #0b0d28;
+  --background-dropdown: #2f3474c5;
+  --hover-dropdown-li: #4856fd;
+  --focus-dropdown-li: #202996;
+  --text-black: black;
+  --text-white: white;
+}
