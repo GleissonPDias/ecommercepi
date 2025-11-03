@@ -80,7 +80,7 @@
                 <select id="product_small_2_{{ $slide->id }}" name="product_small_2">
                     <option value="">-- Nenhum --</option>
                     @foreach ($allProducts as $product)
-                        <option value="{{ $product->id }}" {{ $small1ProdId == $product->id ? 'selected' : '' }}>
+                        <option value="{{ $product->id }}" {{ $small2ProdId == $product->id ? 'selected' : '' }}>
                             {{ $product->name }} (ID: {{ $product->id }})
                         </option>
                     @endforeach

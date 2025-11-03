@@ -14,12 +14,14 @@ return new class extends Migration
 {
     Schema::create('products', function (Blueprint $table) {
         $table->id();
-        $table->foreignId('game_id')->constrained('games')->onDelete('cascade');
+        $table->foreignId('game_id')->nullable()->constrained('games')->onDelete('set null');
         $table->foreignId('platform_id')->constrained('platforms');
         $table->string('name');
         $table->decimal('default_price', 8, 2);
         $table->decimal('current_price', 8, 2);
         $table->boolean('is_active')->default(true);
+
+        
 
         // REMOVA A LINHA ABAIXO:
         // $table->string('featured_slot')->nullable()->unique(); 

@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -13,13 +11,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
-
     <header class="main-header">
         <div class="header-left">
             <button class="btn-menu" type="button" aria-label="Abrir menu">
                 <i class="fas fa-bars"></i>
             </button>
-            <a href="home.html"><img src="{{ asset('images/gettstore(1).png') }}" alt="logo" class="logo"></a>
+            <a href="home.html"><img src="{{ asset('images/logo.svg') }}" alt="logo" class="logo"></a>
         </div>
         <div class="header-center">
             <div class="search-bar">
@@ -32,7 +29,7 @@
                 <a href="../carrinho/carrinho.html"><i class="fas fa-shopping-cart"></i></a>
                 <span class="cart-count">0</span>
             </div>
-            <a href="/contaUsuario/conta.html"><i class="fas fa-user"></i></a>
+            <a href="{{route('dashboard')}}"><i class="fas fa-user"></i></a>
         </div>
     </header>
 
@@ -74,47 +71,51 @@
         @endphp
 
         {{-- 2. Cria a <section> do slide (só 'active' no primeiro) --}}
-        <section class="featured-games-slide {{ $loop->first ? 'active' : '' }}">
-            
-            <div class="featured-main">
-                {{-- 3. Exibe o produto 'large' deste slide --}}
-                @if ($largeProduct)
+            <section class="featured-games-slide {{ $loop->first ? 'active' : '' }}">
+                
+                <div class="featured-main">
+                    {{-- 3. Exibe o produto 'large' deste slide --}}
+                    @if ($largeProduct)
                     <a href="{{ route('products.show', $largeProduct) }}">
-                        <img src="{{ $largeProduct->game->cover_url }}" alt="{{ $largeProduct->name }}">
+                        {{-- CORRIGIDO com Storage::url() --}}
+                        <img src="{{ Storage::url($largeProduct->game->cover_url) }}" alt="{{ $largeProduct->name }}">
                     </a>
                     <div class="price-overlay">
                         <i class="fas fa-shopping-cart"></i>
                         <span>R$ {{ $largeProduct->current_price }}</span>
                     </div>
                     {{-- (etc) --}}
-                @else
+                    @else
                     <a href="#"><img src="{{ asset('images/placeholder-large.png') }}" alt="Produto destaque"></a>
-                @endif
-            </div>
-
-            <div class="featured-sidebar">
-                {{-- 4. Exibe o produto 'small_1' deste slide --}}
-                @if ($small1Product)
+                    @endif
+                </div>
+                
+                <div class="featured-sidebar">
+                    {{-- 4. Exibe o produto 'small_1' deste slide --}}
+                    @if ($small1Product)
                     <div class="side-game-card">
-                         <a href="{{ route('products.show', $small1Product) }}">
-                            <img src="{{ $small1Product->game->cover_url }}" alt="{{ $small1Product->name }}">
+                        <a href="{{ route('products.show', $small1Product) }}">
+                            {{-- CORRIGIDO com Storage::url() --}}
+                            <img src="{{ Storage::url($small1Product->game->cover_url) }}" alt="{{ $small1Product->name }}">
                         </a>
                     </div>
-                @endif
-                {{-- 5. Exibe o produto 'small_2' deste slide --}}
-                @if ($small2Product)
+                    @endif
+                    {{-- 5. Exibe o produto 'small_2' deste slide --}}
+                    @if ($small2Product)
                     <div class="side-game-card">
-                         <a href="{{ route('products.show', $small2Product) }}">
-                            <img src="{{ $small2Product->game->cover_url }}" alt="{{ $small2Product->name }}">
+                        <a href="{{ route('products.show', $small2Product) }}">
+                            {{-- CORRIGIDO com Storage::url() --}}
+                            <img src="{{ Storage::url($small2Product->game->cover_url) }}" alt="{{ $small2Product->name }}">
                         </a>
                     </div>
-                @endif
-            </div>
+                    @endif
+                </div>
 
-        </section>
-    @endforeach {{-- Fim do loop de slides --}}
-
-    {{-- Seu HTML para setas e paginação (dots) vai aqui --}}
+                
+            </section>
+            @endforeach {{-- Fim do loop de slides --}}
+            
+            {{-- Seu HTML para setas e paginação (dots) vai aqui --}}
     <button class="carousel-arrow prev" aria-label="Slide anterior"><i class="fas fa-chevron-left"></i></button>
     <button class="carousel-arrow next" aria-label="Próximo slide"><i class="fas fa-chevron-right"></i></button>
     
@@ -131,8 +132,9 @@
     <div class="games-carousel"> 
 @foreach ($products as $product)
         
-        <a href="#" class="game-card">
-            <img src="{{ $product->game->cover_url }}" alt="{{ $product->name }}">
+        <a href="{{ route('products.show', $product) }}" class="game-card">
+            {{-- CORRIGIDO com Storage::url() --}}
+            <img src="{{ Storage::url($product->game->cover_url) }}" alt="{{ $product->name }}">
             <div class="game-info">
                 <h3>{{$product->name}}</h3>
                 <p class="game-platform">{{$product->platform->name}}</p>

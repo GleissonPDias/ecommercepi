@@ -1,0 +1,26 @@
+.container {
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom, #0b0d28, #272e8e);
+}
+
+.container-checkbox {
+  font-size: 16px;
+  justify-content: center;
+  display: flex;
+  flex-direction: column; /* Coloca as duas 'div.checkbox-option' em coluna */
+  gap: 16px; /* Define o espaço VERTICAL entre as duas opções */
+  width: 100%; /* Faz o container ocupar a largura disponível */
+}
+
+.checkbox-option {
+  color: #fff;
+  display: flex;
+  /* flex-direction: row; é o padrão, então não precisamos declarar */
+  align-items: center; /* Alinha o checkbox e o texto verticalmente no centro */
+  gap: 8px; /* Define o espaço HORIZONTAL entre a caixinha e o texto */
+}

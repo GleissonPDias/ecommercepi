@@ -10,21 +10,22 @@
 }
 
 .btn-entrar {
-  display: flex;
-  justify-content: center;
-  border: none;
-  background-color: #fff;
-  min-width: 100%;
-  font-size: 20px;
-  min-height: 43px;
-  border-radius: 5px;
-  outline: none;
-  cursor: pointer;
-  text-decoration: none;
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    color: black;
+    background-color: #fff;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease;
 }
 
-.button-criacao {
-  min-width: 100%;
+.btn-entrar:hover {
+    background-color: #f0f0f0;
 }
 .button-search {
   position: absolute;
@@ -43,6 +44,91 @@
 .button-search:hover {
   background-color: gray;
 }
-.btn-redefinir:hover {
-  background-color: #00baf5;
+
+.btn-buy,
+.btn-add-cart {
+    width: 100%;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-buy {
+    background-color: #d1d5db;
+    color: #121622;
+    border: none;
+    margin-bottom: 10px;
+}
+
+.btn-buy:hover {
+    background-color: #fff;
+}
+
+.btn-add-cart {
+    background-color: transparent;
+    color: #d1d5db;
+    border: 1px solid #4b5563;
+}
+
+.btn-add-cart:hover {
+    background-color: #2a2f42;
+}
+
+.login-options {
+  border: none;
+  background-color: #fff;
+  border-radius: 4px;
+  display: flex;
+  padding: 8px;
+  width: 80%;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+.login-options a img {
+  display: flex;
+  justify-content: start;
+}
+
+.btn-social {
+    background-color: #fff;
+    color: #333; /* Cor do texto */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border: 1px solid #dcdcdc;
+}
+
+.btn-social:hover {
+    background-color: #f0f0f0;
+}
+
+.btn-social i {
+    font-size: 20px;
+}
+
+/* Cores específicas dos ícones sociais */
+.btn-social .fa-google {
+    color: #DB4437;
+}
+
+.btn-social .fa-facebook-f {
+    color: #4267B2;
+}
+
+.btn {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }

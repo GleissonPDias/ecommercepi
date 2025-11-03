@@ -22,6 +22,7 @@ return new class extends Migration
 
             $table->foreignId('developer_id')->constrained('developers');
             $table->foreignId('publisher_id')->constrained('publishers');
+            
 
             $table->foreignId('base_game_id')->nullable()->constrained('games')->onDelete('set null');
 

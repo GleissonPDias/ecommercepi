@@ -33,12 +33,54 @@ class HomeController extends Controller
         ]);
     }
     
-    public function show(Product $product)
-    {
-        // (Seu método show() está perfeito, mantenha-o)
-        $product->load('game.developer', 'platform', 'systemRequirements', 'game.images');
-        return view('products.show', [
-            'product' => $product
-        ]);
-    }
+public function show(Product $product)
+{
+    // 1. Carrega TUDO o que precisamos de uma vez.
+    // Adicionei 'game.baseGame.product' para já carregar o produto-pai se ele existir.
+    $product->load(
+        'game.developer',
+        'game.publisher',
+        'game.categories',
+        'platform',
+        'systemRequirements',
+        'game.images',
+        'game.baseGame.product' // <-- Otimização: já carrega o produto do jogo-base
+    );
+
+    // 2. Prepara as variáveis
+    $game = $product->game;
+    $dlcProducts = collect();
+    $baseGameProduct = null;
+
+    // 3. Lógica Principal (COM A ESTRUTURA CORRIGIDA)
+    if ($game) { // Primeiro, checa se este produto tem um jogo
+
+        // CASO A: Se for um Jogo-Base (não tem pai)
+        if ($game->base_game_id === null) {
+            
+            // Busca os "jogos-filhos" (DLCs) e seus produtos
+            $dlcGames = $game->dlcs()->with('product.game')->get(); 
+            
+            $dlcProducts = $dlcGames->map(function ($dlcGame) {
+                return $dlcGame->product;
+            })->filter();
+
+        } 
+        // CASO B: Se for uma DLC (tem um pai)
+        else { 
+            
+            // Graças ao 'load()' lá de cima, já podemos checar
+            if ($game->baseGame && $game->baseGame->product) {
+                $baseGameProduct = $game->baseGame->product;
+            }
+        }
+    } // Fim do if ($game)
+
+    // 4. Retorna a View
+    return view('products.show', [
+        'product' => $product,
+        'dlcProducts' => $dlcProducts,
+        'baseGameProduct' => $baseGameProduct
+    ]);
+}
 }

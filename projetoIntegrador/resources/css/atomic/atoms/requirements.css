@@ -12,7 +12,7 @@
 .req-column h3 {
     font-size: 16px;
     margin-bottom: 15px;
-    font-weight: 500;
+    font-weight: 800;
 }
 
 .req-column ul {
@@ -26,6 +26,6 @@
 }
 
 .req-column li strong {
-    color: #a0a4b8;
-    font-weight: 500;
+    color: #ffffff;
+    font-weight: 800;
 }

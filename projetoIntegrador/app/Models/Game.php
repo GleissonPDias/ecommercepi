@@ -1,12 +1,23 @@
 <?php
 
 namespace App\Models;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+use App\Models\Developer;
+use App\Models\Publisher;
+use App\Models\Product;
+use App\Models\GameImage;
+use App\Models\Category;
+use App\Models\User;
+
 class Game extends Model {
+
+    use HasFactory;
 
     protected $fillable=[
         'title',
@@ -15,7 +26,13 @@ class Game extends Model {
         'release_date',
         'age_rating',
         'developer_id',
-        'publisher_id'
+        'publisher_id',
+        'base_game_id'
+    ];
+
+    protected $casts = [
+        // Isso converte a 'release_date' de string para um objeto de data
+        'release_date' => 'datetime',
     ];
 
 
@@ -28,8 +45,8 @@ class Game extends Model {
     public function baseGame(): BelongsTo {
         return $this->belongsTo(Game::class, 'base_game_id');
     }
-    public function products(): HasMany {
-        return $this->hasMany(Product::class);
+    public function product(): HasOne {
+        return $this->hasOne(Product::class, 'game_id');
     }
     public function images(): HasMany {
         return $this->hasMany(GameImage::class);

@@ -25,7 +25,7 @@ class User extends Authenticatable //implements MustVerifyEmail
         return $this->hasMany(GameKey::class)->where('is_sold', true);
     }
     public function favorites(): BelongsToMany {
-        return $this->belongsToMany(Game::class, 'user_favorites');
+        return $this->belongsToMany(Product::class, 'user_favorites', 'user_id', 'product_id');
     }
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -39,6 +39,7 @@ class User extends Authenticatable //implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'is_admin'
     ];
 
     /**
@@ -61,6 +62,11 @@ class User extends Authenticatable //implements MustVerifyEmail
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_admin' => 'boolean'
         ];
     }
+    public function isAdmin(): bool
+{
+    return $this->is_admin;
+}
 }

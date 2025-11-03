@@ -22,20 +22,15 @@
     <form action="{{ route('admin.products.store') }}" method="POST">
         @csrf
         <h1>Criar Novo Produto</h1>
-
-        {{-- Dropdown para Jogo --}}
+        
         <div class="form-group">
-            <label for="game_id">Jogo</label>
-            <select id="game_id" name="game_id" required>
-                <option value="">-- Selecione um Jogo --</option>
-                {{-- Esta variável $games deve vir do seu ProductController@create --}}
-                @foreach ($games as $game)
-                    <option value="{{ $game->id }}" {{ old('game_id') == $game->id ? 'selected' : '' }}>
-                        {{ $game->title }}
-                    </option>
-                @endforeach
+            <label for="game_id">Este produto é para qual Jogo/DLC?</label>
+            <select name="game_id" id="game_id" required>
+            <option value="">-- Selecione um Jogo --</option>
+            @foreach ($games as $game)
+                <option value="{{ $game->id }}">{{ $game->title }}</option>
+            @endforeach
             </select>
-            @error('game_id') <small>{{ $message }}</small> @enderror
         </div>
 
         {{-- Dropdown para Plataforma --}}

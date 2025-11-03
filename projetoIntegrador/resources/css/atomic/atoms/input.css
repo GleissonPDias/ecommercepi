@@ -10,10 +10,6 @@
     transition: border-color 0.3s ease;
 }
 
-.input:hover {
-  border-bottom: 1px solid blueviolet;
-}
-
 .input-search {
   width: 40vw;
   font-size: 20px;

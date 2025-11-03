@@ -19,7 +19,10 @@ class Product extends Model {
     ];
 
     public function game(): BelongsTo {
-        return $this->belongsTo(Game::class);
+        return $this->belongsTo(Game::class, 'game_id');
+    }
+    public function favoritedBy(): BelongsToMany{
+        return $this->belongsToMany(User::class, 'user_favorites', 'product_id','user_id');
     }
     public function platform(): BelongsTo {
         return $this->belongsTo(Platform::class);
