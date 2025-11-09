@@ -35,13 +35,19 @@
         </div>
         <div class="header-right">
             <div class="cart-icon">
-                <a href="#"
-                    ><i class="fas fa-shopping-cart"></i
-                ></a>
-                <span class="cart-count">0</span>
+                <a href="{{route('cart.index')}}"><i class="fas fa-shopping-cart"></i></a>
+                <span class="cart-count">{{$cartItems->count()}}</span> 
             </div>
             <i class="fas fa-heart active"></i>
             <a href="{{ route('profile.edit') }}"><i class="fas fa-user"></i></a>
+            <form method="POST" action="{{ route('logout') }}" style="display: inline-flex; align-items: center; margin-left: 10px;">
+                    @csrf
+                    <a href="{{ route('logout') }}" 
+                       title="Sair"
+                       onclick="event.preventDefault(); this.closest('form').submit();">
+                        <i class="fas fa-sign-out-alt" style="color: white; font-size: 1.2rem;"></i>
+                    </a>
+            </form>
         </div>
     </header>
 
@@ -160,7 +166,24 @@
                             <p class="dlc-price">
                                 R$ {{ number_format($dlc->current_price, 2, ',', '.') }}
                             </p>
+                            <p>{{$dlc->platform->name}}</p>
                         </a>
+                                <form method="POST" action="{{ route('cart.store', $product) }}" class="form-cart-store">
+        @csrf
+            <button type="submit" class="btn-add-to-cart">
+                    <i class="fas fa-shopping-cart"></i>
+            </button>
+        </form>
+                    <form method="POST" action="{{ route('favorites.toggle', $product) }}" class="form-favorite-toggle">
+                @csrf
+                <button type="submit">
+                    @if(auth()->user() && auth()->user()->favorites->contains($product))
+                        <i class="fas fa-heart"></i> {{-- Cheio --}}
+                    @else
+                        <i class="far fa-heart"></i> {{-- Vazio --}}
+                    @endif
+                </button>
+            </form>
                     </div>
                 @endif
             @endforeach
@@ -178,9 +201,31 @@
 @if ($baseGameProduct)
     <div class="base-game-link">
         <p>Requer o jogo-base:</p>
+        <img src="{{Storage::url($baseGameProduct->game->cover_url)}}" alt="{{$baseGameProduct->name}}" class="item-image"> 
         <a href="{{ route('products.show', $baseGameProduct) }}">
             <strong>{{ $baseGameProduct->name }}</strong>
         </a>
+        <p>{{$baseGameProduct->platform->name}}</p>
+        <span class="new-price">R$ {{ number_format($baseGameProduct->current_price , 2, ',', '.') }}</span>
+        <form method="POST" action="{{ route('cart.store', $product) }}" class="form-cart-store">
+        @csrf
+            <button type="submit" class="btn-add-to-cart">
+                    <i class="fas fa-shopping-cart"></i>
+            </button>
+        </form>
+                    <form method="POST" action="{{ route('favorites.toggle', $product) }}" class="form-favorite-toggle">
+                @csrf
+                <button type="submit">
+                    @if(auth()->user() && auth()->user()->favorites->contains($product))
+                        <i class="fas fa-heart"></i> {{-- Cheio --}}
+                    @else
+                        <i class="far fa-heart"></i> {{-- Vazio --}}
+                    @endif
+                </button>
+            </form>
+            
+
+        
     </div>
 @endif
 {{-- =============================================== --}}

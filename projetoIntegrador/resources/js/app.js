@@ -158,3 +158,120 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // O CÓDIGO DUPLICADO FOI REMOVIDO DAQUI
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    // 1. Encontra TODOS os formulários de favoritar na página
+    const favoriteForms = document.querySelectorAll(".form-favorite-toggle");
+
+    // 2. Adiciona um "ouvinte" para CADA formulário
+    favoriteForms.forEach((form) => {
+        // Dispara quando o formulário for enviado (ex: clique no botão)
+        form.addEventListener("submit", function (event) {
+            // 3. O SEU COMANDO: Impede o envio do formulário e o reload!
+            event.preventDefault();
+
+            // 4. Envia os dados do formulário "nos bastidores" (AJAX)
+            fetch(form.action, {
+                method: "POST",
+                body: new FormData(form), // Envia os dados (incluindo o _token)
+                headers: {
+                    // Diz ao Laravel que esta é uma requisição AJAX
+                    "X-Requested-With": "XMLHttpRequest",
+                },
+            })
+                .then((response) => {
+                    // 1. Se a resposta for OK (status 200),
+                    // o usuário está logado e a ação funcionou.
+                    if (response.ok) {
+                        toggleFavoriteIcon(form); // Troca o ícone
+                        return; // Termina a execução
+                    }
+
+                    // 2. Se a resposta for 401 (Não Autorizado)
+                    // O middleware 'auth' envia isso para pedidos AJAX de visitantes.
+                    if (response.status === 401) {
+                        // Redireciona o navegador do usuário para a página de login
+                        window.location.href = "/login";
+                        return;
+                    }
+
+                    // 3. Se for qualquer outro erro (ex: 404, 500)
+                    // Lança um erro para ser pego pelo .catch()
+                    throw new Error("Falha na resposta do servidor.");
+                })
+                .catch((error) => {
+                    console.error("Erro ao favoritar:", error);
+                });
+        });
+    });
+
+    /**
+     * Esta função "troca" o ícone do coração
+     * (de vazio para cheio, ou de cheio para vazio)
+     */
+    function toggleFavoriteIcon(form) {
+        // Encontra o ícone DENTRO do formulário que foi clicado
+        const icon = form.querySelector("i"); // Acha a tag <i>
+
+        if (icon) {
+            // Verifica qual classe o ícone tem e faz a troca
+            if (icon.classList.contains("far")) {
+                // 'far' é o coração VAZIO
+                icon.classList.remove("far", "fa-heart");
+                icon.classList.add("fas", "fa-heart"); // 'fas' é o coração CHEIO
+                icon.style.color = "red";
+            } else {
+                // Se ele é 'fas' (CHEIO)
+                icon.classList.remove("fas", "fa-heart");
+                icon.classList.add("far", "fa-heart"); // Troca para VAZIO
+                icon.style.color = "white"; // (ou a cor padrão que você usa)
+            }
+        }
+
+        // BÔNUS: Se estivermos na página da Wishlist, o card deve sumir
+        const wishlistCard = form.closest(".wishlist-card");
+        if (wishlistCard) {
+            wishlistCard.style.display = "none"; // Faz o card sumir
+        }
+    }
+});
+
+//carrinho
+
+// Espera o documento carregar completamente
+document.addEventListener("DOMContentLoaded", () => {
+    // Seleciona os elementos do DOM
+    const openMenuButton = document.querySelector(".btn-menu");
+    const closeMenuButton = document.querySelector(".btn-close");
+    const sidebar = document.querySelector(".sidebar");
+    const overlay = document.querySelector(".overlay");
+
+    // Função para abrir o menu
+    const openMenu = () => {
+        sidebar.classList.add("is-open");
+        overlay.classList.add("is-open");
+    };
+
+    // Função para fechar o menu
+    const closeMenu = () => {
+        sidebar.classList.remove("is-open");
+        overlay.classList.remove("is-open");
+    };
+
+    // Adiciona os "escutadores" de eventos
+    if (openMenuButton && sidebar && overlay) {
+        openMenuButton.addEventListener("click", openMenu);
+    }
+
+    if (closeMenuButton && sidebar && overlay) {
+        closeMenuButton.addEventListener("click", closeMenu);
+        overlay.addEventListener("click", closeMenu); // Fecha ao clicar no overlay
+    }
+
+    // Opcional: Fecha o menu ao pressionar a tecla "Escape"
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && sidebar.classList.contains("is-open")) {
+            closeMenu();
+        }
+    });
+});

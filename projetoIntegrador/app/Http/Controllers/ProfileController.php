@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Storage;
+use App\Models\Cart;
 
 class ProfileController extends Controller
 {
@@ -16,8 +18,14 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        $user = $request->user();
+        $cartItems = Auth::user()->cartItems()->with('product.game')->get();
+
+        $user->load('favorites.game');
+
         return view('profile.edit', [
-            'user' => $request->user(),
+            'user' => $user,
+            'cartItems' => $cartItems
         ]);
     }
 
@@ -26,15 +34,32 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        $validatedData = $request->validated();
+
+        if ($request->hasFile('photo')){
+
+            if($user->profile_photo_path){
+                Storage::disk('public')->delete($user->profile_photo_path);
+            }
+        $path = $request->file('photo')->store('profile-photos', 'public');
+
+        $validatedData['profile_photo_path'] = $path;
+
         }
 
-        $request->user()->save();
+        $user->fill($validatedData);
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+
+
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
+        }
+
+        $user->save();
+
+        return back()->with('status', 'profile-updated');
     }
 
     /**

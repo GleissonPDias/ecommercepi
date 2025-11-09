@@ -148,9 +148,7 @@
             </select>
         </div>
 
-        <fieldset>
 
-        </fieldset>
 
         <fieldset>
             <legend>Desenvolvedor</legend>

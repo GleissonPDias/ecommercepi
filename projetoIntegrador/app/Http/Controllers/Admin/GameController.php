@@ -229,6 +229,25 @@ class GameController extends Controller
             // 4. Sincroniza as categorias
             // sync() é a forma correta para 'update': ele remove as antigas e adiciona as novas
             $game->categories()->sync($request->categories);
+
+            if ($request->hasFile('images')) {
+                
+                // 5a. Apaga TODAS as imagens antigas do Storage (HD)
+                foreach ($game->images as $oldImage) {
+                    Storage::disk('public')->delete($oldImage->image_url);
+                }
+                
+                // 5b. Apaga TODOS os registos de imagem do banco de dados
+                // Isto apaga todas as linhas da tabela 'game_images' associadas a este jogo
+                $game->images()->delete(); 
+
+                // 5c. Salva as NOVAS imagens (no HD e no banco)
+                foreach ($request->file('images') as $newImageFile) {
+                    $path = $newImageFile->store('game_images', 'public');
+                    // Cria o novo registo no banco associado a este jogo
+                    $game->images()->create(['image_url' => $path]);
+                }
+            }
             
             DB::commit();
 

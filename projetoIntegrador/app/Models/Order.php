@@ -6,6 +6,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Order extends Model {
+
+    protected $fillable = [
+        'user_id',
+        'status',
+        'total_amount',
+        'payment_method_id',
+        'coupon_id'
+    ];
+
     public function user(): BelongsTo {
         return $this->belongsTo(User::class);
     }

@@ -80,6 +80,6 @@ class ProductRequirementController extends Controller
         }
 
         // 3. Redireciona de volta
-        return redirect()->back()->with('success', 'Requisitos salvos com sucesso!');
+        return redirect()->route('admin.products.index')->with('success', 'Requisitos salvos com sucesso!');
     }
 }

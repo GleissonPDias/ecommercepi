@@ -54,6 +54,17 @@
                                 Gerenciar Requisitos
                             </a>
                         </td>
+                        <td class="actions">
+                                {{-- Link para a futura página de edição --}}
+                                <a href="{{route('admin.products.edit', $product)}}" class="btn-action btn-edit">Editar</a>
+                                
+                                {{-- Formulário de Delete --}}
+                                <form method="POST" action="{{route('admin.products.destroy', $product)}}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" onclick="return confirm('Tem certeza que quer excluir este produto?')" class="btn-action btn-delete">Deletar</button>
+                                </form>
+                        </td>
                     </tr>
                 @empty
                     <tr>

@@ -15,7 +15,7 @@
 
     <header class="main-header">
         <div class="header-left">
-            <a href="/tela-inicial/home.html"><img src="/images/GettStore(1).png" alt="logo" class="logo"></a>
+            <a href="{{ route('home') }}"><img src="{{ asset('images/GettStore.png') }}" alt="logo" class="logo"></a>
         </div>
         <div class="header-right">
             <div class="cart-icon">
@@ -30,16 +30,23 @@
         
         <section class="profile-header">
             <div class="profile-avatar">
+                @if (auth()->user()->profile_photo_path)
+                <img src="{{Storage::url(auth()->user()->profile_photo_path) }}"
+                alt="Foto de perfil de {{auth()->user()->name}}"
+                class="avatar-image">
+                @else
                 <i class="fas fa-user"></i>
+                @endif
+
             </div>
             <div class="profile-info">
                 <span class="info-pill">
                     <i class="fas fa-user"></i>
-                    sapeca123
+                    {{ auth()->user()->name }}
                 </span>
                 <span class="info-pill">
                     <i class="fas fa-envelope"></i>
-                    sapequinha@gmail.com
+                    {{ auth()->user()->email }}
                 </span>
             </div>
         </section>
@@ -58,37 +65,54 @@
                 <h2>Informações da conta</h2>
                 <p class="subtitle">Altere seus dados pessoais.</p>
 
-                <form class="info-form">
+                <form method="post" action="{{route('profile.update')}}" enctype="multipart/form-data" class="info-form">
+                    @csrf
+                    @method('patch')
+
                     <div class="form-group">
-                        <label for="login">Nome de usuário:</label>
-                        <input type="text" id="usuário" name="usuário">
+                        <label for="photo">Foto de Perfil (Opcional)</label>
+                        <input type="file" id="photo" name="photo" class="form-control-file">
+                    @error('photo') <span class="error-message">{{ $message }}</span> @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Nome de usuário:</label>
+                        <input type="text" id="username" name="username" value="{{ old('username', auth()->user()->username)}}">
+                        @error('username') <span class="error-message" style="color: red;">{{ $message }}</span> @enderror
                     </div>
                     <div class="form-row">
                         <div class="form-group half-width">
-                            <label for="nome">Nome</label>
-                            <input type="text" id="nome" name="nome">
+                            <label for="name">Nome</label>
+                            <input type="text" id="name" name="name" value="{{ old('name', auth()->user()->name)}}">
+                            @error('name') <span class="error-message" style="color: red;">{{ $message }}</span> @enderror
                         </div>
                         <div class="form-group half-width">
-                            <label for="sobrenome">Sobrenome</label>
-                            <input type="text" id="sobrenome" name="sobrenome">
+                            <label for="last_name">Sobrenome</label>
+                            <input type="text" id="last_name" name="last_name" value="{{old ('last_name', auth()->user()->last_name)}}">
+                            @error('last_name') <span class="error-message" style="color: red;">{{ $message }}</span> @enderror
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group half-width">
                             <label for="cpf">CPF</label>
-                            <input type="text" id="cpf" name="cpf">
+                            <input type="text" id="cpf" name="cpf" value="{{old('cpf', auth()->user()->cpf)}}">
+                            @error('cpf') <span class="error-message" style="color: red;">{{ $message }}</span> @enderror
                         </div>
                         <div class="form-group half-width">
-                            <label for="nascimento">Data de Nascimento</label>
-                            <input type="text" id="nascimento" name="nascimento">
+                            <label for="birth_date">Data de Nascimento</label>
+                            <input type="date" id="birth_date" name="birth_date" value="{{old('birth_date', auth()->user()->birth_date) }}">
+                            @error('birth_date') <span class="error-message" style="color: red;">{{ $message }}</span> @enderror
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="telefone">Telefone</label>
-                        <input type="text" id="telefone" name="telefone">
+                        <label for="phone_number">Telefone</label>
+                        <input type="text" id="phone_number" name="phone_number" value="{{old('phone_number', auth()->user()->phone_number)}}">
+                        @error('phone_number') <span class="error-message" style="color: red;">{{ $message }}</span> @enderror
                     </div>
                     <div class="form-actions">
                         <button type="submit" class="save-button">Salvar Alterações</button>
+                        @if (session('status')==='profile_updated')
+                            <p style="color:green; margin-top: 10px;"> Salvo com sucesso!</p>
+                        @endif 
                     </div>
                 </form>
             </div>
@@ -97,19 +121,44 @@
                 <h2>Alterar Senha</h2>
                 <p class="subtitle">Defina uma nova senha para sua conta.</p>
                 
-                <form class="info-form">
-                     <div class="form-group">
-                        <label for="new_password">Nova Senha</label>
-                        <input type="password" id="new_password" name="new_password" placeholder="••••••••">
-                    </div>
-                    <div class="form-group">
-                        <label for="confirm_password">Confirmar Nova Senha</label>
-                        <input type="password" id="confirm_password" name="confirm_password" placeholder="••••••••">
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="save-button">Atualizar Senha</button>
-                    </div>
-                </form>
+                <form method="post" action="{{route('password.update')}}" class="info-form">
+                    @csrf
+                    @method('put') 
+<div class="form-group">
+            <label for="current_password">Senha Atual</label>
+            <input type="password" id="current_password" name="current_password" placeholder="••••••••" required>
+            {{-- Mostra o erro específico para este campo --}}
+            @error('current_password', 'updatePassword') 
+                <span class="error-message">{{ $message }}</span> 
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <label for="password">Nova Senha</label>
+            {{-- O nome do campo deve ser 'password' --}}
+            <input type="password" id="password" name="password" placeholder="••••••••" required>
+            @error('password', 'updatePassword') 
+                <span class="error-message">{{ $message }}</span> 
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <label for="password_confirmation">Confirmar Nova Senha</label>
+            {{-- O nome do campo deve ser 'password_confirmation' --}}
+            <input type="password" id="password_confirmation" name="password_confirmation" placeholder="••••••••" required>
+            @error('password_confirmation', 'updatePassword') 
+                <span class="error-message">{{ $message }}</span> 
+            @enderror
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="save-button">Atualizar Senha</button>
+            
+            @if (session('status') === 'password-updated')
+                <p style="color: green; margin-top: 10px;">Senha atualizada!</p>
+            @endif
+        </div>
+    </form>
             </div>
 
             <div id="wishlist" class="account-panel">

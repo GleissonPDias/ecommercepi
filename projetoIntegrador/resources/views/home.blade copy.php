@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GettStore - Loja</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-left">
+            <button class="btn-menu" type="button" aria-label="Abrir menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            {{-- CORRIGIDO: Link do logo --}}
+            <a href="{{ route('home') }}"><img src="{{ asset('images/logo.svg') }}" alt="logo" class="logo"></a>
+        </div>
+        <div class="header-center">
+            <div class="search-bar">
+                <input type="text" placeholder="Buscar jogo ou palavra-chave">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="cart-icon">
+                {{-- CORRIGIDO: Link do carrinho --}}
+                <a href="{{ route('cart.index') }}"><i class="fas fa-shopping-cart"></i></a>
+                <span class="cart-count">{{$cartItems->count()}}</span> 
+            </div>
+            {{-- CORRIGIDO: Link do perfil --}}
+            <a href="{{ route('profile.edit') }}"><i class="fas fa-user"></i></a>
+            
+            {{-- ADICIONADO: Botão de Logout (se o usuário estiver logado) --}}
+            @auth
+                <form method="POST" action="{{ route('logout') }}" style="display: inline-flex; align-items: center; margin-left: 10px;">
+                    @csrf
+                    <a href="{{ route('logout') }}" 
+                       title="Sair"
+                       onclick="event.preventDefault(); this.closest('form').submit();">
+                        <i class="fas fa-sign-out-alt" style="color: white; font-size: 1.2rem;"></i>
+                    </a>
+                </form>
+            @endauth
+        </div>
+    </header>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <button class="btn-close" type="button" aria-label="Fechar menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <ul class="sidebar-links">
+            <li><a href="#"><i class="fas fa-gamepad"></i> Catálogo</a></li>
+            <li><a href="#"><i class="fas fa-tags"></i> Ofertas</a></li>
+            <li><a href="#"><i class="fas fa-gift"></i> Gift Card</a></li>
+            <li class="divider"></li>
+            <li><a href="#"><i class="fas fa-desktop"></i> PC</a></li>
+            <li><a href="#"><i class="fab fa-xbox"></i> Xbox</a></li>
+            <li><a href="#"><i class="fab fa-playstation"></i> Playstation</a></li>
+            <li><a href="#"><i class="fas fa-gamepad"></i> Switch</a></li>
+            <li class="divider"></li>
+            <li><a href="#"><i class="fas fa-headset"></i> Suporte</a></li>
+            <li><a href="#"><i class="fas fa-ellipsis-h"></i> Mais</a></li>
+        </ul>
+    </aside>
+
+    <div class="overlay"></div>
+
+    <main class="store-page">
+<div class="featured-carousel-container">
+
+    {{-- 1. Loop externo para CADA SLIDE que o controller enviou --}}
+    @foreach ($carouselSlides as $slide)
+        
+        {{-- Pega os produtos de CADA slot dentro do slide --}}
+        @php
+            $largeProduct = $slide->products->firstWhere('pivot.slot', 'large');
+            $small1Product = $slide->products->firstWhere('pivot.slot', 'small_1');
+            $small2Product = $slide->products->firstWhere('pivot.slot', 'small_2');
+        @endphp
+
+        {{-- 2. Cria a <section> do slide (só 'active' no primeiro) --}}
+            <section class="featured-games-slide {{ $loop->first ? 'active' : '' }}">
+                
+                {{-- 3. Exibe o produto 'large' deste slide --}}
+                {{-- CORRIGIDO: Adicionado style="position: relative;" --}}
+                <div class="featured-main" style="position: relative;">
+                    @if ($largeProduct)
+                        <a href="{{ route('products.show', $largeProduct) }}">
+                            <img src="{{ Storage::url($largeProduct->game->cover_url) }}" alt="{{ $largeProduct->name }}">
+                        </a>
+                        <div class="price-overlay">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span>R$ {{ $largeProduct->current_price }}</span>
+                        </div>
+                        
+                        {{-- ADICIONADO: Botão de Favoritar --}}
+                        <form method="POST" action="{{ route('favorites.toggle', $largeProduct) }}" class="form-favorite-toggle" 
+                              style="position: absolute; top: 20px; right: 20px; z-index: 10;">
+                            @csrf
+                            <button type="submit" style="background: none; border: none; color: white; cursor: pointer; font-size: 1.8rem; text-shadow: 0 0 5px black;">
+                                {{-- Lógica do ícone (requer usuário logado) --}}
+                                @if(auth()->user() && auth()->user()->favorites->contains($largeProduct))
+                                    <i class="fas fa-heart" style="color: red;"></i>
+                                @else
+                                    <i class="far fa-heart"></i>
+                                @endif
+                            </button>
+                        </form>
+
+                    @else
+                        <a href="#"><img src="{{ asset('images/placeholder-large.png') }}" alt="Produto destaque"></a>
+                    @endif
+                </div>
+                
+                <div class="featured-sidebar">
+                    {{-- 4. Exibe o produto 'small_1' deste slide --}}
+                    @if ($small1Product)
+                        {{-- CORRIGIDO: Adicionado style="position: relative;" --}}
+                        <div class="side-game-card" style="position: relative;">
+                            <a href="{{ route('products.show', $small1Product) }}">
+                                <img src="{{ Storage::url($small1Product->game->cover_url) }}" alt="{{ $small1Product->name }}">
+                            </a>
+                            
+                            {{-- ADICIONADO: Botão de Favoritar --}}
+                            <form method="POST" action="{{ route('favorites.toggle', $small1Product) }}" class="form-favorite-toggle" 
+                                  style="position: absolute; top: 10px; right: 10px; z-index: 10;">
+                                @csrf
+                                <button type="submit" style="background: none; border: none; color: white; cursor: pointer; font-size: 1.5rem; text-shadow: 0 0 5px black;">
+                                    @if(auth()->user() && auth()->user()->favorites->contains($small1Product))
+                                        <i class="fas fa-heart" style="color: red;"></i>
+                                    @else
+                                        <i class="far fa-heart"></i>
+                                    @endif
+                                </button>
+                            </form>
+                        </div>
+                    @endif
+                    
+                    {{-- 5. Exibe o produto 'small_2' deste slide --}}
+                    @if ($small2Product)
+                        {{-- CORRIGIDO: Adicionado style="position: relative;" --}}
+                        <div class="side-game-card" style="position: relative;">
+                            <a href="{{ route('products.show', $small2Product) }}">
+                                <img src="{{ Storage::url($small2Product->game->cover_url) }}" alt="{{ $small2Product->name }}">
+                            </a>
+                            
+                            {{-- ADICIONADO: Botão de Favoritar --}}
+                            <form method="POST" action="{{ route('favorites.toggle', $small2Product) }}" class="form-favorite-toggle" 
+                                  style="position: absolute; top: 10px; right: 10px; z-index: 10;">
+                                @csrf
+                                <button type="submit" style="background: none; border: none; color: white; cursor: pointer; font-size: 1.5rem; text-shadow: 0 0 5px black;">
+                                    @if(auth()->user() && auth()->user()->favorites->contains($small2Product))
+                                        <i class="fas fa-heart" style="color: red;"></i>
+                                    @else
+                                        <i class="far fa-heart"></i>
+                                    @endif
+                                </button>
+                            </form>
+                        </div>
+                    @endif
+                </div>
+            </section>
+        @endforeach {{-- Fim do loop de slides --}}
+        
+    <button class="carousel-arrow prev" aria-label="Slide anterior"><i class="fas fa-chevron-left"></i></button>
+    <button class="carousel-arrow next" aria-label="Próximo slide"><i class="fas fa-chevron-right"></i></button>
+    
+    <div class="pagination-dots">
+        @foreach ($carouselSlides as $slide)
+             <span class="dot {{ $loop->first ? 'active' : '' }}" data-slide="{{ $loop->index }}"></span>
+        @endforeach
+    </div>
+
+</div>
+
+<section class="popular-games">
+    <h2>Mais Populares</h2>
+    <div class="games-carousel"> 
+    @foreach ($products as $product)
+        
+        {{-- CORRIGIDO: O card precisa de position: relative --}}
+        <div class="game-card" style="position: relative;">
+            <a href="{{ route('products.show', $product) }}" class="game-card-link">
+                <img src="{{ Storage::url($product->game->cover_url) }}" alt="{{ $product->name }}">
+                <div class="game-info">
+                    <h3>{{$product->name}}</h3>
+                    <p class="game-platform">{{$product->platform->name}}</p>
+                    <div class="price-info">
+                        <span class="discount-tag">-82%</span>
+                        <span class="price-tag">R$ {{$product->current_price}}</span>
+                    </div>
+                </div>
+            </a>
+            
+            {{-- CORRIGIDO: 'lass=' para 'class=' --}}
+            <form method="POST" action="{{ route('favorites.toggle', $product) }}" class="form-favorite-toggle" 
+                  style="position: absolute; top: 10px; right: 10px;">
+                @csrf
+                <button type="submit" style="background: none; border: none; color: white; cursor: pointer; font-size: 1.5rem; text-shadow: 0 0 5px black;">
+                
+                {{-- Lógica para mostrar o coração cheio ou vazio --}}
+                @if(auth()->user() && auth()->user()->favorites->contains($product))
+                    <i class="fas fa-heart" style="color: red;"></i> {{-- Cheio --}}
+                @else
+                    <i class="far fa-heart"></i> {{-- Vazio --}}
+                @endif
+                
+                </button>
+            </form>
+        </div>
+
+    @endforeach
+    </div>
+</section>
+
+
+    </main>
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h3>Seguir GettStore</h3>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Institucional</h3>
+                    <ul>
+                        <li><a href="#">Sobre</a></li>
+                        <li><a href="#">Carreiras</a></li>
+                        <li><a href="#">Seu jogo na Nuuvem</a></li>
+                        <li><a href="#">Segurança</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Ajuda</h3>
+                    <ul>
+                        <li><a href="#">Suporte</a></li>
+                        <li><a href="#">Termos de Uso</a></li>
+                        <li><a href="#">Política de Privacidade</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="footer-divider">
+            <div class="footer-bottom">
+                {{-- CORRIGIDO: Link do footer --}}
+                <a href="{{ route('home') }}"><img src="{{ asset('images/GettStore Branco s fundo.png') }}" alt="GettStore Avatar Logo" class="footer-logo"></a>
+                <p class="footer-legal">
+                    GettStore Ltda. - CNPJ 00.000.000/0000-00<br>
+                    Rua Lauro Müller, nº 116, sala 503 - Torre do Rio Sul - Botafogo - Rio de Janeiro, RJ – 22290-160
+                </p>
+            </div>
+        </div>
+    </footer>
+    </body>
+</html>

@@ -154,13 +154,13 @@
                             
                             <td class="actions">
                                 {{-- Link para a futura página de edição --}}
-                                <a href="#" class="btn-action btn-edit">Editar</a>
+                                <a href="{{route('admin.games.edit', $game)}}" class="btn-action btn-edit">Editar</a>
                                 
                                 {{-- Formulário de Delete --}}
-                                <form action="#" method="POST">
+                                <form method="POST" action="{{route('admin.games.destroy', $game)}}">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn-action btn-delete">Deletar</button>
+                                    <button type="submit" onclick="return confirm('Tem certeza que quer excluir este jogo?')" class="btn-action btn-delete">Deletar</button>
                                 </form>
                             </td>
                         </tr>

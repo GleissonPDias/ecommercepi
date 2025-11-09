@@ -384,6 +384,15 @@ body {
     color: #8a8f9d;
 }
 
+/* --- Criado por gleisson --- */
+
+.avatar-image {
+    border-radius: 500px;
+    width: 200px;
+    height: 150px;
+    overflow: hidden;
+}
+
 /* --- RESPONSIVIDADE (GERAL + CONTA) --- */
 
 @media (max-width: 1024px) {

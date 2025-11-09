@@ -17,7 +17,7 @@
           alt="gettstore"
         />
         <p class="criar-p">Criar minha conta</p>
-        <form class="form" method="POST" action="{{ route('register') }}">
+        <form class="form" method="POST" enctype="multipart/form-data" action="{{ route('register') }}">
         @csrf
           <input
             class="input"
@@ -29,12 +29,45 @@
           />
           <input
             class="input"
+            type="text"
+            id="last_name"
+            name="last_name"
+            placeholder="Sobrenome"
+            title="Sobrenome"
+          />
+          
+          <input
+            class="input"
+            type="number"
+            id="cpf"
+            name="cpf"
+            placeholder="CPF"
+            title="CPF"
+          />
+          <input
+            class="input"
+            type="number"
+            id="phone_number"
+            name="phone_number"
+            placeholder="Telefone"
+            title="Telefone"
+          />
+          <input
+            class="input"
+            type="date"
+            id="birth_date"
+            name="birth_date"
+            title="Data de Nascimento"
+          />
+          <input
+            class="input"
             type="email"
             id="email"
             name="email"
             placeholder="Email"
             title="email"
           />
+          
         @error('email')
             <p class="error-message">{{ $message }}</p>
           @enderror
@@ -54,6 +87,16 @@
             title="confirm-password"
             placeholder="Confirmar Senha"
           />
+          <label for="profile_photo" class="file-label">Foto de Perfil (Opcional)</label>
+          <input 
+            class="input-file" {{-- (Use sua própria classe CSS) --}}
+            type="file" 
+            id="profile_photo" 
+            name="profile_photo" 
+          />
+          @error('profile_photo')
+          <p class="error-message">{{ $message }}</p>
+          @enderror
 
           <div class="container-checkbox">
             <div class="checkbox-option">

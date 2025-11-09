@@ -31,20 +31,38 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'cpf' => ['nullable', 'string', 'max:14', 'unique:users'],
+            'phone_number' => ['required', 'string', 'max:20', 'unique:users'],
+            'birth_date' => ['nullable', 'date'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'profile_photo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048' ],
         ]);
+
+        $photoPath = null;
+        if ($request->hasFile('profile_photo')){
+            $photoPath = $request->file('profile_photo')->store('profile-photos', 'public');
+        }
 
         $user = User::create([
             'name' => $request->name,
+            'last_name' => $request->last_name,
+            'cpf' => $request->cpf,
+            'phone_number'=>$request->phone_number,
+            'birth_date' => $request->birth_date,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'profile_photo_path' => $photoPath,
+
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        $defaultRoute = $user->isAdmin() ? route('admin.dashboard', 'absolute:false') : route ('home', absolute:false);
+
+        return redirect($defaultRoute);
     }
 }

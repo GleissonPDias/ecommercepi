@@ -77,7 +77,7 @@
             <div class="cart-icon">
                 {{-- CORRIGIDO: Link do carrinho --}}
                 <a href="{{ route('cart.index') }}"><i class="fas fa-shopping-cart"></i></a>
-                <span class="cart-count">{{$cartItems->count()}}</span> 
+                <span class="cart-count">0</span> {{-- (Isto pode ser atualizado dinamicamente) --}}
             </div>
             
             @auth {{-- Mostra apenas se o usuário estiver logado --}}
@@ -235,9 +235,9 @@
                 <div class="game-info">
                     <h3>{{$product->name}}</h3>
                     <p class="game-platform">{{$product->platform->name}}</p>
-                    <div class="item-price">
-                        <span class="old-price" style="color: red;">R$ {{ number_format($product->default_price, 2, ',', '.') }}</span>
-                        <span class="new-price" style="color:green;">R$ {{ number_format($product->current_price, 2, ',', '.') }}</span>
+                    <div class="price-info">
+                        <span class="discount-tag">-82%</span> {{-- (Tornar dinâmico no futuro) --}}
+                        <span class="price-tag">R$ {{$product->current_price}}</span>
                     </div>
                 </div>
             </a>
@@ -269,34 +269,13 @@
 </section>
 
     </main>
- <footer class="main-footer">
+    <footer class="main-footer">
         <div class="footer-content">
             <div class="footer-columns">
-                <div class="footer-column">
-                    <h3>Seguir GettStore</h3>
-                    <div class="social-icons">
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-                <div class="footer-column">
-                    <h3>Institucional</h3>
-                    <ul>
-                        <li><a href="#">Sobre</a></li>
-                        <li><a href="#">Carreiras</a></li>
-                        <li><a href="#">Seu jogo na Nuuvem</a></li>
-                        <li><a href="#">Segurança</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Ajuda</h3>
-                    <ul>
-                        <li><a href="#">Suporte</a></li>
-                        <li><a href="#">Termos de Uso</a></li>
-                        <li><a href="#">Política de Privacidade</a></li>
-                    </ul>
-                </div>
+                {{-- (Suas colunas do footer) --}}
+                <div class="footer-column">...</div>
+                <div class="footer-column">...</div>
+                <div class="footer-column">...</div>
             </div>
             <hr class="footer-divider">
             <div class="footer-bottom">

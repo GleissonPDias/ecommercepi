@@ -217,10 +217,6 @@ body {
         margin-top: 15px;
     }
 
-    .search-bar {
-        max-width: none;
-    }
-
     .header-left {
         flex-grow: 1;
     }
@@ -428,7 +424,18 @@ body {
         margin-top: 15px;
     }
     .search-bar {
-        max-width: none;
+        display: flex;
+        align-items: center;
+        position: relative; /* (Você provavelmente já tem isso) */
+    }
+    .search-bar .search-button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        /* Posicione o ícone (ajuste conforme seu CSS original) */
+        position: absolute;
+        right: 10px;
+        color: #888;
     }
     .header-left {
         flex-grow: 1;

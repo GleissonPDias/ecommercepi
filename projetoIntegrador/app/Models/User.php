@@ -37,6 +37,12 @@ class User extends Authenticatable //implements MustVerifyEmail
      */
     protected $fillable = [
         'name',
+        'last_name',
+        'cpf',
+        'phone_number',
+        'username',
+        'birth_date',
+        'profile_photo_path',
         'email',
         'password',
         'is_admin'
@@ -67,6 +73,6 @@ class User extends Authenticatable //implements MustVerifyEmail
     }
     public function isAdmin(): bool
 {
-    return $this->is_admin;
+    return (bool) $this->is_admin;
 }
 }

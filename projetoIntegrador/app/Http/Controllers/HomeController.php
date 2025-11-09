@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 use App\Models\CarouselSlide; // 1. Não se esqueça de importar o CarouselSlide
 
 class HomeController extends Controller
@@ -25,11 +27,18 @@ class HomeController extends Controller
                            ->latest()
                            ->get();
 
+        $cartItems = collect();
 
+        if (Auth::check()){
+            $cartItems = Auth::user()->cartItems()->with('product.game')->get();
+        }
+
+        
         // --- 3. Enviando TUDO para a View ---
         return view('home', [
             'carouselSlides' => $carouselSlides,
             'products' => $products,
+            'cartItems' => $cartItems,
         ]);
     }
     
@@ -46,6 +55,11 @@ public function show(Product $product)
         'game.images',
         'game.baseGame.product' // <-- Otimização: já carrega o produto do jogo-base
     );
+    $cartItems = collect();
+
+    if (Auth::check()){
+        $cartItems = Auth::user()->cartItems()->with('product.game')->get();
+    }
 
     // 2. Prepara as variáveis
     $game = $product->game;
@@ -80,7 +94,8 @@ public function show(Product $product)
     return view('products.show', [
         'product' => $product,
         'dlcProducts' => $dlcProducts,
-        'baseGameProduct' => $baseGameProduct
+        'baseGameProduct' => $baseGameProduct,
+        'cartItems' => $cartItems,
     ]);
 }
 }
