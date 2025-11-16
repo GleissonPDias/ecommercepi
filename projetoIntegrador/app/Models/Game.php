@@ -14,6 +14,7 @@ use App\Models\Product;
 use App\Models\GameImage;
 use App\Models\Category;
 use App\Models\User;
+use App\Models\GameMode;
 
 class Game extends Model {
 
@@ -27,7 +28,8 @@ class Game extends Model {
         'age_rating',
         'developer_id',
         'publisher_id',
-        'base_game_id'
+        'base_game_id',
+        'game_mode',
     ];
 
     protected $casts = [
@@ -60,4 +62,8 @@ class Game extends Model {
     public function favoritedByUsers(): BelongsToMany {
         return $this->belongsToMany(User::class, 'user_favorites');
     }
+    public function gameModes(): BelongsToMany{
+        return $this->belongsToMany(GameMode::class, 'game_game_mode');
+    }
+
 }

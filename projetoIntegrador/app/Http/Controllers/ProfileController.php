@@ -23,7 +23,8 @@ class ProfileController extends Controller
 
         $user->load('favorites.game',
                     'library.product.game',
-                    'library.product.platform'                
+                    'library.product.platform',
+                    'paymentMethods'
     );
 
         return view('profile.edit', [

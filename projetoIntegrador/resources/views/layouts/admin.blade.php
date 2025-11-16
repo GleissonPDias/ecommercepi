@@ -48,10 +48,9 @@
             <a href="{{ route('admin.carousel') }}" class="nav-link">
                 <i class="fas fa-images"></i> Carrossel
             </a>
-            {{-- Adicione o link para 'users.index' se você já criou a rota --}}
-            {{-- <a href="{{ route('admin.users.index') }}" class="nav-link">
+            <a href="{{ route('admin.users.index') }}" class="nav-link">
                 <i class="fas fa-users-cog"></i> Gerenciar Usuários
-            </a> --}}
+            </a>
         </nav>
         
         <div class="sidebar-footer">

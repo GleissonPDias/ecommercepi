@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\CarouselController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\GameKeyController;
 use App\Http\Controllers\Admin\CouponManagementController;
+use App\Http\Controllers\Admin\GameModeController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
@@ -20,6 +21,8 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\CatalogController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,6 +37,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('users', UserController::class);
+    Route::resource('game-modes', GameModeController::class)->except(['show']);
     
     Route::resource('coupons', CouponManagementController::class)->except(['show']);
     Route::resource('developers', DeveloperController::class)->except(['show']);
@@ -100,15 +104,26 @@ Route::middleware('auth')->group(function () {
     Route::delete('/carrinho/remover/{cartItem}', [CartController::class, 'destroy'])->name('cart.destroy');
 
 
-    Route::get('/search', [SearchController::class, 'index'])->name('search.index');
+    
 
-    Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
+    Route::post('/payment/checkout', [PaymentController::class, 'redirectToCheckout'])->name('payment.checkout');
+    Route::get('/payment/success', [PaymentController::class, 'handleSuccess'])->name('payment.success');
+    Route::get('/payment/cancel', [PaymentController::class, 'handleCancel'])->name('payment.cancel');
+
+    // routes/web.php (dentro do grupo 'auth')
+
+// ... (rotas de profile, favorites, cart, payment) ...
+
+// 👇 ADICIONE ESTA ROTA PARA APAGAR O CARTÃO 👇
+    Route::delete('/payment/destroy/{paymentMethod}', [PaymentController::class, 'destroy'])->name('payment.destroy');
 
 
     Route::post('/coupon/apply', [CouponController::class, 'apply'])->name('coupon.apply');
     Route::post('/coupon/remove', [CouponController::class, 'remove'])->name('coupon.remove');
 });
-
+Route::get('/search', [SearchController::class, 'index'])->name('search.index');
+Route::get('/plataforma/{platform:slug}', [CatalogController::class, 'showByPlatform'])
+     ->name('catalog.platform');
 /*
 |--------------------------------------------------------------------------
 | Rotas de Autenticação (Login, Registro, etc.)

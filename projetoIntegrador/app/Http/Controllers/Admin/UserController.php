@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Validation\Rule; // 👈 CORREÇÃO 1: Faltava importar a Rule (singular)
 
 class UserController extends Controller
 {
@@ -15,15 +16,10 @@ class UserController extends Controller
      */
     public function index()
     {
-// 1. Busca todos os usuários que são admins (is_admin = true)
-        //    Usamos get() aqui, pois a lista de admins costuma ser pequena.
+        // (O seu código aqui está perfeito)
         $admins = User::where('is_admin', true)->orderBy('name')->get();
-
-        // 2. Busca todos os usuários que são clientes (is_admin = false)
-        //    Usamos paginate() aqui, pois esta lista pode ser muito grande.
         $clients = User::where('is_admin', false)->orderBy('name')->paginate(15);
         
-        // 3. Envia AMBAS as listas para a view
         return view('admin.users.index', [
             'admins' => $admins,
             'clients' => $clients
@@ -35,6 +31,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        // (O seu código aqui está perfeito)
         return view('admin.users.create');
     }
 
@@ -43,10 +40,12 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validade([
+        // 👇 CORREÇÃO 2: 'validade' -> 'validate'
+        $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'confirmed', Rules\Passowrd::defaults()],
+            // 👇 CORREÇÃO 3: 'Passowrd' -> 'Password'
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'is_admin' => ['required', 'boolean'],
         ]);
 
@@ -54,7 +53,7 @@ class UserController extends Controller
 
         User::create($data);
 
-        return redirect()->route('admin.users.index')->with('success', 'Usuario criado com sucesso!');
+        return redirect()->route('admin.users.index')->with('success', 'Usuário criado com sucesso!');
     }
 
     /**
@@ -62,7 +61,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // (Não estamos a usar esta rota, por isso está OK ficar vazia)
     }
 
     /**
@@ -70,6 +69,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        // (O seu código aqui está perfeito)
         return view('admin.users.edit', compact('user'));
     }
 
@@ -78,6 +78,9 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        // (O seu código aqui estava correto,
+        // mas só funciona se a 'use Illuminate\Validation\Rule;' (singular)
+        // for importada no topo do ficheiro)
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => ['required', 'email', Rule::unique('users')->ignore($user->id)],
@@ -86,7 +89,7 @@ class UserController extends Controller
 
         $user->update($data);
 
-        return redirect()->route('admin.users.index')->with('success', 'Usuario atualizado com sucesso!');
+        return redirect()->route('admin.users.index')->with('success', 'Usuário atualizado com sucesso!');
     }
 
     /**
@@ -94,8 +97,19 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        // 👇 CORREÇÃO 4: A sua lógica de 'destroy' estava incompleta 👇
+        
+        // 1. A sua verificação de segurança (está perfeita)
         if($user->id === auth()->id()){
-            return redirect()->route('admin.users.index')->with('error', 'Você não pode excluir sua própria conta de Admnistrador!');
+            return redirect()->route('admin.users.index')
+                ->with('error', 'Você não pode excluir sua própria conta de Administrador!');
         }
+        
+        // 2. O que faltava: A lógica para apagar o utilizador
+        $user->delete();
+        
+        // 3. O que faltava: O redirecionamento de sucesso
+        return redirect()->route('admin.users.index')
+            ->with('success', 'Usuário apagado com sucesso!');
     }
 }

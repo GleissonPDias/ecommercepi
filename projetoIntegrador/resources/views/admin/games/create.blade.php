@@ -210,6 +210,25 @@
             </div>
         </div>
 
+
+            <fieldset>
+            <legend>Modos de Jogo</legend>
+            <div class="form-group">
+                <label for="game_mode">Selecionar Existentes (Segure Ctrl para várias)</label>
+                <select name="game_modes[]" id="game_modes" multiple size="4">
+                    @foreach ($gameModes as $mode) 
+                        {{-- Lógica 'old' para multi-select --}}
+                        <option value="{{ $mode->id }}" {{ in_array($mode->id, old('game_modes', [])) ? 'selected' : '' }}>
+                            {{ $mode->name }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('gamemodes') <small class="error-message">{{ $message }}</small> @enderror
+            </div>
+            
+        </fieldset>
+
+
         <div class="form-group">
             <label for="about">Sobre o Jogo (Descrição)</label>
             <textarea id="about" name="about" rows="5" required>{{ old('about') }}</textarea>

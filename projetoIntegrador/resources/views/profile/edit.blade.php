@@ -295,16 +295,66 @@
     @endif
 </div>
             
-            <div id="meus-cartoes" class="account-panel">
-                <h2>Meus Cartões</h2>
-                <p class="subtitle">Adicione e gerencie seus cartões.</p>
+{{-- 👇 SUBSTITUA A SUA ABA "MEUS-CARTOES" POR ISTO 👇 --}}
+
+<div id="meus-cartoes" class="account-panel">
+    <h2>Meus Cartões</h2>
+    <p class="subtitle">Adicione e gerencie seus cartões.</p>
+
+    {{-- 
+      Verifica se a coleção 'paymentMethods' (que carregámos no controller) 
+      não está vazia.
+    --}}
+    {{-- (Dentro de <div id="meus-cartoes" ...>) --}}
+
+@if (auth()->user()->paymentMethods->isNotEmpty())
+
+    <div class="card-list">
+        
+        {{-- Faz um loop em cada método de pagamento salvo --}}
+        @foreach (auth()->user()->paymentMethods as $method)
+            
+            <div class="card-item" style="display: flex; justify-content: space-between; align-items: center; background: #f0f2f5; padding: 15px; border-radius: 8px; margin-bottom: 10px; color: #333;">
                 
-                <div class="card-list-placeholder">
-                    <i class="far fa-credit-card"></i>
-                    <p>Nenhum cartão cadastrado.</p>
-                    <button type="button" class="save-button" style="margin-top: 20px;">Adicionar Novo Cartão</button>
+                <div class="card-details" style="display: flex; align-items: center; gap: 15px;">
+                    
+                    {{-- 👇 CORREÇÃO 1: 'brand' -> 'card_brand' 👇 --}}
+                    <i class="fab fa-cc-{{ $method->card_brand }}" style="font-size: 2.5rem; color: #0d47a1;"></i>
+                    
+                    <div>
+                        <strong style="font-size: 1.1rem; letter-spacing: 1px;">
+                            {{-- 👇 CORREÇÃO 2: 'last_four' -> 'last_four_digits' 👇 --}}
+                            **** **** **** {{ $method->last_four_digits }}
+                        </strong>
+                        
+                        {{-- 👇 CORREÇÃO 3: Removida a data de expiração (não existe na sua migração) 👇 --}}
+                        
+                    </div>
                 </div>
+                
+                {{-- O seu formulário de 'destroy' (remover) --}}
+                <form method="POST" action="{{ route('payment.destroy', $method) }}">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="item-remove" aria-label="Remover cartão" 
+                            style="background: none; border: none; color: #ff4d4d; font-size: 1.2rem; cursor: pointer;"
+                            onclick="return confirm('Tem certeza que quer remover este cartão?')">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </form>
             </div>
+        @endforeach
+    </div>
+
+@else
+    {{-- Se a lista estiver vazia, mostramos o placeholder original --}}
+    <div class="card-list-placeholder">
+        <i class="far fa-credit-card"></i>
+        <p>Nenhum cartão cadastrado.</p>
+        <p style="font-size: 0.9em; color: #888;">O seu cartão será salvo automaticamente quando fizer a sua próxima compra.</p>
+    </div>
+@endif
+</div>
 
         </div> </main>
     

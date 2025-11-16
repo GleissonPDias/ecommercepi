@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+// Todos os 'use' necessários
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -10,18 +11,16 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\GameKey;
 use App\Models\Coupon;
+use App\Models\PaymentMethod; // 👈 Importa o PaymentMethod
+use Illuminate\Support\Facades\Storage; // 👈 Importa o Storage
+use Illuminate\Support\Facades\Log;     // 👈 Importa o Log (para registar erros)
 use Stripe\Stripe;
 use Stripe\Checkout\Session as StripeSession;
-use Stripe\PaymentMethod as StripePaymentMethod; // Para salvar o cartão
+use Stripe\PaymentMethod as StripePaymentMethod;
 
 class PaymentController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-        // Define a chave secreta do Stripe para todas as funções
-        Stripe::setApiKey(env('STRIPE_SECRET'));
-    }
+    // O __construct() foi REMOVIDO. A proteção está nas rotas (web.php).
 
     /**
      * PASSO 1: Prepara o checkout e redireciona para o Stripe.
@@ -29,8 +28,12 @@ class PaymentController extends Controller
      */
     public function redirectToCheckout(Request $request)
     {
+        // Define a chave da API do Stripe para este método
+        // (Isto corrige o erro "No API key provided")
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+
         $user = Auth::user();
-        $cartItems = $user->cartItems()->with('product')->get();
+        $cartItems = $user->cartItems()->with('product.game')->get();
 
         if ($cartItems->isEmpty()) {
             return redirect()->route('cart.index')->with('error', 'O seu carrinho está vazio.');
@@ -48,25 +51,28 @@ class PaymentController extends Controller
             if ($coupon->type === 'fixed') $discountAmount = $coupon->value;
             $totalAmount = $subtotal - min($subtotal, $discountAmount);
             
-            // Tenta criar o cupão no Stripe
             try {
+                // Tenta criar um cupão no Stripe
                 $stripeCoupon = \Stripe\Coupon::create([
                     'amount_off' => (int) ($discountAmount * 100), // Stripe usa centavos
                     'currency' => 'brl',
                     'duration' => 'once',
                 ]);
                 $stripeCouponId = $stripeCoupon->id;
-            } catch (\Exception $e) { /* Ignora se o cupão falhar */ }
+            } catch (\Exception $e) { 
+                Log::error('Erro ao criar cupão Stripe: ' . $e->getMessage());
+                // Se falhar, continua sem o cupão, mas regista o erro
+            }
         }
         
-        // --- 2. Verificar Stock (o seu 'throw' do OrderController) ---
+        // --- 2. Verificar Stock ANTES de ir para o pagamento ---
         try {
             foreach ($cartItems as $item) {
                 $stock = GameKey::where('product_id', $item->product_id)
                                 ->where('is_sold', false)
                                 ->count();
                 if ($stock < $item->quantity) {
-                    throw new \Exception('Stock insuficiente para: ' . $item->product->name);
+                    throw new \Exception('Stock insuficiente para: ' . $item->product->name . '. Pedido: ' . $item->quantity . ', Disponível: ' . $stock);
                 }
             }
         } catch (\Exception $e) {
@@ -78,10 +84,11 @@ class PaymentController extends Controller
         foreach ($cartItems as $item) {
             $line_items[] = [
                 'price_data' => [
-                    'currency' => 'brl', // Moeda (Real Brasileiro)
+                    'currency' => 'brl', 
                     'product_data' => [
                         'name' => $item->product->name,
-                        'images' => [Storage::url($item->product->game->cover_url)], // Mostra a imagem no checkout
+                        // CORRIGIDO: A linha 'images' foi removida
+                        // para evitar o erro "Not a valid URL" em localhost.
                     ],
                     'unit_amount' => (int) ($item->product->current_price * 100), // Preço em CENTAVOS
                 ],
@@ -90,30 +97,33 @@ class PaymentController extends Controller
         }
 
         // --- 4. Criar a Sessão de Checkout do Stripe ---
-        $checkout_session = StripeSession::create([
-            'payment_method_types' => ['card', 'boleto'], // Aceita Cartão e Boleto
-            'line_items' => $line_items,
-            'discounts' => $stripeCouponId ? [['coupon' => $stripeCouponId]] : [],
-            'mode' => 'payment',
-            'customer_email' => $user->email, // Preenche o email
-            
-            // 👇 AQUI ESTÁ A LÓGICA DE "SALVAR CARTÃO" 👇
-            // Diz ao Stripe que queremos guardar este cartão para uso futuro
-            'payment_intent_data' => [
-                'setup_future_usage' => 'on_session', 
-            ],
-            // Guarda o ID do nosso utilizador no Stripe para o encontrarmos mais tarde
-            'client_reference_id' => $user->id, 
-            
-            'success_url' => route('payment.success') . '?session_id={CHECKOUT_SESSION_ID}',
-            'cancel_url' => route('payment.cancel'),
-        ]);
+        try {
+            $checkout_session = StripeSession::create([
+                'payment_method_types' => ['card', 'boleto'], 
+                'line_items' => $line_items,
+                'discounts' => $stripeCouponId ? [['coupon' => $stripeCouponId]] : [],
+                'mode' => 'payment',
+                'customer_email' => $user->email, 
+                // Lógica de "Salvar Cartão"
+                'payment_intent_data' => [
+                    'setup_future_usage' => 'on_session', 
+                ],
+                'client_reference_id' => $user->id, // Guarda o ID do nosso utilizador
+                
+                // Rotas de retorno
+                'success_url' => route('payment.success') . '?session_id={CHECKOUT_SESSION_ID}',
+                'cancel_url' => route('payment.cancel'),
+            ]);
 
-        // Guarda o ID da sessão para verificar no 'success'
-        session(['stripe_session_id' => $checkout_session->id]);
+            session(['stripe_session_id' => $checkout_session->id]);
+            
+            // 5. Redireciona o utilizador para a página de pagamento do Stripe
+            return redirect($checkout_session->url);
 
-        // 6. Redireciona o utilizador para a página de pagamento
-        return redirect($checkout_session->url);
+        } catch(\Exception $e) {
+            // Se falhar (ex: chave de API errada), volta ao carrinho com o erro
+            return redirect()->route('cart.index')->with('error', 'Erro ao contactar o gateway de pagamento: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -122,53 +132,65 @@ class PaymentController extends Controller
      */
     public function handleSuccess(Request $request)
     {
+        // Define a chave da API do Stripe para este método também
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+        
         $user = Auth::user();
         
         // 1. Validar a sessão do Stripe
         $stripeSessionId = $request->query('session_id');
-        if (!$stripeSessionId || $stripeSessionId !== session('stripe_session_id')) {
-            return redirect()->route('cart.index')->with('error', 'Sessão de pagamento inválida.');
+        if (!$stripeSessionId) {
+             return redirect()->route('cart.index')->with('error', 'Sessão de pagamento não encontrada.');
         }
         
-        // 2. Limpar a sessão para não ser usada de novo
         session()->forget('stripe_session_id');
 
-        // 3. Buscar os detalhes da sessão (para salvar o cartão)
+        // 2. Buscar os detalhes da sessão (para salvar o cartão)
         try {
             $session = StripeSession::retrieve($stripeSessionId);
             
-            // 4. 👇 SALVAR O CARTÃO (A SUA NOVA EXIGÊNCIA) 👇
             if ($session->payment_intent) {
-                // Pega o ID do método de pagamento (ex: 'pm_123')
                 $paymentIntent = \Stripe\PaymentIntent::retrieve($session->payment_intent);
                 $paymentMethodId = $paymentIntent->payment_method;
+                
+                if ($paymentMethodId && is_string($paymentMethodId)) {
+                    $paymentMethod = StripePaymentMethod::retrieve($paymentMethodId);
 
-                // Pega os detalhes do método de pagamento
-                $paymentMethod = StripePaymentMethod::retrieve($paymentMethodId);
+                    if ($paymentMethod->type == 'card') {
 
-                // Salva na sua tabela 'payment_methods'
-                $user->paymentMethods()->create([
-                    'stripe_pm_id' => $paymentMethodId, // O ID do Stripe (para cobrar no futuro)
-                    'brand' => $paymentMethod->card->brand, // Ex: "visa"
-                    'last_four' => $paymentMethod->card->last4, // Ex: "4242"
-                    'expires_at_month' => $paymentMethod->card->exp_month,
-                    'expires_at_year' => $paymentMethod->card->exp_year,
-                ]);
+                        // --- 👇 INÍCIO DA CORREÇÃO (Sincronizado com a sua Migração) 👇 ---
+                        
+                        $isFirstCard = $user->paymentMethods()->count() == 0;
+
+                        // Salva na sua tabela 'payment_methods' (com os nomes corretos)
+                        $user->paymentMethods()->updateOrCreate(
+                            [
+                                // Procura por 'gateway_token' (da sua migração)
+                                'gateway_token' => $paymentMethodId, 
+                            ],
+                            [
+                                // Salva 'card_brand' (da sua migração)
+                                'card_brand' => $paymentMethod->card->brand, 
+                                // Salva 'last_four_digits' (da sua migração)
+                                'last_four_digits' => $paymentMethod->card->last4, 
+                                'is_default' => $isFirstCard,
+                            ]
+                        );
+                        // --- 👆 FIM DA CORREÇÃO 👆 ---
+                    }
+                }
             }
         } catch (\Exception $e) {
-            // Se falhar a salvar o cartão, não faz mal, a compra foi feita
-            // Apenas regista o erro
-            \Log::error('Erro ao salvar o cartão do Stripe: ' . $e->getMessage());
+            Log::error('Erro ao salvar o cartão do Stripe: ' . $e->getMessage());
         }
 
-        // --- 5. A SUA LÓGICA DE 'OrderController@store' ---
+        // --- 3. A LÓGICA DE CRIAR A ORDEM ---
         
         $cartItems = $user->cartItems()->with('product')->get();
         if ($cartItems->isEmpty()) {
-            return redirect()->route('home')->with('error', 'O seu carrinho já foi processado.');
+            return redirect()->route('profile.edit')->with('success', 'O seu pedido já foi processado!');
         }
 
-        // Recalcula o total (com cupão) para guardar no pedido
         $coupon = session('coupon');
         $subtotal = $cartItems->sum(fn($i) => $i->quantity * $i->product->current_price);
         $totalAmount = $subtotal;
@@ -181,11 +203,8 @@ class PaymentController extends Controller
             $couponId = $coupon->id;
         }
 
-        // Inicia a transação (isto é seguro, o pagamento já foi feito)
         DB::beginTransaction();
         try {
-            // (A verificação de stock já foi feita antes de ir para o Stripe)
-            
             $order = Order::create([
                 'user_id' => $user->id,
                 'total_amount' => $totalAmount,
@@ -194,7 +213,6 @@ class PaymentController extends Controller
             ]);
 
             foreach ($cartItems as $item) {
-                // (Verificação de stock final, por segurança)
                 $availableKeys = GameKey::where('product_id', $item->product_id)
                                     ->where('is_sold', false)
                                     ->lockForUpdate()
@@ -211,23 +229,23 @@ class PaymentController extends Controller
                 ]);
 
                 foreach ($availableKeys as $key) {
+                    // CORRIGIDO: Remove 'order_id'
                     $key->update([
                         'is_sold' => true,
                         'user_id' => $user->id,
-                        'order_item_id' => $orderItem->id,
+                        'order_item_id' => $orderItem->id, 
                     ]);
                 }
             }
 
             $user->cartItems()->delete();
             session()->forget('coupon');
-            if ($couponId) Coupon::find($couponId)->increment('uses_count'); // Incrementa o uso do cupão
+            if ($couponId) Coupon::find($couponId)->increment('uses_count');
             DB::commit();
 
         } catch (\Exception $e) {
             DB::rollBack();
-            // 🚨 ALERTA: O pagamento foi feito, mas a entrega das chaves falhou!
-            return redirect()->route('cart.index')->with('error', 'O seu pagamento foi aprovado, mas houve um erro ao atribuir as suas chaves. Por favor, contacte o suporte.');
+            return redirect()->route('cart.index')->with('error', 'Pagamento aprovado, mas erro ao atribuir chaves. Contacte o suporte. Erro: ' . $e->getMessage());
         }
         
         // SUCESSO!
@@ -240,5 +258,19 @@ class PaymentController extends Controller
     public function handleCancel()
     {
         return redirect()->route('cart.index')->with('error', 'O seu pagamento foi cancelado.');
+    }
+
+    /**
+     * Remove um método de pagamento salvo.
+     */
+    public function destroy(PaymentMethod $paymentMethod)
+    {
+        if ($paymentMethod->user_id !== Auth::id()) {
+            abort(403);
+        }
+        
+        $paymentMethod->delete();
+        
+        return back()->with('success', 'Método de pagamento removido.');
     }
 }

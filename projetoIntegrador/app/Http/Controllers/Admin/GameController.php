@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use App\Models\GameMode;
 
 class GameController extends Controller
 {
@@ -45,12 +46,14 @@ class GameController extends Controller
         $publishers = Publisher::orderBy('name')->get();
         $categories = Category::orderBy('name')->get();
         $baseGames = Game::whereNull('base_game_id')->orderBy('title')->get();
+        $gameModes = GameMode::orderBy('name')->get();
 
         return view('admin.games.create', [
             'developers' => $developers,
             'publishers' => $publishers,
             'categories' => $categories,
-            'baseGames' => $baseGames
+            'baseGames' => $baseGames,
+            'gameModes' => $gameModes
         ]);
 
         
@@ -71,6 +74,8 @@ class GameController extends Controller
             'release_date' => 'required|date',
             'age_rating' => 'required|string',
             'base_game_id' => 'nullable|exists:games,id',
+            'game_modes' => 'nullable|array', // 👈 ADICIONE ESTA
+            'game_modes.*' => 'exists:game_modes,id',
             
             // Dados de Relacionamento (EXISTENTES)
             'developer_id' => 'nullable|exists:developers,id',
@@ -98,7 +103,7 @@ class GameController extends Controller
 
         try {
             
-            $gameData = $request->only('title', 'about', 'release_date', 'age_rating');
+            $gameData = $request->only('title', 'about', 'release_date', 'age_rating', 'game_mode');
 
             $gameData['base_game_id'] = $request->base_game_id;
             // --- Lógica do Desenvolvedor ---
@@ -137,6 +142,11 @@ class GameController extends Controller
             }
             if (!empty($categoryIds)) {
                 $game->categories()->attach($categoryIds);
+            }
+
+            if ($request->has('game_modes')) {
+                // attach() é usado para salvar os IDs na tabela pivot
+                $game->gameModes()->attach($request->game_modes);
             }
 
             // --- Lógica das Imagens da Galeria ---
@@ -206,6 +216,8 @@ class GameController extends Controller
             'publisher_id' => 'required|exists:publishers,id',
             'categories' => 'required|array',
             'categories.*' => 'exists:categories,id',
+            'game_modes' => 'nullable|array', // 👈 ADICIONE ESTA
+            'game_modes.*' => 'exists:game_modes,id',
         ]);
 
         DB::beginTransaction();
@@ -229,6 +241,13 @@ class GameController extends Controller
             // 4. Sincroniza as categorias
             // sync() é a forma correta para 'update': ele remove as antigas e adiciona as novas
             $game->categories()->sync($request->categories);
+
+            if ($request->has('game_modes')) {
+                $game->gameModes()->sync($request->game_modes);
+            } else {
+    // Se o admin não selecionou nada, apaga todos os modos
+                $game->gameModes()->sync([]);
+            }
 
             if ($request->hasFile('images')) {
                 

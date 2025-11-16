@@ -235,7 +235,7 @@
   Este formulário envia para a rota 'order.store'
   e aciona o OrderController que acabámos de criar.
 --}}
-<form action="{{ route('order.store') }}" method="POST">
+<form action="{{ route('payment.checkout') }}" method="POST">
     @csrf
     
     {{-- 

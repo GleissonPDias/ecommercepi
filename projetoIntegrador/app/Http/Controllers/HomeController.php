@@ -6,39 +6,41 @@ use App\Models\Cart;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Category; // 👈 1. ADICIONE O 'USE' PARA CATEGORY
 use App\Models\CarouselSlide; // 1. Não se esqueça de importar o CarouselSlide
+
 
 class HomeController extends Controller
 {
     public function index()
     {
-        // --- 1. Buscando o Carrossel Principal ---
-        // (Esta parte está correta e usa a nova lógica)
+// --- 1. Buscando o Carrossel Principal ---
         $carouselSlides = CarouselSlide::with('products.game', 'products.platform')
                                     ->where('is_active', true)
                                     ->orderBy('order')
                                     ->get();
 
         // --- 2. Buscando a Vitrine Padrão ("Mais Populares") ---
-        // (ESTA É A CORREÇÃO)
         $products = Product::with('game', 'platform')
-                           ->where('is_active', true)
-                           // ->whereNull('featured_slot') // LINHA REMOVIDA
-                           ->latest()
-                           ->get();
+                            ->where('is_active', true)
+                            ->latest()
+                            ->get(); // (Pode adicionar .limit(10) aqui se quiser)
 
-        $cartItems = collect();
-
-        if (Auth::check()){
+        // --- 3. [CORRIGIDO] Lógica do Carrinho (para o Header) ---
+        $cartItems = collect(); 
+        if (Auth::check()) {
             $cartItems = Auth::user()->cartItems()->with('product.game')->get();
         }
-
         
-        // --- 3. Enviando TUDO para a View ---
+        // --- 4. [NOVO] Busca as categorias para o menu de filtro ---
+        $categories = Category::orderBy('name')->get();
+
+        // --- 5. Enviando TUDO para a View ---
         return view('home', [
             'carouselSlides' => $carouselSlides,
             'products' => $products,
             'cartItems' => $cartItems,
+            'categories' => $categories, // 👈 6. ENVIA AS CATEGORIAS
         ]);
     }
     
@@ -53,7 +55,8 @@ public function show(Product $product)
         'platform',
         'systemRequirements',
         'game.images',
-        'game.baseGame.product' // <-- Otimização: já carrega o produto do jogo-base
+        'game.baseGame.product',
+        'game.gameModes' // <-- Otimização: já carrega o produto do jogo-base
     );
     $cartItems = collect();
 

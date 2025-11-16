@@ -47,15 +47,15 @@
         
         {{-- 3. O ícone agora é um botão de 'submit' --}}
         <button type="submit" class="search-button" aria-label="Buscar">
-            <i class="fas fa-search"></i>
+        <i class="fas fa-search"></i>
         </button>
     </form>
 </div>
         <div class="header-right">
             <div class="cart-icon">
-                <a href="{{ route('cart.index') }}"
-                    ><i class="fas fa-shopping-cart"></i
-                ></a>
+                <a href="{{ route('cart.index') }}">
+                    <i class="fas fa-shopping-cart"></i>
+                </a>
                 {{-- (Este contador pode ser preenchido dinamicamente no futuro) --}}
                 <span class="cart-count">{{$cartItems->count()}}</span> 
             </div>
@@ -91,10 +91,26 @@
             <li><a href="#"><i class="fas fa-tags"></i> Ofertas</a></li>
             <li><a href="#"><i class="fas fa-gift"></i> Gift Card</a></li>
             <li class="divider"></li>
-            <li><a href="#"><i class="fas fa-desktop"></i> PC</a></li>
-            <li><a href="#"><i class="fab fa-xbox"></i> Xbox</a></li>
-            <li><a href="#"><i class="fab fa-playstation"></i> Playstation</a></li>
-            <li><a href="#"><i class="fas fa-gamepad"></i> Switch</a></li>
+<li>
+        <a href="{{ route('catalog.platform', 'pc') }}">
+            <i class="fas fa-desktop"></i> PC
+        </a>
+    </li>
+    <li>
+        <a href="{{ route('catalog.platform', 'xbox') }}">
+            <i class="fab fa-xbox"></i> Xbox
+        </a>
+    </li>
+    <li>
+        <a href="{{ route('catalog.platform', 'playstation') }}">
+            <i class="fab fa-playstation"></i> Playstation
+        </a>
+    </li>
+    <li>
+        <a href="{{ route('catalog.platform', 'switch') }}">
+            <i class="fas fa-gamepad"></i> Switch
+        </a>
+    </li>
             <li class="divider"></li>
             <li><a href="#"><i class="fas fa-headset"></i> Suporte</a></li>
             <li><a href="#"><i class="fas fa-ellipsis-h"></i> Mais</a></li>

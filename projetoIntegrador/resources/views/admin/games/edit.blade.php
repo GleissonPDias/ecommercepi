@@ -112,6 +112,18 @@
     </div>
 
     <div class="form-group">
+    <label for="game_mode">Modo de Jogo</label>
+    <select id="game_mode" name="game_mode">
+        <option value="" @if(old('game_mode') == '') selected @endif>-- Selecione um modo --</option>
+        <option value="Single-player" @if(old('game_mode') == 'Single-player') selected @endif>Single-player</option>
+        <option value="Multi-player" @if(old('game_mode') == 'Multi-player') selected @endif>Multi-player</option>
+        <option value="Co-op" @if(old('game_mode') == 'Co-op') selected @endif>Co-op</option>
+        <option value="Single & Multi" @if(old('game_mode') == 'Single & Multi') selected @endif>Single & Multi</option>
+    </select>
+    @error('game_mode') <small class="error-message">{{ $message }}</small> @enderror
+</div>
+
+    <div class="form-group">
         <label for="about">Sobre o Jogo (Descrição)</label>
         {{-- CORRIGIDO: Preenchido o 'textarea' --}}
         <textarea id="about" name="about" rows="5" required>{{ old('about', $game->about) }}</textarea>
