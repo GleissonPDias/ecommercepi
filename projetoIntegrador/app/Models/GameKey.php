@@ -11,10 +11,9 @@ class GameKey extends Model
 
     protected $fillable = [
         'product_id',
-        'key_string',
+        'key_value',
         'is_sold',
         'user_id',
-        'order_id',
         'order_item_id', // (Se você tiver esta coluna)
     ];
 

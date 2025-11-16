@@ -12,6 +12,7 @@
 </head>
 <body>
 
+
     <header class="main-header">
         <div class="header-left">
             <button class="btn-menu" type="button" aria-label="Abrir menu">
@@ -75,6 +76,17 @@
                     <h2>Meu Carrinho</h2>
                 </div>
 
+                @if (session('success'))
+                 <div style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
+                {{ session('success') }}
+                </div>
+                @endif
+                @if (session('error'))
+    <div style="background-color: #f8d7da; color: #721c24; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
+        <strong>Erro:</strong> {{ session('error') }}
+    </div>
+                @endif
+
                 <div class="cart-item-list">
                     <span class="list-header">Produto</span>
                     @forelse ($cartItems as $item)
@@ -87,6 +99,22 @@
                             
                             <p>{{$item->product->platform->name}} (por chave de ativação)</p>
                         </div>
+                                                <div class="item-quantity">
+                            {{-- Botão de diminuir --}}
+                            <form action="{{ route('cart.decrease', $item) }}" method="POST" class="quantity-form">
+                                @csrf
+                                <button type="submit" class="btn-quantity">-</button>
+                            </form>
+                            
+                            {{-- O número --}}
+                            <span class="quantity-value">{{ $item->quantity }}</span>
+
+                            {{-- Botão de aumentar --}}
+                            <form action="{{ route('cart.increase', $item) }}" method="POST" class="quantity-form">
+                                @csrf
+                                <button type="submit" class="btn-quantity">+</button>
+                            </form>
+                        </div>
                         <div class="item-price">
                             <span class="old-price">R$ {{ number_format($item->product->default_price * $item->quantity, 2, ',', '.') }}</span>
                             <span class="new-price">R$ {{ number_format($item->product->current_price * $item->quantity, 2, ',', '.') }}</span>
@@ -97,6 +125,7 @@
                             <button type="submit" class="item-remove" aria-label="Remover item">
                                 <i class="fas fa-trash-alt"></i>
                             </button>
+                        </form>
                     </div>
                     @empty
                     <div class="cart-item" style="justify-content: center; padding:20px;">
@@ -106,12 +135,15 @@
                 </div>
 
                 <div class="coupon-section">
-                    <h4>Possui um cupom de desconto ou voucher?</h4>
-                    <div class="coupon-apply">
-                        <input type="text" placeholder="Cupom ou voucher">
-                        <button type="button">Aplicar</button>
-                    </div>
-                </div>
+    <h4>Possui um cupom de desconto ou voucher?</h4>
+
+    {{-- Formulário para APLICAR o cupão --}}
+    <form action="{{ route('coupon.apply') }}" method="POST" class="coupon-apply">
+        @csrf
+        <input type="text" name="code" placeholder="Cupom ou voucher" required>
+        <button type="submit">Aplicar</button>
+    </form>
+</div>
 
                 <div class="info-box">
                     <h4><i class="fas fa-info-circle"></i> Informações Importantes:</h4>
@@ -167,14 +199,38 @@
                     </div>
                 </div>
 
-                <div class="price-summary">
-                    <div class="summary-row total">
-                        <span>Valor total</span>
-                        <div>
-                            <span class="new-total">R$ {{ number_format($subtotal, 2, ',', '.') }}</span>
-                        </div>
-                    </div>
-                </div>
+<div class="price-summary">
+    {{-- MOSTRA O SUBTOTAL --}}
+    <div class="summary-row">
+        <span>Subtotal</span>
+        <span>R$ {{ number_format($subtotal, 2, ',', '.') }}</span>
+    </div>
+
+    {{-- MOSTRA O DESCONTO (APENAS SE EXISTIR) --}}
+    @if (session('coupon'))
+        <div class="summary-row" style="color: #28a745;"> {{-- (cor verde) --}}
+            <span>Desconto ({{ session('coupon')->code }})</span>
+            <span>- R$ {{ number_format($discountAmount, 2, ',', '.') }}</span>
+
+            {{-- Formulário para REMOVER o cupão --}}
+            <form action="{{ route('coupon.remove') }}" method="POST" style="text-align: right; margin-top: 5px;">
+                @csrf
+                <button type="submit" style="background: none; border: none; color: #ff4d4d; cursor: pointer; padding: 0; font-size: 0.8em;">
+                    [Remover cupão]
+                </button>
+            </form>
+        </div>
+    @endif
+
+    {{-- MOSTRA O NOVO TOTAL --}}
+    <div class="summary-row total">
+        <span>Valor total</span>
+        <div>
+            {{-- Usamos a nova variável $total --}}
+            <span class="new-total">R$ {{ number_format($total, 2, ',', '.') }}</span>
+        </div>
+    </div>
+</div>
                 {{-- 
   Este formulário envia para a rota 'order.store'
   e aciona o OrderController que acabámos de criar.

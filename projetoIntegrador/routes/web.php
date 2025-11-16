@@ -12,12 +12,14 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CarouselController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\GameKeyController;
+use App\Http\Controllers\Admin\CouponManagementController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Order;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CouponController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +34,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('users', UserController::class);
+    
+    Route::resource('coupons', CouponManagementController::class)->except(['show']);
     Route::resource('developers', DeveloperController::class)->except(['show']);
     Route::resource('publishers', PublisherController::class)->except(['show']);
     Route::resource('platforms', PlatformController::class)->except(['show']);
@@ -91,12 +95,18 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/carrinho', [CartController::class, 'index'])->name('cart.index');
     Route::post('/carrinho/adicionar/{product}', [CartController::class, 'store'])->name('cart.store');
+    Route::post('/carrinho/increase/{cartItem}', [CartController::class, 'increase'])->name('cart.increase');
+    Route::post('/carrinho/decrease/{cartItem}', [CartController::class, 'decrease'])->name('cart.decrease');
     Route::delete('/carrinho/remover/{cartItem}', [CartController::class, 'destroy'])->name('cart.destroy');
 
 
     Route::get('/search', [SearchController::class, 'index'])->name('search.index');
 
-    Route::post('/order/store', [OrderController::class, 'sotre'])->name('order.store');
+    Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
+
+
+    Route::post('/coupon/apply', [CouponController::class, 'apply'])->name('coupon.apply');
+    Route::post('/coupon/remove', [CouponController::class, 'remove'])->name('coupon.remove');
 });
 
 /*

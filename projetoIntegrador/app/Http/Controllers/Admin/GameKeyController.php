@@ -51,8 +51,8 @@ class GameKeyController extends Controller
 
             // 4. Cria a chave no banco de dados, já associada ao produto
             $product->keys()->create([
-                'key_string' => $trimmedKey,
-                'is_sold' => false, // (O default da sua migration)
+                'key_value' => $trimmedKey,
+
             ]);
 
             $count++;

@@ -240,13 +240,60 @@
 </div>
 
             <div id="meus-games" class="account-panel">
-                <h2>Meus Games</h2>
-                <p class="subtitle">Sua biblioteca de jogos.</p>
-                 <div class="content-placeholder">
-                    <i class="fas fa-gamepad"></i>
-                    <p>Você ainda não possui jogos.</p>
-                </div>
-            </div>
+    <h2>Meus Games</h2>
+    <p class="subtitle">Sua biblioteca de jogos e chaves de ativação.</p>
+    
+    {{-- 
+      Verifica se a coleção 'library' (que carregamos no controller) 
+      não está vazia. 
+    --}}
+    @if (auth()->user()->library->isNotEmpty())
+
+        {{-- (Vou usar um estilo de grid parecido com o da Wishlist) --}}
+        <div class="wishlist-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
+            
+            {{-- Faz um loop em cada CHAVE (GameKey) na biblioteca --}}
+            @foreach (auth()->user()->library as $key)
+                
+                {{-- Verificação de segurança para garantir que os dados existem --}}
+                @if($key->product && $key->product->game)
+                    <div class="game-key-card" style="border: 1px solid #444; border-radius: 8px; overflow: hidden; background: #2a2a3a;">
+                        
+                        {{-- A Chave ($key) tem um Produto ($key->product) que tem um Jogo ($key->product->game) --}}
+                        <img src="{{ Storage::url($key->product->game->cover_url) }}" 
+                             alt="{{ $key->product->name }}" 
+                             style="width: 100%; height: 260px; object-fit: cover;">
+                        
+                        <div style="padding: 15px;">
+                            <h4 style="margin: 0 0 5px 0;">{{ $key->product->name }}</h4>
+                            <p style="font-size: 0.9em; color: #ccc; margin: 0 0 10px 0;">
+                                {{ $key->product->platform->name }}
+                            </p>
+                            
+                            <label style="font-size: 0.8em; color: #aaa;">Sua Chave:</label>
+                            
+                            {{-- 
+                              A 'key_value' vem do seu Model GameKey. 
+                              Verifiquei o seu Model anterior e o nome da coluna é 'key_value'.
+                            --}}
+                            <input type="text" 
+                                   value="{{ $key->key_value }}" 
+                                   readonly 
+                                   style="width: 100%; background: #1a1a2e; border: 1px solid #555; color: white; padding: 8px; border-radius: 4px;">
+                        </div>
+                    </div>
+                @endif
+            @endforeach
+        </div>
+
+    @else
+        {{-- Se a biblioteca estiver vazia, mostramos o seu placeholder original --}}
+        <div class="content-placeholder">
+            <i class="fas fa-gamepad"></i>
+            <p>Você ainda não possui jogos.</p>
+        </div>
+    @endif
+</div>
             
             <div id="meus-cartoes" class="account-panel">
                 <h2>Meus Cartões</h2>

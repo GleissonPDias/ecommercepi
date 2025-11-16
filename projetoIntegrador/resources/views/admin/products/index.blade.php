@@ -57,6 +57,10 @@
                         <td class="actions">
                                 {{-- Link para a futura página de edição --}}
                                 <a href="{{route('admin.products.edit', $product)}}" class="btn-action btn-edit">Editar</a>
+
+                                <a href="{{ route('admin.products.keys.index', $product) }}" class="btn-gerenciar-chaves" style="background: #007bff; color: white; padding: 5px 10px; text-decoration: none; border-radius: 4px; font-size: 0.9em;">
+                                Gerir Chaves
+                                </a>
                                 
                                 {{-- Formulário de Delete --}}
                                 <form method="POST" action="{{route('admin.products.destroy', $product)}}">

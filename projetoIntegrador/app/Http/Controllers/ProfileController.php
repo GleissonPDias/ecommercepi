@@ -21,7 +21,10 @@ class ProfileController extends Controller
         $user = $request->user();
         $cartItems = Auth::user()->cartItems()->with('product.game')->get();
 
-        $user->load('favorites.game');
+        $user->load('favorites.game',
+                    'library.product.game',
+                    'library.product.platform'                
+    );
 
         return view('profile.edit', [
             'user' => $user,
