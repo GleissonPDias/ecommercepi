@@ -1,0 +1,93 @@
+.admin-table {
+    width: 90%;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Sombra suave */
+    border-radius: 8px;
+    overflow: hidden; /* Para arredondar os cantos do thead */
+    margin-bottom: 20px;
+}
+
+.admin-table thead {
+    background-color: #1A203E; /* Cabeçalho escuro */
+    color: #ffffff;
+}
+
+.admin-table th {
+    padding: 15px;
+    text-align: left;
+    font-weight: 500;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.admin-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+/* Efeito hover nas linhas (exceto as que já tem cor de fundo fixa) */
+.admin-table tbody tr:hover {
+    background-color: #f9fafb; 
+}
+
+.admin-table td {
+    padding: 12px 15px;
+    font-size: 14px;
+    color: #555;
+    vertical-align: middle;
+}
+
+.table-wrapper {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    overflow: hidden; /* Arredonda os cantos da tabela */
+    overflow-x: auto; /* Responsividade */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: #1a1f33; /* Cabeçalho escuro padrão */
+}
+
+th {
+    color: #ffffff;
+    padding: 15px;
+    text-align: left;
+    font-weight: 500;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: none;
+}
+
+td {
+    padding: 12px 15px;
+    vertical-align: middle;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Efeito zebrado e hover */
+tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+/* --- IMAGEM DE CAPA --- */
+.table-cover-img {
+    width: 50px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.table-lines td{
+    padding: 10px;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}

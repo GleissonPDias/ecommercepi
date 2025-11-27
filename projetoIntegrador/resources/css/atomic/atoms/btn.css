@@ -30,3 +30,129 @@
 .btn-add-cart:hover {
     background-color: #2a2f42;
 }
+
+.btn-editar {
+    background-color: #ffc107; /* Amarelo/Âmbar */
+    color: #212529;
+    padding: 6px 12px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: opacity 0.3s ease;
+    margin-right: 5px;
+}
+
+.btn-editar:hover {
+    opacity: 0.8;
+}
+
+.btn-excluir {
+    background-color: #ef4444; /* Vermelho */
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-excluir:hover {
+    background-color: #dc2626;
+}
+
+.btn-create {
+    background-color: #3b82f6; /* Azul vibrante padrão */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+    border: none;
+    cursor: pointer;
+}
+
+.btn-create:hover {
+    background-color: #2563eb;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.actions form {
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.btn-action {
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    transition: opacity 0.2s;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+}
+
+.btn-action:hover {
+    opacity: 0.85;
+}
+
+.btn-continue {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 8px;
+    border: none;
+    background-color: #d1d5db; /* Verde da imagem */
+    color: #121622;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+}
+.btn-continue:hover {
+    background-color: #fff;
+    transform: scale(1.02);
+}
+
+.btn-quantity {
+    width: 28px;
+    height: 28px;
+    background-color: #2a2f42; /* Fundo inicial do botão */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;             /* Centraliza o símbolo + ou - */
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+
+.btn-quantity:hover {
+    background-color: #3b82f6; /* Azul vibrante da marca */
+}
+
+.quantity-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    padding: 0 12px;           /* Espaçamento lateral entre o número e os botões */
+    min-width: 20px;           /* Evita que o layout pule se mudar de 1 para 10 */
+    text-align: center;
+}

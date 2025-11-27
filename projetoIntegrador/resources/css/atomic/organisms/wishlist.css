@@ -1,0 +1,87 @@
+/* --- WISHLIST (LISTA DE DESEJOS) --- */
+
+/* Grid que organiza os itens */
+.wishlist-grid {
+    display: grid;
+    /* Colunas automáticas com largura mínima de 200px */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px; /* Espaço entre os cards */
+    margin-top: 20px;
+}
+
+/* O Card Individual */
+.wishlist-card {
+    background-color: #0d111c; /* Um pouco mais escuro que o painel para contraste */
+    border-radius: 12px;
+    padding: 15px;
+    border: 1px solid #2a2f42; /* Borda sutil */
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Empurra o botão para baixo */
+    height: 100%; /* Garante que todos tenham a mesma altura */
+}
+
+.wishlist-card:hover {
+    transform: translateY(-5px); /* Efeito de "flutuar" ao passar o mouse */
+}
+
+/* Link que envolve a imagem e textos */
+.wishlist-card a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    margin-bottom: 15px;
+}
+
+/* Imagem do Produto */
+.wishlist-card img {
+    width: 100%;
+    height: 120px; /* Altura fixa para manter padrão */
+    object-fit: cover; /* Corta a imagem sem distorcer */
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+/* Nome do Produto */
+.wishlist-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #a0a4b8;
+    margin: 0 0 5px 0;
+    line-height: 1.4;
+}
+
+/* Preço */
+.wishlist-card p {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* Botão Remover */
+.wishlist-card button {
+    width: 100%;
+    background-color: transparent;
+    color: #ff4769; /* Vermelho para ação de remover */
+    border: 1px solid #ff4769;
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: auto; /* Garante que fique no rodapé do card */
+}
+
+.wishlist-card button:hover {
+    background-color: #ff4769;
+    color: #fff;
+}
+
+/* --- RESPONSIVIDADE --- */
+@media (max-width: 480px) {
+    .wishlist-grid {
+        grid-template-columns: 1fr; /* 1 coluna no celular */
+    }
+}

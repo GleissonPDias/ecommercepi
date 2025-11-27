@@ -8,12 +8,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <title>Document</title>
+    <title>GettStore</title>
   </head>
   <body>
     <div class="container">
       <div class="content content-redefinir">
-        <img class="logo-login" src="./images/GettStore Branco s fundo.png" alt="gettstore" />
+        <img class="logo-redefinir" src="{{ asset('images/gettstore.png') }}" alt="gettstore" />
         <form class="form form-redefinir" method="POST" action="{{ route('password.email') }}">
         @csrf
           <h2 class="redefinir">Redefinir senha</h2>
@@ -25,7 +25,6 @@
         @endif
 
             <div class="form-group">
-                    <label for="email" style="color: white; margin-bottom: 5px; display: block;">Email Cadastrado:</label>
                     
                     {{-- 
                       3. O 'name="email"' foi adicionado

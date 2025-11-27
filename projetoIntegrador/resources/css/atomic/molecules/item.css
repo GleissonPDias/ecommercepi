@@ -7,11 +7,13 @@
 .item-details {
     flex-grow: 1;
 }
+
 .item-details h4 {
     font-size: 16px;
     font-weight: 600;
     color: #fff;
 }
+
 .item-details p {
     font-size: 14px;
     color: #a0a4b8;
@@ -20,12 +22,14 @@
 .item-price {
     text-align: right;
 }
+
 .item-price .old-price {
     display: block;
     font-size: 12px;
     color: #a0a4b8;
     text-decoration: line-through;
 }
+
 .item-price .new-price {
     font-size: 16px;
     font-weight: 600;
@@ -33,11 +37,32 @@
 }
 
 .item-remove {
-    color: #a0a4b8;
-    font-size: 16px;
-    padding: 10px;
-    transition: color 0.3s ease;
+    background: transparent;    /* Remove o fundo padrão de botão */
+    border: none;               /* Remove a borda padrão */
+    cursor: pointer;            /* Mãozinha ao passar o mouse */
+    color: #a0a4b8;             /* Cor cinza claro (padrão do seu tema) */
+    font-size: 18px;            /* Tamanho do ícone */
+    padding: 8px;               /* Aumenta a área de clique sem aumentar o ícone */
+    border-radius: 4px;         /* Cantos arredondados para o efeito de hover */
+    transition: all 0.2s ease;  /* Animação suave */
+    
+    /* Centraliza o ícone dentro do botão */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
 .item-remove:hover {
-    color: #ff4769;
+    color: #ff4769; /* Vermelho/Rosa para indicar ação destrutiva */
+    background-color: rgba(255, 71, 105, 0.1); /* Fundo vermelho bem suave */
+}
+
+.item-quantity {
+    display: flex;
+    align-items: center;
+    background-color: #0d111c; /* Fundo mais escuro que o card */
+    border: 1px solid #2a2f42; /* Borda sutil */
+    border-radius: 6px;        /* Cantos arredondados */
+    padding: 4px;              /* Espaço interno */
+    width: fit-content;        /* Ocupa só o espaço necessário */
 }

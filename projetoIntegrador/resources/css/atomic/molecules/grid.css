@@ -14,3 +14,17 @@
     color: #a0a4b8;
     font-size: 14px;
 }
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: 0.85fr 1fr; /* Divide em duas frações iguais */
+    gap: 20px; /* Espaço entre eles */
+    align-items: start; /* Alinha ao topo caso um fique maior que o outro */
+}
+
+/* IMPORTANTE: Responsividade para celulares */
+@media (max-width: 768px) {
+    .grid-2 {
+        grid-template-columns: 1fr; /* Volta a ficar um embaixo do outro no celular */
+    }
+}

@@ -34,23 +34,23 @@
                 ><img src="{{ asset('images/logo.svg') }}" alt="logo" class="logo"
             /></a>
         </div>
-<div class="header-center">
-    {{-- 1. Transformado num formulário que envia para a rota 'search.index' --}}
-    <form action="{{ route('search.index') }}" method="GET" class="search-bar">
-        
-        {{-- 2. Adicionado o atributo 'name="query"' --}}
-        <input type="text" 
-               name="query" 
-               placeholder="Buscar jogo ou palavra-chave" 
-               required 
-               value="{{ request('query') ?? '' }}"> {{-- (Mantém o texto na barra) --}}
-        
-        {{-- 3. O ícone agora é um botão de 'submit' --}}
-        <button type="submit" class="search-button" aria-label="Buscar">
-        <i class="fas fa-search"></i>
-        </button>
-    </form>
-</div>
+        <div class="header-center">
+            {{-- 1. Transformado num formulário que envia para a rota 'search.index' --}}
+            <form action="{{ route('search.index') }}" method="GET" class="search-bar">
+                
+                {{-- 2. Adicionado o atributo 'name="query"' --}}
+                <input type="text" 
+                    name="query" 
+                    placeholder="Buscar jogo ou palavra-chave" 
+                    required 
+                    value="{{ request('query') ?? '' }}"> {{-- (Mantém o texto na barra) --}}
+                
+                {{-- 3. O ícone agora é um botão de 'submit' --}}
+                <button type="submit" aria-label="Buscar">
+                <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </div>
         <div class="header-right">
             <div class="cart-icon">
                 <a href="{{ route('cart.index') }}"><i class="fas fa-shopping-cart"></i></a>

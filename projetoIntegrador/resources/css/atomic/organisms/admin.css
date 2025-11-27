@@ -1,0 +1,131 @@
+/* --- CONFIGURAÇÕES GERAIS DO ADMIN --- */
+.admin-body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f6f9; /* Fundo cinza claro da área principal */
+    margin: 0;
+    display: flex; /* Define o layout flex para sidebar e conteúdo */
+    min-height: 100vh;
+}
+
+/* --- 1. BARRA LATERAL DE NAVEGAÇÃO (SIDEBAR) --- */
+.admin-sidebar {
+    width: 250px; /* Largura fixa da sidebar */
+    background-color: #1A203E; /* Azul escuro da marca (como na imagem) */
+    color: #a0a4b8; /* Cor do texto (cinza claro para contraste) */
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Ocupa a altura total da tela */
+    position: fixed; /* Fixa a sidebar na tela */
+    top: 0;
+    left: 0;
+    border-right: 1px solid #2a2f42; /* Borda sutil */
+    z-index: 10;
+}
+
+/* Cabeçalho da Sidebar (Logo) */
+.sidebar-header {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin-logo {
+    height: 35px;
+    width: auto;
+}
+
+/* Navegação da Sidebar */
+.admin-nav {
+    padding: 20px 0;
+    flex-grow: 1; /* Ocupa o espaço disponível */
+    overflow-y: auto; /* Permite rolagem se o menu for muito longo */
+}
+
+/* Links da Navegação */
+.nav-link {
+    display: flex;
+    align-items: center;
+    padding: 12px 25px;
+    color: #a0a4b8;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent; /* Borda para efeito hover */
+}
+
+/* Ícones dos Links */
+.nav-link i {
+    margin-right: 15px;
+    font-size: 16px;
+    width: 20px;
+    text-align: center;
+}
+
+/* Efeito Hover e Link Ativo */
+.nav-link:hover, .nav-link.active {
+    background-color: #121622; /* Cor de fundo mais escura */
+    color: #ffffff; /* Texto branco */
+    border-left-color: #3b82f6; /* Borda azul vibrante no hover */
+}
+
+/* Rodapé da Sidebar */
+.sidebar-footer {
+    padding: 20px 0;
+    border-top: 1px solid #2a2f42;
+    background-color: #1A203E;
+}
+
+/* --- 2. CONTEÚDO PRINCIPAL (HEADER + PÁGINA) --- */
+.admin-main-content {
+    flex-grow: 1; /* Ocupa o espaço restante à direita da sidebar */
+    margin-left: 250px; /* Margem igual à largura da sidebar */
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- CABEÇALHO DO PAINEL (HEADER SUPERIOR) --- */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    background-color: #2a2f42; /* Cabeçalho branco para destaque */
+    border-bottom: 1px solid #e5e7eb;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03); /* Sombra muito sutil */
+    position: sticky;
+    top: 0;
+    z-index: 5;
+}
+
+/* Título da Página no Header */
+.admin-header h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 600;
+    color: #ffffff; /* Azul escuro da marca */
+}
+
+/* Informações do Usuário no Header */
+.admin-user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.admin-user-info i {
+    font-size: 20px;
+    color: #a0a4b8; /* Ícone do usuário em azul vibrante */
+}
+
+/* --- 3. ÁREA DE CONTEÚDO INJETADO (@yield('content')) --- */
+.admin-content {
+    background-color: #2a2f42;
+    padding: 30px; /* Espaçamento interno do conteúdo */
+    flex-grow: 1;
+    /* Aqui é onde os formulários, tabelas, etc., que criamos antes serão injetados */
+}

@@ -1,0 +1,81 @@
+/* Container Principal agora ocupa a largura toda */
+.filter-sidebar {
+    width: 100%; /* Mudou de 250px para 100% */
+    background-color: #1e1e2f;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px; /* Espaço abaixo da barra de filtros */
+    color: #fff;
+}
+
+/* O Formulário se torna o container Flex */
+.filter-sidebar form {
+    display: flex; /* Coloca os itens lado a lado */
+    align-items: flex-end; /* Alinha os campos e o botão pela base */
+    gap: 20px; /* Espaçamento entre os filtros */
+    flex-wrap: wrap; /* Permite quebrar linha se a tela for pequena */
+}
+
+/* Grupos de filtro ocupam espaço igual */
+.filter-sidebar .filter-group {
+    flex: 1; /* Faz os inputs crescerem para ocupar o espaço */
+    min-width: 200px; /* Tamanho mínimo para não ficar espremido */
+    margin-bottom: 0; /* Remove a margem de baixo antiga */
+}
+
+.filter-sidebar .filter-group label {
+    display: block;
+    font-weight: 500;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    color: #ccc;
+}
+
+.filter-sidebar .filter-group input,
+.filter-sidebar .filter-group select {
+    width: 100%;
+    padding: 10px; /* Ajuste leve para ficar na altura do botão */
+    background-color: #2a2a3a;
+    border: 1px solid #444;
+    color: #fff;
+    border-radius: 5px;
+    font-family: "Poppins", sans-serif;
+    height: 45px; /* Altura fixa para alinhar com o botão */
+}
+
+/* Botão */
+.filter-sidebar .btn-filter {
+    width: auto; /* O botão agora tem o tamanho do texto */
+    padding: 0 30px; /* Espaçamento lateral interno */
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    height: 45px; /* Mesma altura dos inputs para alinhar */
+    transition: background 0.3s;
+}
+
+.filter-sidebar .btn-filter:hover {
+    background-color: #0056b3;
+}
+
+/* 2. O CONTEÚDO (DIREITA) */
+.search-results-content {
+    flex-grow: 1; /* Ocupa todo o espaço restante */
+    min-width: 0; /* (Correção de bug do Flexbox) */
+}
+
+/* O seu 'games-carousel' (que agora é uma grelha)
+   precisa de ser uma grelha responsiva 
+*/
+.search-results-content .games-carousel {
+    display: grid;
+    /* Cria colunas responsivas: 
+      Tenta encaixar o máximo de colunas de 240px que conseguir.
+    */
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+}

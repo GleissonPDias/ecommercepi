@@ -38,28 +38,53 @@
 }
 
 .search-bar {
-    position: relative;
+    position: relative; /* Essencial para o botão ficar dentro da barra */
     width: 100%;
     max-width: 450px;
     margin: 0 auto;
+    display: flex; /* Garante alinhamento */
 }
 
 .search-bar input {
     width: 100%;
-    padding: 10px 40px 10px 15px;
+    padding: 10px 40px 10px 15px; /* 40px na direita para o botão não cobrir o texto */
     border-radius: 8px;
     border: 1px solid #2a2f42;
     background-color: #0d111c;
     color: #fff;
     font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Efeito de foco para ficar bonito */
+.search-bar input:focus {
+    outline: none;
+    border-color: #3b82f6;
+}
+
+/* --- AQUI ESTÁ A MUDANÇA PRINCIPAL --- */
+/* Estilizamos o BOTÃO, não apenas o ícone */
+.search-bar button {
+    position: absolute;
+    right: 10px; /* Distância da direita */
+    top: 50%;
+    transform: translateY(-50%); /* Centraliza verticalmente */
+    
+    background: transparent; /* Remove fundo cinza padrão */
+    border: none;            /* Remove borda padrão */
+    color: #6a6f83;          /* Cor do ícone */
+    
+    cursor: pointer;
+    padding: 5px 10px;       /* Área de clique um pouco maior */
+    transition: color 0.2s;
+}
+
+.search-bar button:hover {
+    color: #fff; /* Fica branco ao passar o mouse */
 }
 
 .search-bar i {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #6a6f83;
+    font-size: 16px;
 }
 
 .header-right {
@@ -104,4 +129,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.header2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
 }

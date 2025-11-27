@@ -1,0 +1,48 @@
+.profile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.profile-avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: #f0f0f0; /* Fundo branco */
+    color: #0b0d28; /* Ícone azul escuro */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 80px; /* Tamanho do ícone */
+    margin-bottom: 25px;
+}
+
+.profile-info {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap; /* Para quebrar linha em telas menores */
+    justify-content: center;
+}
+
+.profile-nav {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    justify-content: center; /* Centraliza os botões */
+    border-bottom: 1px solid #2a2f42; /* Adiciona uma linha divisória */
+    padding-bottom: 20px;
+}
+
+.info-pill {
+    background-color: #1a1f33; /* Azul mais escuro (do card) */
+    padding: 10px 20px;
+    border-radius: 20px; /* Formato de pílula */
+    color: #f0f0f0;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}

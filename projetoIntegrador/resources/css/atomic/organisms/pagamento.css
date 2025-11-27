@@ -94,20 +94,3 @@
     color: #a3cc3a; /* Verde da imagem */
 }
 
-.btn-continue {
-    width: 100%;
-    padding: 15px;
-    font-size: 18px;
-    font-weight: 700;
-    border-radius: 8px;
-    border: none;
-    background-color: #a3cc3a; /* Verde da imagem */
-    color: #0B0D28;
-    cursor: pointer;
-    margin-top: 20px;
-    transition: all 0.3s ease;
-}
-.btn-continue:hover {
-    background-color: #b9e04f;
-    transform: scale(1.02);
-}

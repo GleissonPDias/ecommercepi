@@ -1,14 +1,29 @@
 .thumbnail-gallery {
-    display: flex;
-    gap: 15px;
+    display: flex;             /* Coloca as imagens lado a lado */
+    gap: 10px;                 /* Espaço entre as imagens */
+    margin-top: 15px;          /* Espaço entre a imagem grande e as miniaturas */
+    padding-bottom: 0;
+    flex-wrap: wrap; /* Garante que não quebre o layout se a tela for muito pequena */
 }
 
 .thumbnail-gallery img {
-    width: calc(20% - 12px);
+    /* Ajuste de largura para caber exatamente 5 imagens + os espaços (gaps) */
+    /* 100% do espaço menos 4 gaps de 10px (40px), dividido por 5 imagens */
+    width: calc((100% - 40px) / 5); 
+    
+    height: 80px;      
+    object-fit: cover;
     border-radius: 8px;
     cursor: pointer;
     opacity: 0.6;
-    transition: opacity 0.3s ease;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+}
+
+/* --- A MÁGICA ACONTECE AQUI --- */
+/* Seleciona da 6ª imagem em diante (n+6) e esconde */
+.thumbnail-gallery img:nth-of-type(n+6) {
+    display: none;
 }
 
 .thumbnail-gallery img:hover,

@@ -7,6 +7,10 @@
 }
 
 .logo-criar {
-    max-width: 250px;
+    max-width: 150px;
     padding: 20px;
+}
+
+.logo-redefinir {
+    max-width: 200px;
 }

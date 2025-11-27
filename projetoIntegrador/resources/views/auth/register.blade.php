@@ -6,13 +6,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>Gettstore</title>
   </head>
   <body>
     <div class="container">
       <div class="content">
         <img
-          class="logo logo-criacao"
+          class="logo-criar"
           src="{{ asset('images/gettstore.png')}}"
           alt="gettstore"
         />
@@ -59,19 +63,19 @@
             placeholder="Confirmar Senha"
           />
           <div class="container-checkbox">
-            <div class="checkbox-option">
+            <div class="checkbox-option criar">
               <input id="spam" name="spam" type="checkbox" value="0" />
               <label for="spam">Quero receber promoções por e-mail</label>
             </div>
 
-            <div class="checkbox-option">
+            <div class="checkbox-option criar">
               <input id="termos" name="termos" type="checkbox" value="0" />
               <label for="termos">Aceito os termos de uso</label>
             </div>
           </div>
 
+          <p class="execute">Já possui uma conta? <a class="forgot-password" href="{{route('login')}}">Login</a></p>
           <button class="button button-criacao" type="submit">Criar</button>
-          <p>Já possui uma conta? <a href="{{route('login')}}">Login</a></p>
           <p class="criar-termos">
             Ao se cadastrar, você aceita os Termos de Uso e a Política de
             Privacidade

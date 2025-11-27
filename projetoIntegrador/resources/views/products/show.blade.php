@@ -1,14 +1,11 @@
-{{-- 1. "Veste" o molde mestre (que tem o header/footer/search corretos) --}}
 @extends('layouts.app')
 
-{{-- 2. Define o título da página (para o @yield('title')) --}}
 @section('title', $product->name)
 
-{{-- 3. Injeta este conteúdo no "buraco" @yield('content') do molde --}}
 @section('content')
 
     <main class="product-page">
-        <div class="content-left" style="">
+        <div class="content-left">
             <div class="main-banner">
                 <img src="{{ Storage::url($product->game->cover_url) }}" alt="Capa do jogo" id="mainProductImage" />
                 <button class="carousel-arrow prev" aria-label="Imagem anterior">
@@ -55,95 +52,133 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        {{-- =============================================== --}}
-        {{-- ============ SEÇÃO DE DLCS RELACIONADAS ========= --}}
-        {{-- =============================================== --}}
-        @if ($dlcProducts->isNotEmpty())
-            <div class="related-products">
-                <h3>Produtos Relacionados</h3>
+            {{-- =============================================== --}}
+            {{-- ============ SEÇÃO DE DLCS RELACIONADAS ========= --}}
+            {{-- =============================================== --}}
+            @if ($dlcProducts->isNotEmpty())
+                <div class="related-products">
+                    <h3>Produtos Relacionados</h3>
 
-                <div class="related-products-list">
-                    @foreach ($dlcProducts as $dlc)
-                        @if ($dlc && $dlc->game)
-                            {{-- CORRIGIDO: Adicionado position:relative para os botões --}}
-                            <div class="dlc-card" style="position: relative;">
-                                <a href="{{ route('products.show', $dlc) }}">
-                                    <img src="{{ Storage::url($dlc->game->cover_url) }}"
-                                         alt="Capa de {{ $dlc->name }}" />
-                                    <h4>{{ $dlc->name }}</h4>
-                                    <p class="dlc-price">
-                                        R$ {{ number_format($dlc->current_price, 2, ',', '.') }}
-                                    </p>
-                                    {{-- CORRIGIDO: Mostra a plataforma da DLC --}}
-                                    <p style="font-size: 0.9em; padding: 0 10px 10px; color: #ccc;">{{ $dlc->platform->name }}</p>
-                                </a>
-                                
-                                {{-- CORRIGIDO: Botão de carrinho aponta para a DLC ($dlc) --}}
-                                <form method="POST" action="{{ route('cart.store', $dlc) }}" class="form-cart-store">
-                                    @csrf
-                                    <button type="submit" class="btn-add-to-cart">
-                                        <i class="fas fa-shopping-cart"></i>
-                                    </button>
-                                </form>
-                                {{-- CORRIGIDO: Botão de favorito aponta para a DLC ($dlc) --}}
-                                <form method="POST" action="{{ route('favorites.toggle', $dlc) }}" class="form-favorite-toggle">
-                                    @csrf
-                                    <button type="submit">
-                                        @if(auth()->user() && auth()->user()->favorites->contains($dlc))
-                                            <i class="fas fa-heart"></i> {{-- Cheio --}}
-                                        @else
-                                            <i class="far fa-heart"></i> {{-- Vazio --}}
-                                        @endif
-                                    </button>
-                                </form>
-                            </div>
-                        @endif
-                    @endforeach
+                    <div class="related-products-list">
+                        @foreach ($dlcProducts as $dlc)
+                            @if ($dlc && $dlc->game)
+                                <div class="dlc-card">
+                                    
+                                    {{-- LADO ESQUERDO: Link, Imagem e Informações --}}
+                                    <a href="{{ route('products.show', $dlc) }}" class="dlc-link-area">
+                                        <div class="dlc-image-wrapper">
+                                            <img src="{{ Storage::url($dlc->game->cover_url) }}" alt="{{ $dlc->name }}" />
+                                        </div>
+                                        <div class="dlc-info">
+                                            <h4>{{ $dlc->name }}</h4>
+                                            <span class="platform-badge"> {{ $dlc->platform->name }}</span>
+                                        </div>
+                                    </a>
+
+                                    {{-- LADO DIREITO: Preço e Botões --}}
+                                    <div class="dlc-actions-area">
+                                        
+                                        {{-- Preço --}}
+                                        <div class="dlc-pricing">
+                                            {{-- Exemplo de desconto estático, pode adicionar lógica se tiver --}}
+                                             
+                                            <span class="final-price">R$ {{ number_format($dlc->current_price, 2, ',', '.') }}</span>
+                                        </div>
+
+                                        {{-- Botão Adicionar ao Carrinho --}}
+                                        <form method="POST" action="{{ route('cart.store', $dlc) }}">
+                                            @csrf
+                                            <button type="submit" class="btn-dlc-buy">
+                                                <i class="fas fa-shopping-cart"></i>
+                                            </button>
+                                        </form>
+
+                                        {{-- Botão Favorito --}}
+                                        <form method="POST" action="{{ route('favorites.toggle', $dlc) }}">
+                                            @csrf
+                                            <button type="submit" class="btn-dlc-fav">
+                                                @if(auth()->user() && auth()->user()->favorites->contains($dlc))
+                                                    <i class="fas fa-heart"></i>
+                                                @else
+                                                    <i class="far fa-heart"></i>
+                                                @endif
+                                            </button>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
                 </div>
-            </div>
-        @endif
-        {{-- =============================================== --}}
-        {{-- ============ FIM DA SEÇÃO DE DLCS ============= --}}
-        {{-- =============================================== --}}
+                </div>
+            @endif
+            {{-- =============================================== --}}
+            {{-- ============ FIM DA SEÇÃO DE DLCS ============= --}}
+            {{-- =============================================== --}}
 
 
-        {{-- =============================================== --}}
-        {{-- ============ MOSTRA O JOGO-BASE (SE FOR DLC) ===== --}}
-        {{-- =============================================== --}}
-        @if ($baseGameProduct)
-            {{-- CORRIGIDO: Adicionado position:relative para os botões --}}
-            <div class="base-game-link" style="position: relative;">
-                <p>Requer o jogo-base:</p>
-                <img src="{{Storage::url($baseGameProduct->game->cover_url)}}" alt="{{$baseGameProduct->name}}" class="item-image" style="width: 100%; height: 260px; object-fit: cover;"> 
-                <a href="{{ route('products.show', $baseGameProduct) }}">
-                    <strong>{{ $baseGameProduct->name }}</strong>
-                </a>
-                <p>{{$baseGameProduct->platform->name}}</p>
-                <span class="new-price">R$ {{ number_format($baseGameProduct->current_price , 2, ',', '.') }}</span>
-                
-                {{-- CORRIGIDO: Botão de carrinho aponta para o JOGO BASE ($baseGameProduct) --}}
-                <form method="POST" action="{{ route('cart.store', $baseGameProduct) }}" class="form-cart-store">
-                    @csrf
-                    <button type="submit" class="btn-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                    </button>
-                </form>
-                {{-- CORRIGIDO: Botão de favorito aponta para o JOGO BASE ($baseGameProduct) --}}
-                <form method="POST" action="{{ route('favorites.toggle', $baseGameProduct) }}" class="form-favorite-toggle">
-                    @csrf
-                    <button type="submit">
-                        @if(auth()->user() && auth()->user()->favorites->contains($baseGameProduct))
-                            <i class="fas fa-heart"></i> {{-- Cheio --}}
-                        @else
-                            <i class="far fa-heart"></i> {{-- Vazio --}}
-                        @endif
-                    </button>
-                </form>
-            </div>
-        @endif
-        {{-- =============================================== --}}
+            {{-- =============================================== --}}
+            {{-- ============ MOSTRA O JOGO-BASE (SE FOR DLC) ===== --}}
+            {{-- =============================================== --}}
+            @if ($baseGameProduct)
+                <div class="base-game-container">
+                    {{-- Texto de Aviso --}}
+                    <p class="base-game-alert">
+                        <i class="fas fa-exclamation-circle"></i> Este conteúdo requer o jogo base:
+                    </p>
+
+                    {{-- Card Horizontal (Reutilizando o estilo .dlc-card) --}}
+                    <div class="dlc-card">
+                        
+                        {{-- LADO ESQUERDO: Link, Imagem e Texto --}}
+                        <a href="{{ route('products.show', $baseGameProduct) }}" class="dlc-link-area">
+                            <div class="dlc-image-wrapper">
+                                <img src="{{ Storage::url($baseGameProduct->game->cover_url) }}" alt="{{ $baseGameProduct->name }}" />
+                            </div>
+                            <div class="dlc-info">
+                                <h4>{{ $baseGameProduct->name }}</h4>
+                                <span class="platform-badge">
+                                    {{ $baseGameProduct->platform->name }}
+                                </span>
+                            </div>
+                        </a>
+
+                        {{-- LADO DIREITO: Preço e Botões --}}
+                        <div class="dlc-actions-area">
+                            
+                            {{-- Preço --}}
+                            <div class="dlc-pricing">
+                                <span class="final-price">
+                                    R$ {{ number_format($baseGameProduct->current_price, 2, ',', '.') }}
+                                </span>
+                            </div>
+
+                            {{-- Botão Adicionar ao Carrinho --}}
+                            <form method="POST" action="{{ route('cart.store', $baseGameProduct) }}">
+                                @csrf
+                                <button type="submit" class="btn-dlc-buy">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </button>
+                            </form>
+
+                            {{-- Botão Favorito --}}
+                            <form method="POST" action="{{ route('favorites.toggle', $baseGameProduct) }}">
+                                @csrf
+                                <button type="submit" class="btn-dlc-fav">
+                                    @if(auth()->user() && auth()->user()->favorites->contains($baseGameProduct))
+                                        <i class="fas fa-heart"></i>
+                                    @else
+                                        <i class="far fa-heart"></i>
+                                    @endif
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            @endif
+        </div>
 
         <div class="content-right">
             <div class="sidebar-card">
@@ -154,6 +189,19 @@
                         {{ $category->name }}{{ !$loop->last ? ',' : '' }}
                     @endforeach
                 </p>
+
+                {{-- CORRIGIDO: Ícone de Favorito (agora é um formulário) --}}
+                <form method="POST" action="{{ route('favorites.toggle', $product) }}" class="form-favorite-toggle">
+                    @csrf
+                    <button type="submit" style="background: none; border: none; color: white; cursor: pointer; font-size: 1.8rem; text-shadow: 0 0 5px black;">
+                        @if(auth()->user() && auth()->user()->favorites->contains($product))
+                            <i class="fas fa-heart" style="color: red;"></i>
+                        @else
+                            <i class="far fa-heart"></i>
+                        @endif
+                    </button>
+                </form>
+
                 <p class="game-price">R$ {{ number_format($product->current_price, 2, ',', '.') }}</p>
                 <p class="activation-note">
                     Produto ativado através de <strong>chave de ativação</strong>
@@ -171,18 +219,6 @@
                     @csrf
                     {{-- Adiciona o seletor de quantidade que discutimos --}}
                     <button type="submit" class="btn-add-cart">Adicionar ao carrinho</button>
-                </form>
-                
-                {{-- CORRIGIDO: Ícone de Favorito (agora é um formulário) --}}
-                <form method="POST" action="{{ route('favorites.toggle', $product) }}" class="form-favorite-toggle" style="position: absolute; top: 15px; right: 15px;">
-                    @csrf
-                    <button type="submit" style="background: none; border: none; color: white; cursor: pointer; font-size: 1.8rem; text-shadow: 0 0 5px black;">
-                        @if(auth()->user() && auth()->user()->favorites->contains($product))
-                            <i class="fas fa-heart" style="color: red;"></i>
-                        @else
-                            <i class="far fa-heart"></i>
-                        @endif
-                    </button>
                 </form>
 
                 <div class="game-info">
@@ -206,7 +242,7 @@
 
                 <div class="game-meta">
                     {{-- CORRIGIDO: Modo de Jogo dinâmico --}}
-<p>
+    <p>
         <strong>Modo de Jogo:</strong>
         @forelse ($product->game->gameModes as $mode)
             <span class="tag">{{ $mode->name }}</span>

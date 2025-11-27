@@ -1,34 +1,20 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Requisitos do Jogo</title>
-    <style>
-        body { font-family: sans-serif; padding: 20px; }
-        form { max-width: 800px; margin: 0 auto; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
-        .form-group input { width: 100%; padding: 8px; box-sizing: border-box; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        button { background: #007bff; color: white; padding: 10px 15px; border: none; cursor: pointer; }
-        .success { background: #d4edda; color: #155724; padding: 10px; margin-bottom: 15px; }
-    </style>
-</head>
+@extends('layouts.admin')
+
+@section('title', 'Gerenciar requisitos: ' .$product->name)
+
+@section('content')
 <body>
 
-    <form action="{{ route('admin.products.requirements.store', $product) }}" method="POST">
+    <form class="form-carrossel" action="{{ route('admin.products.requirements.store', $product) }}" method="POST">
         @csrf
-
-        <h1>Gerenciar Requisitos para: {{ $product->name }}</h1>
 
         @if (session('success'))
             <div class="success">{{ session('success') }}</div>
         @endif
 
-        <div class="grid">
-            <fieldset>
-                <legend><h2>Requisitos Mínimos (Obrigatório)</h2></legend>
+        <div class="grid-2">
+            <fieldset class="form-field">
+                <legend>Requisitos Mínimos (Obrigatório)</legend>
 
                 <div class="form-group">
                     <label for="min_os">Sistema Operacional</label>
@@ -61,8 +47,8 @@
                 </div>
             </fieldset>
 
-            <fieldset>
-                <legend><h2>Requisitos Recomendados (Opcional)</h2></legend>
+            <fieldset class="form-field">
+                <legend>Requisitos Recomendados (Opcional)</legend>
 
                 <div class="form-group">
                     <label for="rec_os">Sistema Operacional</label>
@@ -90,9 +76,10 @@
                 </div>
             </fieldset>
         </div>
+        <br>
 
-        <button type="submit">Salvar Requisitos</button>
+        <button class="btn-create" type="submit">Salvar Requisitos</button>
     </form>
 
 </body>
-</html>
+@endsection

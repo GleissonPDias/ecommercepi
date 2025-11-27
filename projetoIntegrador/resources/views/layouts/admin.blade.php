@@ -5,18 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel de Admin - GettStore</title>
     
-    {{-- Carrega o seu CSS de admin. Você precisará criar este arquivo --}}
-    @vite(['resources/css/admin.css'])
-    
-    {{-- Font Awesome para ícones --}}
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 </head>
 <body class="admin-body">
 
     {{-- 1. BARRA LATERAL DE NAVEGAÇÃO --}}
     <aside class="admin-sidebar">
         <div class="sidebar-header">
-            <img src="{{ asset('images/GettStore.png') }}" alt="Logo" class="admin-logo">
+            <img src="{{ asset('images/GettStore(1).png') }}" alt="Logo" class="admin-logo">
         </div>
         
         <nav class="admin-nav">
@@ -48,8 +49,8 @@
             <a href="{{ route('admin.carousel') }}" class="nav-link">
                 <i class="fas fa-images"></i> Carrossel
             </a>
-            <a href="{{ route('admin.users.index') }}" class="nav-link">
-                <i class="fas fa-users-cog"></i> Gerenciar Usuários
+            <a href="{{ route('admin.coupons.index') }}" class="nav-link">
+                <i class="fas fa-images"></i> Cupons
             </a>
         </nav>
         
@@ -85,14 +86,6 @@
         </main>
         
     </div>
-
-
-
-    <a href="{{ route('admin.users.index') }}" class="nav-link">
-        <i class="fas fa-users-cog"></i> Gerenciar Usuários
-    </a>
-
-
 
 </body>
 </html>

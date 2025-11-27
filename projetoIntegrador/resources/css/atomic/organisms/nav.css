@@ -29,3 +29,26 @@
 .logo {
   z-index: 1;
 }
+
+.nav-button {
+    background-color: transparent; /* Fundo transparente */
+    color: #a0a4b8; /* Cor de texto mais suave */
+    text-decoration: none;
+    padding: 10px 20px; /* Ajuste no padding */
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 1px solid transparent; /* Borda transparente para manter o tamanho */
+}
+
+.nav-button:hover {
+    background-color: #1a1f33;
+    color: #fff;
+}
+
+.nav-button.active {
+    background-color: #1a1f33;
+    color: #fff;
+    font-weight: 600;
+    border-color: #2a2f42;
+}

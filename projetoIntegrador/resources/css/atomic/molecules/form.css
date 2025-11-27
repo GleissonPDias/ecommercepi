@@ -16,8 +16,6 @@
   height: 20px;
 }
 .form-redefinir {
-  background-color: #292f8f;
-  border-radius: 5px;
   gap: 32px;
   padding: 32px;
 }
@@ -28,7 +26,7 @@
 
 .forgot-password {
     text-align: right;
-    font-size: 14px;
+    font-size: 15px;
     color: #a0a4b8;
     text-decoration: none;
     transition: color 0.3s ease;
@@ -39,19 +37,176 @@
     text-decoration: underline;
 }
 
+.criar {
+    font-size: 15px;
+}
+
 .criar-conta {
     color: #a0a4b8;
-    font-size: 14px;
+    font-size: 15px;
     margin: 10px 0;
+    text-align: right;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.criar-conta:hover {
+    text-decoration: underline;
+    color: #fff;
+}
+
+.criar-termos {
+  text-align: center;
+  color: #fff;
+  max-width: 100%;
+  font-size: 10px;
+}
+
+.execute {
+  font-size: 15px;
+  margin: 2px 0 0;
+  color: #d8dae4;
+}
+
+.criar-p {
+  text-align: center;
+  color: #fff;
+  max-width: 80%;
+  font-weight: 600;
+}
+
+.form-carrossel {
+  background-color: #1a1f33;
+  padding: 30px;
+  border-radius: 10px; /* Cantos arredondados */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Sombra suave */
+  margin-bottom: 30px; /* Espaço entre os formulários */
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    padding-right: 40px; /* Espaço extra na direita para a seta */
+    
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: #1f2937;
+    background-color: #ffffff;
+    
+    border: 1px solid #d1d5db; /* Borda cinza suave */
+    border-radius: 6px; /* Cantos arredondados */
+    
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.form-group textarea {
+  width: 100%;
+  resize:vertical;
+  padding: 12px 15px;
+  border-radius: 10px;
+}
+
+.form-carrossel h2 {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+
+.form-carrossel label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #a0a4b8; /* Cinza médio */
+  margin-bottom: 8px;
+}
+
+.form-carrossel input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif; /* Garante a fonte nos inputs */
+  color: #333;
+  background-color: #fff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box; /* Garante que padding não aumente a largura */
+}
+
+.form-actions {
+    margin-top: 30px;
     text-align: right;
 }
 
-.criar-conta a {
-    color: #fff;
-    font-weight: 600;
-    text-decoration: none;
+.form-field {
+  border-radius: 10px;
+  padding: 2px;
 }
 
-.criar-conta a:hover {
-    text-decoration: underline;
+.form-group-checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 10px 0;
+}
+
+.form-group-checkbox label {
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-left: 12px; /* Espaço entre o switch e o texto */
+    user-select: none; /* Impede seleção do texto ao clicar rápido */
+}
+
+/* O Input Checkbox (Transformado em Switch) */
+.form-group-checkbox input[type="checkbox"] {
+    appearance: none; /* Remove o estilo padrão do navegador */
+    -webkit-appearance: none;
+    width: 44px;
+    height: 24px;
+    background-color: #cbd5e1; /* Cinza quando desligado */
+    border-radius: 20px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    outline: none;
+    flex-shrink: 0; /* Garante que não amasse */
+}
+
+/* A "bolinha" do switch */
+.form-group-checkbox input[type="checkbox"]::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Estado CHECADO (Ativo) */
+.form-group-checkbox input[type="checkbox"]:checked {
+    background-color: #3b82f6;
+}
+
+/* Move a bolinha para a direita quando checado */
+.form-group-checkbox input[type="checkbox"]:checked::after {
+    transform: translateX(20px);
+}
+
+.quantity-form {
+    margin: 0;
+    padding: 0;
+    display: flex;
 }

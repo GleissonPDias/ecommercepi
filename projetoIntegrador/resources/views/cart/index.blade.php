@@ -48,7 +48,6 @@
         <ul class="sidebar-links">
             <li><a href="#"><i class="fas fa-gamepad"></i> Catálogo</a></li>
             <li><a href="#"><i class="fas fa-tags"></i> Ofertas</a></li>
-            <li><a href="#"><i class="fas fa-gift"></i> Gift Card</a></li>
             <li class="divider"></li>
             <li><a href="#"><i class="fas fa-desktop"></i> PC</a></li>
             <li><a href="#"><i class="fab fa-xbox"></i> Xbox</a></li>
@@ -56,7 +55,6 @@
             <li><a href="#"><i class="fas fa-gamepad"></i> Switch</a></li>
             <li class="divider"></li>
             <li><a href="#"><i class="fas fa-headset"></i> Suporte</a></li>
-            <li><a href="#"><i class="fas fa-ellipsis-h"></i> Mais</a></li>
         </ul>
     </aside>
 
@@ -99,7 +97,7 @@
                             
                             <p>{{$item->product->platform->name}} (por chave de ativação)</p>
                         </div>
-                                                <div class="item-quantity">
+                        <div class="item-quantity">
                             {{-- Botão de diminuir --}}
                             <form action="{{ route('cart.decrease', $item) }}" method="POST" class="quantity-form">
                                 @csrf
@@ -157,7 +155,9 @@
 
             <aside class="payment-sidebar">
 
-                <div class="payment-methods">
+
+{{--FORMAS DE PAGAMENTO COMENTADA, PARA USO FUTURO COM A GATEWAY DE PAGAMENTO--}}
+                {{--<div class="payment-methods">
                     <h3>Formas de Pagamento</h3>
 
                     <div class="payment-option">
@@ -197,7 +197,9 @@
                         <input type="radio" id="boleto" name="payment-method">
                         <label for="boleto">Boleto</label>
                     </div>
-                </div>
+                </div>--}}
+
+
 
 <div class="price-summary">
     {{-- MOSTRA O SUBTOTAL --}}
@@ -244,7 +246,7 @@
     --}}
     
     <button type="submit" class="btn-continue" style="width: 100%; border: none; font-size: 1rem; cursor: pointer;">
-        Finalizar e Pagar
+        Ir para Pagamento
     </button>
 </form>
 
@@ -282,12 +284,18 @@
                     </ul>
                 </div>
             </div>
-            <hr class="footer-divider">
+            <hr class="footer-divider" />
             <div class="footer-bottom">
-                <a href="{{ route('home') }}"><img src="{{ asset('images/GettStore1.png') }}" alt="GettStore Avatar Logo" class="footer-logo"></a>
+                <a href="{{ route('home') }}"
+                    ><img
+                        src="{{ asset('images/gettstore.png') }}"
+                        alt="GettStore Avatar Logo"
+                        class="footer-logo"
+                /></a>
                 <p class="footer-legal">
-                    GettStore Ltda. – CNPJ 00.000.000/0000-00<br>
-                    Rua Lauro Müller, nº 116, sala 503 - Torre do Rio Sul - Botafogo - Rio de Janeiro, RJ – 22290-160
+                    GettStore Ltda. – CNPJ 00.000.000/0000-00<br />
+                    Rua Lauro Müller, nº 116, sala 503 - Torre do Rio Sul - Botafogo -
+                    Rio de Janeiro, RJ – 22290-160
                 </p>
             </div>
         </div>

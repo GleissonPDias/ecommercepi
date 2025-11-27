@@ -5,3 +5,211 @@
     max-width: 1400px;
     margin: 0 auto;
 }
+
+/* --- SEÇÃO DE PRODUTOS RELACIONADOS (ESTILO LISTA) --- */
+
+.related-products {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #2a2f42;
+    width: 100%;
+}
+
+.related-products h3 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.related-products-list {
+    display: flex;
+    flex-direction: column; /* Empilha um embaixo do outro */
+    gap: 15px;
+}
+
+/* O Card (Linha Horizontal) */
+.dlc-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Separa esquerda e direita */
+    background-color: #1A203E; /* Fundo azul escuro */
+    border-radius: 8px;
+    padding: 10px 15px;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.dlc-card:hover {
+    background-color: #23294a;
+    transform: translateX(5px); /* Leve movimento para direita */
+}
+
+
+
+/* --- LADO ESQUERDO (Link + Imagem + Texto) --- */
+.dlc-link-area {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-decoration: none;
+    flex-grow: 1; /* Ocupa o espaço disponível */
+}
+
+.dlc-image-wrapper img {
+    width: 120px;
+    height: 65px;
+    object-fit: cover;
+    border-radius: 4px;
+    display: block;
+}
+
+.dlc-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.dlc-info h4 {
+    margin: 0;
+    font-size: 16px;
+    color: #fff;
+    font-weight: 500;
+}
+
+.platform-badge {
+    font-size: 12px;
+    color: #a0a4b8;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* --- LADO DIREITO (Preço + Botões) --- */
+.dlc-actions-area {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.dlc-pricing {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: 10px;
+}
+
+.discount-badge {
+    background-color: #4c6b22; /* Fundo verde musgo */
+    color: #a3cc3a; /* Texto verde neon */
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.final-price {
+    color: #a0a4b8; /* Cor padrão */
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Botão Comprar (Verde) */
+.btn-dlc-buy {
+    background-color: #d1d5db; /* Verde Neon */
+    color: #121622; /* Texto escuro */
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s;
+}
+
+.btn-dlc-buy:hover {
+    background-color: #b9e04f;
+}
+
+/* Botão Favorito (Coração) */
+.btn-dlc-fav {
+    background: none;
+    border: 1px solid #3b82f6;
+    color: #3b82f6;
+    width: 35px;
+    height: 35px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.btn-dlc-fav:hover {
+    background-color: #3b82f6;
+    color: #fff;
+}
+
+.btn-dlc-fav .fa-heart {
+    font-size: 16px;
+}
+
+/* Ícone de coração preenchido (já favoritado) */
+.btn-dlc-fav .fas.fa-heart {
+    color: #ff4769; /* Vermelho se estiver cheio */
+}
+
+/* --- RESPONSIVIDADE --- */
+@media (max-width: 768px) {
+    .dlc-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .dlc-actions-area {
+        width: 100%;
+        justify-content: space-between;
+        border-top: 1px solid #2a2f42;
+        padding-top: 10px;
+    }
+}
+
+/* --- SEÇÃO JOGO BASE (Reutiliza estilos de .dlc-card) --- */
+
+.base-game-container {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border-top: 1px solid #2a2f42;
+    padding-top: 20px;
+}
+
+/* Estilo do texto de aviso acima do card */
+.base-game-alert {
+    color: #ff4769; /* Rosa/Vermelho para chamar atenção */
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.base-game-alert i {
+    font-size: 16px;
+}
+
+/* Ajuste fino para diferenciar levemente o jogo base (opcional) */
+.base-game-container .dlc-card {
+    border: 1px solid rgba(255, 71, 105, 0.3); /* Borda sutil avermelhada para indicar dependência */
+}
+
+.base-game-container .dlc-card:hover {
+    border-color: #ff4769; /* Borda vermelha ao passar o mouse */
+}

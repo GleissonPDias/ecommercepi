@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GettStore - Minha Conta</title> 
     
-    @vite(['resources/css/user.css', 'resources/js/user.js'])
+    @vite(['resources/css/app.css', 'resources/js/user.js'])
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -15,7 +15,7 @@
 
     <header class="main-header">
         <div class="header-left">
-            <a href="{{ route('home') }}"><img src="{{ asset('images/GettStore.png') }}" alt="logo" class="logo"></a>
+            <a href="{{ route('home') }}"><img src="{{ asset('images/GettStore(1).png') }}" alt="logo" class="logo"></a>
         </div>
         <div class="header-right">
             <div class="cart-icon">
@@ -80,60 +80,67 @@
                 <h2>Informações da conta</h2>
                 <p class="subtitle">Altere seus dados pessoais.</p>
 
-                <form method="post" action="{{route('profile.update')}}" enctype="multipart/form-data" class="info-form">
+                <form method="post" action="{{route('profile.update')}}" enctype="multipart/form-data">
                     @csrf
                     @method('patch')
 
 
-                    <div class="form-group">
-                        <label for="username">Nome de usuário:</label>
-                        <input type="text" id="username" name="username" value="{{ old('username', auth()->user()->username)}}">
-                        @error('username') <span class="error-message" style="color: red;">{{ $message }}</span> @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="email">E-mail</label>
-                        <input type="email" id="email" name="email" value="{{ old('email', auth()->user()->email)}}">
-                        @error('email') <span class="error-message" style="color: red;">{{ $message }}</span> @enderror
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group half-width">
-                            <label for="name">Nome</label>
-                            <input type="text" id="name" name="name" value="{{ old('name', auth()->user()->name)}}">
-                            @error('name') <span class="error-message" style="color: red;">{{ $message }}</span> @enderror
+                    <div class="form-carrossel">
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label for="username">Nome de usuário:</label>
+                                <input type="text" id="username" name="username" value="{{ old('username', auth()->user()->username)}}">
+                                @error('username') <span class="error-message" style="color: red;">{{ $message }}</span> @enderror
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">E-mail</label>
+                                <input type="email" id="email" name="email" value="{{ old('email', auth()->user()->email)}}">
+                                @error('email') <span class="error-message" style="color: red;">{{ $message }}</span> @enderror
+                            </div>
                         </div>
-                        <div class="form-group half-width">
-                            <label for="last_name">Sobrenome</label>
-                            <input type="text" id="last_name" name="last_name" value="{{old ('last_name', auth()->user()->last_name)}}">
-                            @error('last_name') <span class="error-message" style="color: red;">{{ $message }}</span> @enderror
+                        <div class="grid-2">
+                            <div class="form-group half-width">
+                                <label for="name">Nome</label>
+                                <input type="text" id="name" name="name" value="{{ old('name', auth()->user()->name)}}">
+                                @error('name') <span class="error-message" style="color: red;">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="form-group half-width">
+                                <label for="last_name">Sobrenome</label>
+                                <input type="text" id="last_name" name="last_name" value="{{old ('last_name', auth()->user()->last_name)}}">
+                                @error('last_name') <span class="error-message" style="color: red;">{{ $message }}</span> @enderror
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group half-width">
-                            <label for="cpf">CPF</label>
-                            <input type="text" id="cpf" name="cpf" value="{{old('cpf', auth()->user()->cpf)}}">
-                            @error('cpf') <span class="error-message" style="color: red;">{{ $message }}</span> @enderror
+                        <div class="grid-2">
+                            <div class="form-group half-width">
+                                <label for="cpf">CPF</label>
+                                <input type="text" id="cpf" name="cpf" maxlength="14" placeholder="000.000.000-00" oninput="mascaraCPF(this)" value="{{old('cpf', auth()->user()->cpf)}}">
+                                @error('cpf') <span class="error-message" style="color: red;">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="form-group half-width">
+                                <label for="birth_date">Data de Nascimento</label>
+                                <input type="date" id="birth_date" name="birth_date" value="{{old('birth_date', auth()->user()->birth_date) }}">
+                                @error('birth_date') <span class="error-message" style="color: red;">{{ $message }}</span> @enderror
+                            </div>
                         </div>
-                        <div class="form-group half-width">
-                            <label for="birth_date">Data de Nascimento</label>
-                            <input type="date" id="birth_date" name="birth_date" value="{{old('birth_date', auth()->user()->birth_date) }}">
-                            @error('birth_date') <span class="error-message" style="color: red;">{{ $message }}</span> @enderror
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label for="phone_number">Telefone</label>
+                                <input type="text" id="phone_number" name="phone_number" value="{{old('phone_number', auth()->user()->phone_number)}}">
+                                @error('phone_number') <span class="error-message" style="color: red;">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="photo">Foto de Perfil (Opcional)</label>
+                                <input type="file" id="photo" name="photo" class="form-control-file">
+                            @error('photo') <span class="error-message">{{ $message }}</span> @enderror
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone_number">Telefone</label>
-                        <input type="text" id="phone_number" name="phone_number" value="{{old('phone_number', auth()->user()->phone_number)}}">
-                        @error('phone_number') <span class="error-message" style="color: red;">{{ $message }}</span> @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="photo">Foto de Perfil (Opcional)</label>
-                        <input type="file" id="photo" name="photo" class="form-control-file">
-                    @error('photo') <span class="error-message">{{ $message }}</span> @enderror
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="save-button">Salvar Alterações</button>
-                        @if (session('status')==='profile_updated')
-                            <p style="color:green; margin-top: 10px;"> Salvo com sucesso!</p>
-                        @endif 
+                        <div class="form-actions">
+                            <button type="submit" class="btn-create">Salvar Alterações</button>
+                            @if (session('status')==='profile_updated')
+                                <p style="color:green; margin-top: 10px;"> Salvo com sucesso!</p>
+                            @endif 
+                        </div>
                     </div>
                 </form>
             </div>
@@ -142,158 +149,143 @@
                 <h2>Alterar Senha</h2>
                 <p class="subtitle">Defina uma nova senha para sua conta.</p>
                 
-                <form method="post" action="{{route('password.update')}}" class="info-form">
+                <form class="form-carrossel" method="post" action="{{route('password.update')}}">
                     @csrf
                     @method('put') 
-<div class="form-group">
-            <label for="current_password">Senha Atual</label>
-            <input type="password" id="current_password" name="current_password" placeholder="••••••••" required>
-            {{-- Mostra o erro específico para este campo --}}
-            @error('current_password', 'updatePassword') 
-                <span class="error-message">{{ $message }}</span> 
-            @enderror
-        </div>
+                    <div class="form-group">
+                        <label for="current_password">Senha Atual</label>
+                        <input type="password" id="current_password" name="current_password" placeholder="••••••••" required>
+                        {{-- Mostra o erro específico para este campo --}}
+                        @error('current_password', 'updatePassword') 
+                            <span class="error-message">{{ $message }}</span> 
+                        @enderror
+                    </div>
 
-        <div class="form-group">
-            <label for="password">Nova Senha</label>
-            {{-- O nome do campo deve ser 'password' --}}
-            <input type="password" id="password" name="password" placeholder="••••••••" required>
-            @error('password', 'updatePassword') 
-                <span class="error-message">{{ $message }}</span> 
-            @enderror
-        </div>
+                    <div class="form-group">
+                        <label for="password">Nova Senha</label>
+                        {{-- O nome do campo deve ser 'password' --}}
+                        <input type="password" id="password" name="password" placeholder="••••••••" required>
+                        @error('password', 'updatePassword') 
+                            <span class="error-message">{{ $message }}</span> 
+                        @enderror
+                    </div>
 
-        <div class="form-group">
-            <label for="password_confirmation">Confirmar Nova Senha</label>
-            {{-- O nome do campo deve ser 'password_confirmation' --}}
-            <input type="password" id="password_confirmation" name="password_confirmation" placeholder="••••••••" required>
-            @error('password_confirmation', 'updatePassword') 
-                <span class="error-message">{{ $message }}</span> 
-            @enderror
-        </div>
+                    <div class="form-group">
+                        <label for="password_confirmation">Confirmar Nova Senha</label>
+                        {{-- O nome do campo deve ser 'password_confirmation' --}}
+                        <input type="password" id="password_confirmation" name="password_confirmation" placeholder="••••••••" required>
+                        @error('password_confirmation', 'updatePassword') 
+                            <span class="error-message">{{ $message }}</span> 
+                        @enderror
+                    </div>
 
-        <div class="form-actions">
-            <button type="submit" class="save-button">Atualizar Senha</button>
-            
-            @if (session('status') === 'password-updated')
-                <p style="color: green; margin-top: 10px;">Senha atualizada!</p>
-            @endif
-        </div>
-    </form>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-create">Atualizar Senha</button>
+                        
+                        @if (session('status') === 'password-updated')
+                            <p style="color: green; margin-top: 10px;">Senha atualizada!</p>
+                        @endif
+                    </div>
+                </form>
             </div>
 
             <div id="wishlist" class="account-panel">
-    <h2>Wishlist</h2>
-    <p class="subtitle">Sua lista de desejos.</p>
-    
-    {{-- 
-      Verifica se a coleção 'favorites' (que carregamos no controller) 
-      não está vazia. 
-    --}}
-    @if (auth()->user()->favorites->isNotEmpty())
-
-        {{-- Você pode usar uma classe de grid da sua home page aqui --}}
-        <div class="wishlist-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px;">
-            
-            {{-- Faz um loop em cada produto favorito --}}
-            @foreach (auth()->user()->favorites as $product)
+                <h2>Wishlist</h2>
+                <p class="subtitle">Sua lista de desejos.</p>
                 
-                <div class="wishlist-card" style="border: 1px solid #444; border-radius: 8px; overflow: hidden;">
-                    <a href="{{ route('products.show', $product) }}">
-                        {{-- 
-                          Mostra a imagem de capa.
-                          Isso só funciona rápido porque fizemos o $user->load('favorites.game') no controller.
-                        --}}
-                        @if($product->game && $product->game->cover_url)
-                            <img src="{{ Storage::url($product->game->cover_url) }}" 
-                                 alt="{{ $product->name }}" 
-                                 style="width: 100%; height: 240px; object-fit: cover;">
-                        @endif
+                @if (auth()->user()->favorites->isNotEmpty())
+
+                    <div class="wishlist-grid">
                         
-                        <h4 style="padding: 10px; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                            {{ $product->name }}
-                        </h4>
-                        <p style="padding: 0 10px 10px; margin: 0; color: #00ffc3; font-weight: bold;">
-                            R$ {{ number_format($product->current_price, 2, ',', '.') }}
-                        </p>
-                    </a>
-                    
-                    {{-- Botão para REMOVER (usa a mesma rota 'toggle') --}}
-                    <form method="POST" action="{{ route('favorites.toggle', $product) }}">
-                        @csrf
-                        <button type"submit" class="save-button" style="width: 100%; background-color: #ff4d4d;">
-                            Remover
-                        </button>
-                    </form>
-                </div>
-
-            @endforeach
-        </div>
-
-    @else
-        {{-- Se a lista estiver vazia, mostramos o seu placeholder original --}}
-        <div class="content-placeholder">
-            <i class="fas fa-heart"></i>
-            <p>Sua lista de desejos está vazia.</p>
-        </div>
-    @endif
-</div>
-
-            <div id="meus-games" class="account-panel">
-    <h2>Meus Games</h2>
-    <p class="subtitle">Sua biblioteca de jogos e chaves de ativação.</p>
-    
-    {{-- 
-      Verifica se a coleção 'library' (que carregamos no controller) 
-      não está vazia. 
-    --}}
-    @if (auth()->user()->library->isNotEmpty())
-
-        {{-- (Vou usar um estilo de grid parecido com o da Wishlist) --}}
-        <div class="wishlist-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
-            
-            {{-- Faz um loop em cada CHAVE (GameKey) na biblioteca --}}
-            @foreach (auth()->user()->library as $key)
-                
-                {{-- Verificação de segurança para garantir que os dados existem --}}
-                @if($key->product && $key->product->game)
-                    <div class="game-key-card" style="border: 1px solid #444; border-radius: 8px; overflow: hidden; background: #2a2a3a;">
-                        
-                        {{-- A Chave ($key) tem um Produto ($key->product) que tem um Jogo ($key->product->game) --}}
-                        <img src="{{ Storage::url($key->product->game->cover_url) }}" 
-                             alt="{{ $key->product->name }}" 
-                             style="width: 100%; height: 260px; object-fit: cover;">
-                        
-                        <div style="padding: 15px;">
-                            <h4 style="margin: 0 0 5px 0;">{{ $key->product->name }}</h4>
-                            <p style="font-size: 0.9em; color: #ccc; margin: 0 0 10px 0;">
-                                {{ $key->product->platform->name }}
-                            </p>
+                        {{-- Faz um loop em cada produto favorito --}}
+                        @foreach (auth()->user()->favorites as $product)
                             
-                            <label style="font-size: 0.8em; color: #aaa;">Sua Chave:</label>
-                            
-                            {{-- 
-                              A 'key_value' vem do seu Model GameKey. 
-                              Verifiquei o seu Model anterior e o nome da coluna é 'key_value'.
-                            --}}
-                            <input type="text" 
-                                   value="{{ $key->key_value }}" 
-                                   readonly 
-                                   style="width: 100%; background: #1a1a2e; border: 1px solid #555; color: white; padding: 8px; border-radius: 4px;">
-                        </div>
+                            <div class="wishlist-card">
+                                <a href="{{ route('products.show', $product) }}">
+                                    {{-- 
+                                    Mostra a imagem de capa.
+                                    Isso só funciona rápido porque fizemos o $user->load('favorites.game') no controller.
+                                    --}}
+                                    @if($product->game && $product->game->cover_url)
+                                        <img src="{{ Storage::url($product->game->cover_url) }}" 
+                                            alt="{{ $product->name }}" >
+                                    @endif
+                                    
+                                    <h4>
+                                        {{ $product->name }}
+                                    </h4>
+                                    <p>
+                                        R$ {{ number_format($product->current_price, 2, ',', '.') }}
+                                    </p>
+                                </a>
+                                
+                                {{-- Botão para REMOVER (usa a mesma rota 'toggle') --}}
+                                <form method="POST" action="{{ route('favorites.toggle', $product) }}">
+                                    @csrf
+                                    <button type="submit">
+                                        Remover
+                                    </button>
+                                </form>
+                            </div>
+
+                        @endforeach
+                    </div>
+
+                @else
+                    {{-- Se a lista estiver vazia, mostramos o seu placeholder original --}}
+                    <div class="content-placeholder">
+                        <i class="fas fa-heart"></i>
+                        <p>Sua lista de desejos está vazia.</p>
                     </div>
                 @endif
-            @endforeach
-        </div>
+            </div>
 
-    @else
-        {{-- Se a biblioteca estiver vazia, mostramos o seu placeholder original --}}
-        <div class="content-placeholder">
-            <i class="fas fa-gamepad"></i>
-            <p>Você ainda não possui jogos.</p>
-        </div>
-    @endif
-</div>
+            <div id="meus-games" class="account-panel">
+                <h2>Meus Games</h2>
+                <p class="subtitle">Sua biblioteca de jogos e chaves de ativação.</p>
+                
+                {{-- 
+                Verifica se a coleção 'library' (que carregamos no controller) 
+                não está vazia. 
+                --}}
+                @if (auth()->user()->library->isNotEmpty())
+
+                <div class="library-grid">
+                    @foreach (auth()->user()->library as $key)
+                        @if($key->product && $key->product->game)
+                            <div class="game-key-card">
+                                {{-- Imagem --}}
+                                <img src="{{ Storage::url($key->product->game->cover_url) }}" 
+                                    alt="{{ $key->product->name }}">
+                                
+                                <div class="key-card-content">
+                                    {{-- Título e Plataforma --}}
+                                    <h4>{{ $key->product->name }}</h4>
+                                    <p>{{ $key->product->platform->name }}</p>
+                                    
+                                    {{-- Área da Chave --}}
+                                    <div class="key-display">
+                                        <label>Sua Chave de Ativação:</label>
+                                        <input type="text" 
+                                            class="key-input" 
+                                            value="{{ $key->key_value }}" 
+                                            readonly 
+                                            onclick="this.select();"> {{-- Seleciona tudo ao clicar --}}
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
+
+                @else
+                    {{-- Se a biblioteca estiver vazia, mostramos o seu placeholder original --}}
+                    <div class="content-placeholder">
+                        <i class="fas fa-gamepad"></i>
+                        <p>Você ainda não possui jogos.</p>
+                    </div>
+                @endif
+            </div>
             
 {{-- 👇 SUBSTITUA A SUA ABA "MEUS-CARTOES" POR ISTO 👇 --}}
 
@@ -387,12 +379,18 @@
                     </ul>
                 </div>
             </div>
-            <hr class="footer-divider">
+            <hr class="footer-divider" />
             <div class="footer-bottom">
-                <a href="index.html"><img src="/images/GettStore Branco s fundo.png" alt="GettStore Avatar Logo" class="footer-logo"></a>
+                <a href="{{ route('home') }}"
+                    ><img
+                        src="{{ asset('images/gettstore.png') }}"
+                        alt="GettStore Avatar Logo"
+                        class="footer-logo"
+                /></a>
                 <p class="footer-legal">
-                    GettStore Ltda. – CNPJ 00.000.000/0000-00<br>
-                    Rua Lauro Müller, nº 116, sala 503 - Torre do Rio Sul - Botafogo - Rio de Janeiro, RJ – 22290-160
+                    GettStore Ltda. – CNPJ 00.000.000/0000-00<br />
+                    Rua Lauro Müller, nº 116, sala 503 - Torre do Rio Sul - Botafogo -
+                    Rio de Janeiro, RJ – 22290-160
                 </p>
             </div>
         </div>

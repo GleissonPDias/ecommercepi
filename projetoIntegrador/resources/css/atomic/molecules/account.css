@@ -1,0 +1,26 @@
+/* Painel de Conteúdo Individual */
+.account-panel {
+    background-color: #1a1f33;
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 30px 40px;
+    border-radius: 12px;
+    display: none; /* ESCONDIDO POR PADRÃO */
+}
+
+/* Mostra o painel que estiver ativo */
+.account-panel.active {
+    display: block; /* MOSTRAR APENAS O ATIVO */
+}
+
+.account-panel h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.account-panel .subtitle {
+    font-size: 14px;
+    color: #a0a4b8;
+    margin-bottom: 30px;
+}

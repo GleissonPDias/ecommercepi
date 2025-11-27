@@ -7,11 +7,15 @@
 
     {{-- O Vite vai injetar os estilos do seu resources/css/app.css aqui --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   </head>
   <body>
     <div class="container">
       <div class="content">
-        <img class="logo" src="{{ asset('images/gettstore.png') }}" alt="gettstore" />
+        <img class="logo-login" src="{{ asset('images/gettstore.png') }}" alt="gettstore" />
 
 
         <form class="form" method="POST" action="{{ route('login') }}">
@@ -24,7 +28,7 @@
             type="email"
             id="email"
             name="email" 
-            placeholder="email"
+            placeholder="Email"
             value="{{ old('email') }}" 
             required
             autofocus
@@ -41,7 +45,7 @@
             type="password"
             id="password"
             name="password" 
-            placeholder="*******"
+            placeholder="Senha"
             required
             autocomplete="current-password"
           />
@@ -64,16 +68,16 @@
             </a>
           @endif
 
-          <button class="button" type="submit">Entrar</button>
+          <button class="btn-entrar" type="submit">Entrar</button>
 
 
-          <p>Não tem conta? <a href="{{ route('register') }}">Criar conta</a></p>
+          <p class="criar">Não tem conta? <a class="criar-conta" href="{{ route('register') }}">Criar conta</a></p>
 
           {{-- A funcionalidade de login social precisa ser implementada à parte (ex: com Laravel Socialite) --}}
-          <button type="button" class="btn-Login-options">
+          <button type="button" class="login-options">
             <img src="{{ asset('images/iconGoogle.svg') }}" /><span>Entrar com Google</span>
           </button>
-          <button type="button" class="btn-Login-options">
+          <button type="button" class="login-options">
             <img src="{{ asset('images/iconFacebook.svg') }}" /><span>Entrar com Facebook</span>
           </button>
         </form>

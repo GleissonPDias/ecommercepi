@@ -240,7 +240,7 @@ class PaymentController extends Controller
 
             $user->cartItems()->delete();
             session()->forget('coupon');
-            if ($couponId) Coupon::find($couponId)->increment('uses_count');
+            //if ($couponId) Coupon::find($couponId)->increment('uses_count');
             DB::commit();
 
         } catch (\Exception $e) {

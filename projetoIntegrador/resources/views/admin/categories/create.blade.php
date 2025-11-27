@@ -1,9 +1,15 @@
-<form action="{{ route('admin.categories.store') }}" method="POST">
+@extends('layouts.admin')
+
+@section('title', 'Criar Categoria')
+
+@section('content')
+
+<form class="form-carrossel" action="{{ route('admin.categories.store') }}" method="POST">
     @csrf
-    <div>
+    <div class="form-group">
         <label for="name">Nome</label>
         <input type="text" name="name" required />
-
-        <button type="submit">Criar</button> 
-        
     </div>
+    <button class="btn-create" type="submit">Criar</button> 
+</form>
+@endsection

@@ -1,36 +1,35 @@
 // Espera o documento carregar antes de executar o script
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. Encontrar todos os botões da barra de navegação
-    // ATUALIZADO: O seletor agora é '.profile-nav .nav-button'
+    
+    // ============================================================
+    // 1. LÓGICA DE NAVEGAÇÃO POR ABAS (Seu código original)
+    // ============================================================
+    
+    // Encontrar todos os botões da barra de navegação
     const navButtons = document.querySelectorAll(".profile-nav .nav-button");
 
-    // 2. Encontrar todos os painéis de conteúdo
-    // ATUALIZADO: O seletor agora é '.account-content-wrapper .account-panel'
-    const contentPanels = document.querySelectorAll(
-        ".account-content-wrapper .account-panel"
-    );
+    // Encontrar todos os painéis de conteúdo
+    const contentPanels = document.querySelectorAll(".account-content-wrapper .account-panel");
 
-    // 3. Adicionar um "ouvinte" de clique em cada botão
+    // Adicionar um "ouvinte" de clique em cada botão
     navButtons.forEach((button) => {
         button.addEventListener("click", (event) => {
-            // Previne a ação padrão do link (de subir a página)
+            // Previne a ação padrão do link
             event.preventDefault();
 
-            // Pega o ID do alvo do atributo 'data-target' (ex: "minha-conta")
+            // Pega o ID do alvo do atributo 'data-target'
             const targetId = button.getAttribute("data-target");
 
             // --- Lógica para os Botões ---
-
             // Remove a classe 'active' de TODOS os botões
             navButtons.forEach((btn) => {
                 btn.classList.remove("active");
             });
 
-            // Adiciona a classe 'active' APENAS ao botão que foi clicado
+            // Adiciona a classe 'active' APENAS ao botão clicado
             button.classList.add("active");
 
             // --- Lógica para os Painéis de Conteúdo ---
-
             // Esconde TODOS os painéis
             contentPanels.forEach((panel) => {
                 panel.classList.remove("active");
@@ -43,4 +42,30 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     });
+
+    // ============================================================
+    // 2. LÓGICA DA MÁSCARA DE CPF (Novo)
+    // ============================================================
+    
+    const cpfInput = document.getElementById('cpf');
+
+    // Verifica se o campo CPF existe na página antes de tentar adicionar o evento
+    if (cpfInput) {
+        cpfInput.addEventListener('input', function() {
+            let v = this.value;
+
+            // Remove tudo o que não é dígito
+            v = v.replace(/\D/g, "");
+
+            // Limita a 11 dígitos numéricos (para evitar bugs de formatação)
+            if (v.length > 11) v = v.slice(0, 11);
+
+            // Aplica a formatação ponto e traço
+            v = v.replace(/(\d{3})(\d)/, "$1.$2");
+            v = v.replace(/(\d{3})(\d)/, "$1.$2");
+            v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+
+            this.value = v;
+        });
+    }
 });

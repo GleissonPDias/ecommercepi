@@ -46,3 +46,27 @@
     border-radius: 8px;
     margin-bottom: 20px;
 }
+
+.stat-card {
+    padding: 20px 0 0;
+}
+
+.stat-card h3 {
+    color: #ffffff;
+}
+
+.stat-card p {
+    color: #a0a4b8;
+}
+
+.card-list-placeholder {
+    text-align: center;
+    padding: 40px;
+    color: #a0a4b8;
+    border: 2px dashed #2a2f42;
+    border-radius: 8px;
+}
+.card-list-placeholder .fa-credit-card {
+    font-size: 50px;
+    margin-bottom: 20px;
+}

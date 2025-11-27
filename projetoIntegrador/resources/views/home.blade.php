@@ -16,60 +16,6 @@
     {{-- (Usamos o mesmo layout da página de pesquisa) --}}
     <div class="search-layout-container" style="padding: 20px;">
 
-        {{-- 1. BARRA DE FILTROS (ESQUERDA) --}}
-        <aside class="filter-sidebar">
-            <h3>Filtrar</h3>
-            
-            {{-- 
-              Este formulário envia o utilizador para a PÁGINA DE PESQUISA,
-              já com os filtros aplicados.
-            --}}
-            <form action="{{ route('search.index') }}" method="GET">
-                
-                {{-- 
-                  O campo 'query' está escondido e pesquisa por "*".
-                  Isto é para que o SearchController procure "tudo"
-                  mas com os seus filtros aplicados.
-                --}}
-                <input type="hidden" name="query" value="*">
-
-                {{-- Filtro de Ordem --}}
-                <div class="filter-group">
-                    <label for="sort_by">Ordernar por:</label>
-                    <select name="sort_by" id="sort_by">
-                        <option value="default">Relevância</option>
-                        <option value="price_asc">Preço: Menor para Maior</option>
-                        <option value="price_desc">Preço: Maior para Menor</option>
-                        <option value="name_asc">Nome: A-Z</option>
-                        <option value="name_desc">Nome: Z-A</option>
-                    </select>
-                </div>
-
-                {{-- Filtro de Categoria (AGORA DINÂMICO) --}}
-                <div class="filter-group">
-                    <label for="category_id">Categoria:</label>
-                    <select name="category_id" id="category_id">
-                        <option value="">Todas as Categorias</option>
-                        {{-- O $categories vem do HomeController --}}
-                        @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">
-                                {{ $category->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-                
-                {{-- Filtro de Preço --}}
-                <div class="filter-group">
-                    <label for="max_price">Preço Máximo (R$):</label>
-                    <input type="number" name="max_price" id="max_price" 
-                           placeholder="Ex: 50" min="1" step="1">
-                </div>
-
-                <button type="submit" class="btn-filter">Filtrar</button>
-            </form>
-        </aside>
-
         {{-- 2. CONTEÚDO DA HOME (CARROSSÉIS) (DIREITA) --}}
         <div class="search-results-content">
         
@@ -156,6 +102,48 @@
                          <span class="dot {{ $loop->first ? 'active' : '' }}" data-slide="{{ $loop->index }}"></span>
                     @endforeach
                 </div>
+            </div>
+
+            {{-- 1. BARRA DE FILTROS (ESQUERDA) --}}
+            <div class="filter-sidebar">
+                <form action="{{ route('search.index') }}" method="GET">
+                    <input type="hidden" name="query" value="*">
+
+                    {{-- Filtro de Ordem --}}
+                    <div class="filter-group">
+                        <label for="sort_by">Ordernar por:</label>
+                        <select name="sort_by" id="sort_by">
+                            <option value="default">Relevância</option>
+                            <option value="price_asc">Preço: Menor para Maior</option>
+                            <option value="price_desc">Preço: Maior para Menor</option>
+                            <option value="name_asc">Nome: A-Z</option>
+                            <option value="name_desc">Nome: Z-A</option>
+                        </select>
+                    </div>
+
+                    {{-- Filtro de Categoria (AGORA DINÂMICO) --}}
+                    <div class="filter-group">
+                        <label for="category_id">Categoria:</label>
+                        <select name="category_id" id="category_id">
+                            <option value="">Todas as Categorias</option>
+                            {{-- O $categories vem do HomeController --}}
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}">
+                                    {{ $category->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    
+                    {{-- Filtro de Preço --}}
+                    <div class="filter-group">
+                        <label for="max_price">Preço Máximo (R$):</label>
+                        <input type="number" name="max_price" id="max_price" 
+                            placeholder="Ex: 50" min="1" step="1">
+                    </div>
+
+                    <button type="submit" class="btn-filter">Filtrar</button>
+                </form>
             </div>
 
             {{-- A SUA SECÇÃO "MAIS POPULARES" (Sem alterações) --}}

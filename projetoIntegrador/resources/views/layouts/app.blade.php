@@ -46,7 +46,7 @@
                value="{{ request('query') ?? '' }}"> {{-- (Mantém o texto na barra) --}}
         
         {{-- 3. O ícone agora é um botão de 'submit' --}}
-        <button type="submit" class="search-button" aria-label="Buscar">
+        <button type="submit" aria-label="Buscar">
         <i class="fas fa-search"></i>
         </button>
     </form>
@@ -89,7 +89,6 @@
         <ul class="sidebar-links">
             <li><a href="#"><i class="fas fa-gamepad"></i> Catálogo</a></li>
             <li><a href="#"><i class="fas fa-tags"></i> Ofertas</a></li>
-            <li><a href="#"><i class="fas fa-gift"></i> Gift Card</a></li>
             <li class="divider"></li>
 <li>
         <a href="{{ route('catalog.platform', 'pc') }}">
@@ -113,7 +112,6 @@
     </li>
             <li class="divider"></li>
             <li><a href="#"><i class="fas fa-headset"></i> Suporte</a></li>
-            <li><a href="#"><i class="fas fa-ellipsis-h"></i> Mais</a></li>
         </ul>
     </aside>
 
@@ -162,7 +160,7 @@
             <div class="footer-bottom">
                 <a href="{{ route('home') }}"
                     ><img
-                        src="{{ asset('images/GettStore Branco s fundo.png') }}"
+                        src="{{ asset('images/gettstore.png') }}"
                         alt="GettStore Avatar Logo"
                         class="footer-logo"
                 /></a>

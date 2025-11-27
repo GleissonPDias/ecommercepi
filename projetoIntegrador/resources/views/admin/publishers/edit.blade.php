@@ -1,10 +1,16 @@
-<form action="{{ route('admin.publishers.update', $publisher )}}" method="POST">
+@extends('layouts.admin')
+
+@section('title', 'Editar Publisher: ' .$publisher->name)
+
+@section('content')
+
+<form class="form-carrossel" action="{{ route('admin.publishers.update', $publisher )}}" method="POST">
     @method('PUT')
     @csrf
-    <h1>Editar Publisher: {{ $publisher->name }} </h1>
-    <div>
+    <div class="form-group">
         <label for="name">Nome</label>
         <input type="text" name="name" value="{{$publisher->name}}" />
-    <div>
-        <button type="submit">Atualizar</button>
+</div>
+        <button class="btn-create" type="submit">Atualizar</button>
 </form> 
+@endsection

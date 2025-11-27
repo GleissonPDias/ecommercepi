@@ -1,13 +1,9 @@
-{{-- 1. "Veste" o seu layout mestre (o mesmo da home/carrinho) --}}
 @extends('layouts.app')
 
-{{-- 2. Define o título da página --}}
 @section('title', 'Plataforma ' . $platform->name)
 
-{{-- 3. Injeta o conteúdo --}}
 @section('content')
 
-{{-- Usamos a classe da 'store-page' para manter o estilo --}}
 <main class="store-page" style="padding: 20px;">
 
     {{-- Título da página de resultados (CORRIGIDO) --}}

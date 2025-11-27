@@ -1,10 +1,16 @@
-<form action="{{ route('admin.developers.update', $developer )}}" method="POST">
+@extends('layouts.admin')
+
+@section('title', 'Editar Desenvolvedor(a): ' .$developer->name)
+
+@section('content')
+
+<form class="form-carrossel" action="{{ route('admin.developers.update', $developer )}}" method="POST">
     @method('PUT')
     @csrf
-    <h1>Editar Desenvolvedora: {{ $developer->name }} </h1>
-    <div>
+    <div class="form-group">
         <label for="name">Nome</label>
         <input type="text" name="name" value="{{$developer->name}}" />
-    <div>
-        <button type="submit">Atualizar</button>
-</form> 
+    </div>
+        <button class="btn-create" type="submit">Atualizar</button>
+</form>
+@endsection

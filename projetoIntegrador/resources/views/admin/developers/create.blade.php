@@ -1,9 +1,15 @@
-<form action="{{ route('admin.developers.store') }}" method="POST">
+@extends('layouts.admin')
+
+@section('title', 'Criar Desenvolvedor ')
+
+@section('content')
+
+<form class="form-carrossel" action="{{ route('admin.developers.store') }}" method="POST">
     @csrf
-    <div>
+    <div class="form-group">
         <label for="name">Nome</label>
         <input type="text" name="name" id="name" required />
-
-        <button type="submit">Criar</button> 
-        
     </div>
+        <button class="btn-create" type="submit">Criar</button> 
+</form>
+@endsection

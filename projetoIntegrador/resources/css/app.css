@@ -7,6 +7,11 @@
 @import "./atomic/organisms/product.css";
 @import "./atomic/organisms/pagamento.css";
 @import "./atomic/organisms/container.css";
+@import "./atomic/organisms/table.css";
+@import "./atomic/organisms/admin.css";
+@import "./atomic/organisms/nav.css";
+@import "./atomic/organisms/wishlist.css";
+@import "./atomic/organisms/mygames.css";
 
 /*-- IMPORT MOLECULES --*/
 @import "./atomic/molecules/card.css";
@@ -14,6 +19,10 @@
 @import "./atomic/molecules/cart.css";
 @import "./atomic/molecules/item.css";
 @import "./atomic/molecules/form.css";
+@import "./atomic/molecules/profile.css";
+@import "./atomic/molecules/account.css";
+@import "./atomic/molecules/filter.css";
+
 
 /*-- IMPORT ATOMS --*/
 @import "./atomic/atoms/img.css";
@@ -26,6 +35,9 @@
 @import "./atomic/atoms/button.css";
 @import "./atomic/atoms/logo.css";
 @import "./atomic/atoms/input.css";
+@import "./atomic/atoms/btn.css";
+@import "./atomic/atoms/avatar.css";
+@import "./atomic/atoms/checkbox.css";
 
 /* --- RESET E CONFIGURAÇÕES GLOBAIS --- */
 * {
@@ -147,6 +159,26 @@ body {
 }
 
 /*-- TELA DE INFO PRODUTOS --*/
+.main-banner {
+    position: relative; /* Necessário para posicionar as setas */
+    width: 100%;        /* Ocupa a largura disponível da coluna */
+    height: 450px;      /* ALTURA FIXA: Define o tamanho padrão */
+    background-color: #0d111c; /* Cor de fundo enquanto a imagem carrega */
+    border-radius: 12px;
+    overflow: hidden;   /* Garante que nada saia das bordas arredondadas */
+    margin-bottom: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* A Imagem Principal */
+#mainProductImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* A MÁGICA: Corta a imagem para preencher sem distorcer */
+    display: block;
+    transition: opacity 0.3s ease; /* Suaviza a troca de imagem */
+}
+
 .main-banner img {
     width: 100%;
     border-radius: 12px;
@@ -172,8 +204,8 @@ body {
     z-index: 10;
 }
 .form-favorite-toggle {
-    top: 10px;
-    right: 10px;
+    right: 145px;
+    top: 400px;
 }
 .form-cart-store {
     bottom: 85px; /* (Ajuste este valor para o seu design) */
@@ -190,6 +222,7 @@ body {
     height: 40px;
     font-size: 1.1rem;
 }
+
 .form-favorite-toggle button i.fas {
     color: red;
 }
@@ -459,20 +492,6 @@ body {
         order: 3;
         margin-top: 15px;
     }
-    .search-bar {
-        display: flex;
-        align-items: center;
-        position: relative; /* (Você provavelmente já tem isso) */
-    }
-    .search-bar .search-button {
-        background: none;
-        border: none;
-        cursor: pointer;
-        /* Posicione o ícone (ajuste conforme seu CSS original) */
-        position: absolute;
-        right: 10px;
-        color: #888;
-    }
     .header-left {
         flex-grow: 1;
     }
@@ -513,102 +532,93 @@ body {
     .item-price {
         text-align: left;
     }
-    .item-remove {
-        align-self: flex-end;
-        margin-top: -30px;
-    }
-    .coupon-apply {
-        flex-direction: column;
-    }
-    .coupon-apply button {
-        width: 100%;
-    }
     .cart-page {
         padding: 20px 15px;
     }
 }
 
-.filter-sidebar {
-    width: 250px; /* Largura fixa para os filtros */
-    flex-shrink: 0; /* Impede que a barra encolha */
-    background-color: #1e1e2f; /* (Cor de fundo escura, ajuste à sua paleta) */
-    padding: 20px;
-    border-radius: 8px;
-    align-self: flex-start; /* Faz a barra parar no topo */
-    color: #fff;
-}
 
-.filter-sidebar h3 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    margin-top: 0;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #333;
-    padding-bottom: 10px;
-}
+/* --- RESPONSIVIDADE (GERAL + CONTA) --- */
 
-.filter-sidebar .filter-group {
-    margin-bottom: 20px;
-}
-
-.filter-sidebar .filter-group label {
-    display: block;
-    font-weight: 500;
-    font-size: 0.9rem;
-    margin-bottom: 8px;
-    color: #ccc;
-}
-
-.filter-sidebar .filter-group input,
-.filter-sidebar .filter-group select {
-    width: 100%;
-    padding: 8px 10px;
-    background-color: #2a2a3a;
-    border: 1px solid #444;
-    color: #fff;
-    border-radius: 5px;
-    font-family: "Poppins", sans-serif;
-}
-
-.filter-sidebar .btn-filter {
-    width: 100%;
-    padding: 12px;
-    background-color: #007bff; /* (Cor do seu botão primário) */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-}
-.filter-sidebar .btn-filter:hover {
-    background-color: #0056b3;
-}
-
-/* 2. O CONTEÚDO (DIREITA) */
-.search-results-content {
-    flex-grow: 1; /* Ocupa todo o espaço restante */
-    min-width: 0; /* (Correção de bug do Flexbox) */
-}
-
-/* O seu 'games-carousel' (que agora é uma grelha)
-   precisa de ser uma grelha responsiva 
-*/
-.search-results-content .games-carousel {
-    display: grid;
-    /* Cria colunas responsivas: 
-      Tenta encaixar o máximo de colunas de 240px que conseguir.
-    */
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 20px;
-}
-
-/* Media query para telemóveis */
-@media (max-width: 768px) {
-    .search-layout-container {
-        flex-direction: column; /* Pilha os filtros em cima dos resultados */
+@media (max-width: 1024px) {
+    .main-header {
+        padding: 20px 30px;
     }
-    .filter-sidebar {
-        width: 100%; /* Ocupa a largura toda */
+}
+
+@media (max-width: 768px) {
+    .main-header {
+        justify-content: space-between;
+        padding: 15px 20px;
+    }
+
+    .header-center {
+        width: 100%;
+        order: 3;
+        margin-top: 15px;
+    }
+
+    .header-left {
+        flex-grow: 1;
+    }
+
+    .header-right {
+        flex-grow: 1;
+        justify-content: flex-end;
+    }
+
+    .header-left .fa-bars {
+        display: none;
+    }
+
+    .footer-content {
+        padding: 30px 20px 0 20px;
+    }
+
+    .footer-columns {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .social-icons {
+        justify-content: center;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    /* --- RESPONSIVIDADE PÁGINA CONTA --- */
+    .profile-avatar {
+        width: 100px;
+        height: 100px;
+        font-size: 50px;
+    }
+
+    .info-pill {
+        font-size: 12px;
+        padding: 8px 15px;
+    }
+
+    .nav-button {
+        font-size: 14px;
+        padding: 10px 15px;
+        flex-grow: 1; /* Faz os botões ocuparem espaço */
+        text-align: center;
+    }
+
+    .profile-nav {
+        gap: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        height: 25px;
+    }
+
+    .nav-button {
+        flex-basis: 40%; /* Garante que fiquem 2 botões por linha */
     }
 }

@@ -23,4 +23,10 @@
   /* flex-direction: row; é o padrão, então não precisamos declarar */
   align-items: center; /* Alinha o checkbox e o texto verticalmente no centro */
   gap: 8px; /* Define o espaço HORIZONTAL entre a caixinha e o texto */
+  font-size: 15px;
+}
+
+.container2 {
+  max-width: 1200px;
+  margin: 0 auto;
 }

@@ -1,57 +1,46 @@
+@extends('layouts.admin')
 
+@section('title', 'Editar o produto: ' .$product->name)
 
-   
-<style>
-        body { font-family: sans-serif; padding: 20px; }
-        form { max-width: 600px; margin: 0 auto; border: 1px solid #ccc; padding: 20px; border-radius: 8px; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
-        .form-group input[type="text"],
-        .form-group input[type="number"],
-        .form-group select { width: 100%; padding: 8px; box-sizing: border-box; }
-        .form-group-checkbox { display: flex; align-items: center; gap: 10px; }
-        button { background: #28a745; color: white; padding: 10px 15px; border: none; cursor: pointer; border-radius: 5px; }
-        small { color: red; }
-</style>
-
-
+@section('content')
 
     {{-- Ação correta, apontando para a rota de admin --}}
-<form action="{{ route('admin.products.update', $product) }}" method="POST">
+<form class="form-carrossel" action="{{ route('admin.products.update', $product) }}" method="POST">
     @method('PUT')
     @csrf
-    <h1>Editar o produto: {{ $product->name }}</h1>
     
-    <div class="form-group">
-        <label for="game_id">Este produto é para qual Jogo/DLC?</label>
-        <select name="game_id" id="game_id" required>
-        <option value="">-- Selecione um Jogo --</option>
-        @foreach ($games as $game)
-            {{-- CORRIGIDO: Adiciona 'selected' se o ID bater --}}
-            <option value="{{ $game->id }}"
-                @if(old('game_id', $product->game_id) == $game->id) selected @endif
-            >
-                {{ $game->title }}
-            </option>
-        @endforeach
-        </select>
-        @error('game_id') <small>{{ $message }}</small> @enderror
-    </div>
-
-    <div class="form-group">
-        <label for="platform_id">Plataforma</label>
-        <select id="platform_id" name="platform_id" required>
-            <option value="">-- Selecione uma Plataforma --</option>
-            @foreach ($platforms as $platform)
+    <div class="grid-2">
+        <div class="form-group">
+            <label for="game_id">Este produto é para qual Jogo/DLC?</label>
+            <select name="game_id" id="game_id" required>
+            <option value="">-- Selecione um Jogo --</option>
+            @foreach ($games as $game)
                 {{-- CORRIGIDO: Adiciona 'selected' se o ID bater --}}
-                <option value="{{ $platform->id }}" 
-                    @if(old('platform_id', $product->platform_id) == $platform->id) selected @endif
+                <option value="{{ $game->id }}"
+                    @if(old('game_id', $product->game_id) == $game->id) selected @endif
                 >
-                    {{ $platform->name }}
+                    {{ $game->title }}
                 </option>
             @endforeach
-        </select>
-        @error('platform_id') <small>{{ $message }}</small> @enderror
+            </select>
+            @error('game_id') <small>{{ $message }}</small> @enderror
+        </div>
+
+        <div class="form-group">
+            <label for="platform_id">Plataforma</label>
+            <select id="platform_id" name="platform_id" required>
+                <option value="">-- Selecione uma Plataforma --</option>
+                @foreach ($platforms as $platform)
+                    {{-- CORRIGIDO: Adiciona 'selected' se o ID bater --}}
+                    <option value="{{ $platform->id }}" 
+                        @if(old('platform_id', $product->platform_id) == $platform->id) selected @endif
+                    >
+                        {{ $platform->name }}
+                    </option>
+                @endforeach
+            </select>
+            @error('platform_id') <small>{{ $message }}</small> @enderror
+        </div>
     </div>
     
     <div class="form-group">
@@ -61,18 +50,20 @@
         @error('name') <small>{{ $message }}</small> @enderror
     </div>
     
-    <div class="form-group">
-        <label for="default_price">Preço Padrão (Ex: 299.99)</label>
-        {{-- CORRIGIDO: Adiciona o valor do $product no 'value' --}}
-        <input type="number" id="default_price" name="default_price" step="0.01" value="{{ old('default_price', $product->default_price) }}" required>
-        @error('default_price') <small>{{ $message }}</small> @enderror
-    </div>
+    <div class="grid-2">
+        <div class="form-group">
+            <label for="default_price">Preço Padrão (Ex: 299.99)</label>
+            {{-- CORRIGIDO: Adiciona o valor do $product no 'value' --}}
+            <input type="number" id="default_price" name="default_price" step="0.01" value="{{ old('default_price', $product->default_price) }}" required>
+            @error('default_price') <small>{{ $message }}</small> @enderror
+        </div>
 
-    <div class="form-group">
-        <label for="current_price">Preço Atual (Promocional)</label>
-        {{-- CORRIGIDO: Adiciona o valor do $product no 'value' --}}
-        <input type="number" id="current_price" name="current_price" step="0.01" value="{{ old('current_price', $product->current_price) }}" required>
-        @error('current_price') <small>{{ $message }}</small> @enderror
+        <div class="form-group">
+            <label for="current_price">Preço Atual (Promocional)</label>
+            {{-- CORRIGIDO: Adiciona o valor do $product no 'value' --}}
+            <input type="number" id="current_price" name="current_price" step="0.01" value="{{ old('current_price', $product->current_price) }}" required>
+            @error('current_price') <small>{{ $message }}</small> @enderror
+        </div>
     </div>
 
     {{-- CORRIGIDO: Lógica 'checked' para formulários de edição --}}
@@ -98,7 +89,6 @@
         <label for="is_active">Ativo (Visível na loja)?</label>
     </div>
     
-    <br>
-    {{-- CORRIGIDO: Texto do botão --}}
-    <button type="submit">Atualizar Produto</button>
+    <button class="btn-create" type="submit">Atualizar Produto</button>
 </form>
+@endsection

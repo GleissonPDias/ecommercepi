@@ -6,10 +6,6 @@
   align-items: center;
 }
 
-.content-redefinir {
-  gap: 32px;
-}
-
 .content-left {
     flex: 2;
     display: flex;
@@ -19,4 +15,22 @@
 
 .content-right {
     flex: 1;
+}
+
+.account-content-wrapper {
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.content-placeholder {
+    text-align: center;
+    padding: 60px 40px;
+    color: #a0a4b8;
+    border: 2px dashed #2a2f42;
+    border-radius: 8px;
+}
+.content-placeholder i {
+    /* Ícone */
+    font-size: 50px;
+    margin-bottom: 20px;
 }
