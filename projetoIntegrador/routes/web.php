@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\GameKeyController;
 use App\Http\Controllers\Admin\CouponManagementController;
 use App\Http\Controllers\Admin\GameModeController;
+use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
@@ -25,6 +26,15 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CatalogController;
 use Illuminate\Support\Facades\Route;
 
+
+
+
+    Route::get('/auth/{provider}/redirect', [SocialiteController::class, 'redirectToProvider'])
+    ->name('socialite.redirect');
+
+// Rota que o Google/Facebook chama de volta
+    Route::get('/auth/{provider}/callback', [SocialiteController::class, 'handleProviderCallback'])
+    ->name('socialite.callback');
 /*
 |--------------------------------------------------------------------------
 | Rotas de Admin (Protegidas)
@@ -34,6 +44,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+
+
     
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('users', UserController::class);

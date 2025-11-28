@@ -74,12 +74,11 @@
           <p class="criar">Não tem conta? <a class="criar-conta" href="{{ route('register') }}">Criar conta</a></p>
 
           {{-- A funcionalidade de login social precisa ser implementada à parte (ex: com Laravel Socialite) --}}
-          <button type="button" class="login-options">
-            <img src="{{ asset('images/iconGoogle.svg') }}" /><span>Entrar com Google</span>
-          </button>
-          <button type="button" class="login-options">
-            <img src="{{ asset('images/iconFacebook.svg') }}" /><span>Entrar com Facebook</span>
-          </button>
+          <a href="{{ route('socialite.redirect', 'google') }}" class="login-options">
+            <img src="{{ asset('images/iconGoogle.svg') }}" />
+            <span>Entrar com Google</span>
+          </a>
+
         </form>
       </div>
     </div>
